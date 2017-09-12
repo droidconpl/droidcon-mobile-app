@@ -1,1 +1,1 @@
-# droidcon2017-mobile-app
+# droidcon-mobile-app
