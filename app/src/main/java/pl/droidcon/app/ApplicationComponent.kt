@@ -1,8 +1,9 @@
 package pl.droidcon.app
 
 import dagger.Component
-import pl.droidcon.app.network.NetworkModule
-import pl.droidcon.app.speakers.SpeakersFragment
+import pl.droidcon.app.data.DataModule
+import pl.droidcon.app.data.NetworkModule
+import pl.droidcon.app.speakers.view.SpeakersFragment
 import javax.inject.Scope
 
 @Scope
@@ -10,7 +11,8 @@ import javax.inject.Scope
 annotation class ApplicationScope
 
 @Component(modules = arrayOf(
-        NetworkModule::class
+        NetworkModule::class,
+        DataModule::class
 ))
 @ApplicationScope
 interface ApplicationComponent {

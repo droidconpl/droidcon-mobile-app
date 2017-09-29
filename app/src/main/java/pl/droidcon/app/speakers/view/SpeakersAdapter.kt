@@ -1,4 +1,4 @@
-package pl.droidcon.app.speakers
+package pl.droidcon.app.speakers.view
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import pl.droidcon.app.R
-import pl.droidcon.app.data.Speaker
+import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.ext.bind
 
 class SpeakersAdapter(private val speakers: List<Speaker>) : RecyclerView.Adapter<SpeakerViewHolder>() {

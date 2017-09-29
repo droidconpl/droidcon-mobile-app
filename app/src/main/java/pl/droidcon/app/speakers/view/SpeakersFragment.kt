@@ -1,4 +1,4 @@
-package pl.droidcon.app.speakers
+package pl.droidcon.app.speakers.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
-import pl.droidcon.app.data.Speaker
+import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.ext.bind
+import pl.droidcon.app.speakers.SpeakersPresenter
+import pl.droidcon.app.speakers.SpeakersView
 import javax.inject.Inject
 
 class SpeakersFragment : Fragment(), SpeakersView {
@@ -22,7 +24,6 @@ class SpeakersFragment : Fragment(), SpeakersView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         DroidconApp.component.inject(this)
-
         super.onCreate(savedInstanceState)
     }
 
@@ -31,13 +32,11 @@ class SpeakersFragment : Fragment(), SpeakersView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         presenter.attachView(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         presenter.attachView(null)
     }
 
