@@ -14,11 +14,14 @@ class SpeakersRepository @Inject constructor(private val remoteSpeakersSource: R
     }
 
     fun speakers(): Observable<List<Speaker>> {
+        val localStream = localSpeakersSource.get().toObservable().defaultIfEmpty(emptyList())
+
         return remoteSpeakersSource.get(onRemoteDone)
                 .toObservable()
-                .startWith(localSpeakersSource.get().toObservable())
+                .startWith(localStream)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .filter { !it.isEmpty() } // to not return empty list from remote in case of network error after local is done
-                .defaultIfEmpty(emptyList()) // in case of 1. Network Error and Empty DB just return empty list
+                .onErrorResumeNext(localStream) // in case of Network Error return local
+                .defaultIfEmpty(emptyList())
     }
 }
