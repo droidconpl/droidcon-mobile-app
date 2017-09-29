@@ -3,7 +3,9 @@ package pl.droidcon.app.speakers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import pl.droidcon.app.data.Speaker
+import io.reactivex.schedulers.Schedulers
+import pl.droidcon.app.domain.Speaker
+import pl.droidcon.app.speakers.interactor.SpeakersRepository
 import javax.inject.Inject
 
 class SpeakersPresenter @Inject constructor(private val speakersRepository: SpeakersRepository) {
@@ -27,6 +29,7 @@ class SpeakersPresenter @Inject constructor(private val speakersRepository: Spea
 
     private fun loadSpeakers() {
         speakersRepository.speakers()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ view?.display(it) }, { e -> e.printStackTrace() })
                 .addTo(disposables)

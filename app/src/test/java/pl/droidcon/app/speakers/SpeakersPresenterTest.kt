@@ -15,7 +15,8 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import pl.droidcon.app.data.Speaker
+import pl.droidcon.app.domain.Speaker
+import pl.droidcon.app.speakers.interactor.SpeakersRepository
 
 
 @RunWith(JUnit4::class)

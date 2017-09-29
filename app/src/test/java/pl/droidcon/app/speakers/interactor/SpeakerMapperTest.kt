@@ -1,12 +1,12 @@
-package pl.droidcon.app.speakers
+package pl.droidcon.app.speakers.interactor
 
 import com.google.common.truth.Truth.assertThat
 import junitparams.JUnitParamsRunner
 import junitparams.Parameters
 import org.junit.Test
 import org.junit.runner.RunWith
-import pl.droidcon.app.data.ApiSpeaker
-import pl.droidcon.app.data.Speaker
+import pl.droidcon.app.data.SpeakerData
+import pl.droidcon.app.domain.Speaker
 
 @RunWith(JUnitParamsRunner::class)
 class SpeakerMapperTest {
@@ -18,12 +18,14 @@ class SpeakerMapperTest {
     fun maps(id: Long, firstName: String, lastName: String, title: String, description: String, websiteUrl: String,
              fb: String, twitter: String, gh: String, linkedIn: String, gplus: String, image: String) {
 
-        val expectedSpeaker = Speaker(id, firstName, lastName, title, description, websiteUrl, fb, twitter, websiteUrl, gh, gplus, image)
-        val apiSpeaker = ApiSpeaker(id, firstName, lastName, title, description, websiteUrl, fb, twitter, websiteUrl, gh, gplus, image)
+        val domainSpeaker = Speaker(id, firstName, lastName, title, description, websiteUrl, fb, twitter, websiteUrl, gh, gplus, image)
+        val dataSpeaker = SpeakerData(id, firstName, lastName, title, description, websiteUrl, fb, twitter, websiteUrl, gh, gplus, image)
 
-        val resultUnderTest = systemUnderTest.map(apiSpeaker)
+        val testedDomainSpeaker = systemUnderTest.map(dataSpeaker)
+        val testedDataSpeaker = systemUnderTest.map(domainSpeaker)
 
-        assertThat(resultUnderTest).isEqualTo(expectedSpeaker)
+        assertThat(testedDomainSpeaker).isEqualTo(domainSpeaker)
+        assertThat(testedDataSpeaker).isEqualTo(dataSpeaker)
     }
 
     @Suppress("unused")
