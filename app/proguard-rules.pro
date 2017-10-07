@@ -29,3 +29,4 @@
 -dontwarn okio.**
 -dontwarn javax.annotation.**
 -dontwarn retrofit2.Platform$Java8
+-dontwarn com.squareup.okhttp.**
