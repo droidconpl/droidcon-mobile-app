@@ -2,16 +2,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="160dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    tools:background="@color/colorAccent"
+    tools:layout_width="160dp">
 
     <ImageView
         android:id="@+id/speaker_picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person"
+        tools:layout_width="160dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,9 +24,11 @@
     <TextView
         android:id="@+id/speaker_name"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:gravity="center_vertical"
+        android:background="@color/droidcon_green"
+        android:gravity="center"
+        android:minHeight="32dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         tools:text="Data binding" />
