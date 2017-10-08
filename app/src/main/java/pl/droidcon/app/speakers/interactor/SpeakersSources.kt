@@ -15,12 +15,12 @@ class RemoteSpeakersSource @Inject constructor(private val speakersService: Spea
                                                private val speakerMapper: SpeakerMapper)
     : RemoteDataSource<List<Speaker>> {
 
-    override fun get(onRemoteDone: OnRemoteSuccess<List<Speaker>>): Single<List<Speaker>> {
+    override fun get(success: OnRemoteSuccess<List<Speaker>>): Single<List<Speaker>> {
         return speakersService.speakers()
                 .map { it.map { apiSpeaker -> speakerMapper.map(apiSpeaker) } }
                 .doOnSuccess {
                     if (!it.isEmpty()) {
-                        onRemoteDone(it)
+                        success(it)
                     }
                 }
                 .onErrorReturn { (emptyList()) }
