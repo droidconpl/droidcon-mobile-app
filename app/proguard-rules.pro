@@ -29,3 +29,9 @@
 -dontwarn okio.**
 -dontwarn javax.annotation.**
 -dontwarn retrofit2.Platform$Java8
+
+
+# Firebase
+-keepclassmembers class pl.droidcon.app.data.** {
+*;
+}
