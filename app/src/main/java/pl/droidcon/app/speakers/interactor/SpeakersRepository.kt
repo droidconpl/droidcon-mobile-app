@@ -14,7 +14,10 @@ class SpeakersRepository @Inject constructor(private val remoteSpeakersSource: R
     }
 
     fun speakers(): Observable<List<Speaker>> {
-        val localStream = localSpeakersSource.get().toObservable().defaultIfEmpty(emptyList())
+        val localStream = localSpeakersSource.get()
+                .toObservable()
+                .onErrorResumeNext(Observable.empty())
+                .defaultIfEmpty(emptyList())
 
         return remoteSpeakersSource.get(onRemoteDone)
                 .toObservable()

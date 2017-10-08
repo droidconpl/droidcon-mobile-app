@@ -1,8 +1,6 @@
 package pl.droidcon.app.speakers.interactor
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
@@ -12,6 +10,7 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import pl.droidcon.app.data.OnRemoteSuccess
 import pl.droidcon.app.domain.Speaker
 import util.RxJavaPluginHelper
 import java.io.IOException
@@ -117,5 +116,50 @@ class SpeakersRepositoryTest {
         testObserver.assertValues(localList, remoteList)
         testObserver.assertNoErrors()
         testObserver.assertComplete()
+    }
+
+    @Test
+    fun returns_remote_when_local_error() {
+        val remoteList = listOf(speaker, speaker)
+
+        whenever(local.get()).thenReturn(Maybe.error(IOException()))
+        whenever(remote.get(any())).thenReturn(Single.just(remoteList))
+
+        val testObserver = systemUnderTest.speakers().test()
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+        testObserver.assertValue(remoteList)
+        testObserver.assertNoErrors()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun updates_local_source_with_remote_when_local_exists() {
+        val captor = argumentCaptor<OnRemoteSuccess<List<Speaker>>>()
+
+        val localList = listOf(speaker)
+        val remoteList = listOf(speaker, speaker)
+
+        whenever(local.get()).thenReturn(Maybe.just(localList))
+        whenever(remote.get(captor.capture())).thenReturn(Single.just(remoteList))
+
+        systemUnderTest.speakers().test()
+
+        captor.firstValue.invoke(remoteList)
+        verify(local).put(eq(remoteList))
+    }
+
+    @Test
+    fun updates_local_source_with_remote_when_local_empty() {
+        val captor = argumentCaptor<OnRemoteSuccess<List<Speaker>>>()
+
+        val remoteList = listOf(speaker, speaker)
+
+        whenever(local.get()).thenReturn(Maybe.never())
+        whenever(remote.get(captor.capture())).thenReturn(Single.just(remoteList))
+
+        systemUnderTest.speakers().test()
+
+        captor.firstValue.invoke(remoteList)
+        verify(local).put(eq(remoteList))
     }
 }
