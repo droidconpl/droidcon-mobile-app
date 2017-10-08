@@ -16,8 +16,8 @@ class SpeakersRepository @Inject constructor(private val remoteSpeakersSource: R
     fun speakers(): Observable<List<Speaker>> {
         val localStream = localSpeakersSource.get()
                 .toObservable()
-                .onErrorResumeNext(Observable.empty())
-                .defaultIfEmpty(emptyList())
+                .onErrorResumeNext(Observable.empty()) // in case of error reading local, we would like still wait for remote and update local
+                .defaultIfEmpty(emptyList()) // if empty, return empty list and filter in next stream
 
         return remoteSpeakersSource.get(onRemoteDone)
                 .toObservable()
