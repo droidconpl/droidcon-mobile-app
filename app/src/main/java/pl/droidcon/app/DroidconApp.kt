@@ -2,6 +2,7 @@ package pl.droidcon.app
 
 import android.app.Application
 import android.content.Context
+import com.google.firebase.FirebaseApp
 
 class DroidconApp : Application() {
 
@@ -12,5 +13,10 @@ class DroidconApp : Application() {
 
     companion object {
         lateinit var component: ApplicationComponent
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        FirebaseApp.initializeApp(this)
     }
 }

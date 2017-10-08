@@ -16,3 +16,10 @@ data class ApiSpeaker(
         @SerializedName("googlePlus") val googlePlusUrl: String,
         @SerializedName("imageUrl") val imageUrl: String
 )
+
+data class FirebaseSpeaker(
+        val name: String = "",
+        val surname: String = "",
+        val photoUrl: String = ""
+
+)
