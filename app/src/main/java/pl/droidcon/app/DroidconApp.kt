@@ -2,13 +2,13 @@ package pl.droidcon.app
 
 import android.app.Application
 import android.content.Context
-import pl.droidcon.app.data.DataModule
+import pl.droidcon.app.data.LocalDataModule
 
 class DroidconApp : Application() {
 
     override fun attachBaseContext(base: Context?) {
         component = DaggerApplicationComponent.builder()
-                .dataModule(DataModule(this))
+                .localDataModule(LocalDataModule(this))
                 .build()
         super.attachBaseContext(base)
     }

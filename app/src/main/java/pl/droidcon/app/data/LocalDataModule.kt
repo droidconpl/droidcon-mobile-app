@@ -1,15 +1,18 @@
 package pl.droidcon.app.data
 
+import dagger.Module
+import dagger.Provides
+import pl.droidcon.app.ApplicationScope
 import pl.droidcon.app.data.local.DroidconDatabase
 
-@dagger.Module
-class DataModule(context: android.content.Context) {
+@Module
+class LocalDataModule(context: android.content.Context) {
 
     init {
         DroidconDatabase.init(context)
     }
 
-    @dagger.Provides
-    @pl.droidcon.app.ApplicationScope
+    @Provides
+    @ApplicationScope
     fun provideSpeakerDao() = DroidconDatabase.get().speakerDao()
 }

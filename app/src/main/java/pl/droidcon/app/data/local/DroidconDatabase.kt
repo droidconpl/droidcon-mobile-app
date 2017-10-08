@@ -1,19 +1,23 @@
 package pl.droidcon.app.data.local
 
-@android.arch.persistence.room.Database(entities = arrayOf(pl.droidcon.app.data.SpeakerData::class), version = 1)
-abstract class DroidconDatabase : android.arch.persistence.room.RoomDatabase() {
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.Room
+import android.arch.persistence.room.RoomDatabase
+import android.content.Context
+
+@Database(entities = arrayOf(SpeakerLocal::class), version = 1)
+abstract class DroidconDatabase : RoomDatabase() {
 
     abstract fun speakerDao(): SpeakersDao
 
     companion object {
+        private lateinit var database: DroidconDatabase
 
-        private lateinit var database: pl.droidcon.app.data.local.DroidconDatabase
-
-        fun init(context: android.content.Context) {
-            pl.droidcon.app.data.local.DroidconDatabase.Companion.database = android.arch.persistence.room.Room.databaseBuilder(context, pl.droidcon.app.data.local.DroidconDatabase::class.java, "droidcon")
+        fun init(context: Context) {
+            database = Room.databaseBuilder(context, DroidconDatabase::class.java, "droidcon")
                     .build()
         }
 
-        fun get() = pl.droidcon.app.data.local.DroidconDatabase.Companion.database
+        fun get() = database
     }
 }

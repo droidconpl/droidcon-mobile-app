@@ -6,6 +6,7 @@ import pl.droidcon.app.data.LocalDataSource
 import pl.droidcon.app.data.OnRemoteSuccess
 import pl.droidcon.app.data.RemoteDataSource
 import pl.droidcon.app.data.local.SpeakersDao
+import pl.droidcon.app.data.mapper.SpeakerMapper
 import pl.droidcon.app.data.network.SpeakersService
 import pl.droidcon.app.domain.Speaker
 import javax.inject.Inject
