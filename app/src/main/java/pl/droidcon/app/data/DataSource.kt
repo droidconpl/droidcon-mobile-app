@@ -6,7 +6,7 @@ import io.reactivex.Single
 typealias OnRemoteSuccess<T> = (T) -> Unit
 
 interface RemoteDataSource<T> {
-    fun get(onRemoteDone: OnRemoteSuccess<T>): Single<T>
+    fun get(success: OnRemoteSuccess<T>): Single<T>
 }
 
 interface LocalDataSource<K> {
