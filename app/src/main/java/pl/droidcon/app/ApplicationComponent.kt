@@ -3,6 +3,7 @@ package pl.droidcon.app
 import dagger.Component
 import pl.droidcon.app.data.LocalDataModule
 import pl.droidcon.app.data.NetworkModule
+import pl.droidcon.app.sessions.view.SessionsFragment
 import pl.droidcon.app.speakers.view.SpeakersFragment
 import javax.inject.Scope
 
@@ -18,4 +19,6 @@ annotation class ApplicationScope
 interface ApplicationComponent {
 
     fun inject(speakersFragment: SpeakersFragment)
+
+    fun inject(sessionsFragment: SessionsFragment)
 }

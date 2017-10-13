@@ -9,7 +9,7 @@ import javax.inject.Inject
 class SpeakersRepository @Inject constructor(private val remoteSpeakersSource: RemoteSpeakersSource,
                                              private val localSpeakersSource: LocalSpeakersSource) {
 
-    private val onRemoteDone: OnRemoteSuccess<List<Speaker>> = {
+    private val onRemoteSuccess: OnRemoteSuccess<List<Speaker>> = {
         localSpeakersSource.put(it)
     }
 
@@ -19,7 +19,7 @@ class SpeakersRepository @Inject constructor(private val remoteSpeakersSource: R
                 .onErrorResumeNext(Observable.empty()) // in case of error reading local, we would like still wait for remote and update local
                 .defaultIfEmpty(emptyList()) // if empty, return empty list and filter in next stream
 
-        return remoteSpeakersSource.get(onRemoteDone)
+        return remoteSpeakersSource.get(onRemoteSuccess)
                 .toObservable()
                 .startWith(localStream)
                 .debounce(300, TimeUnit.MILLISECONDS)
