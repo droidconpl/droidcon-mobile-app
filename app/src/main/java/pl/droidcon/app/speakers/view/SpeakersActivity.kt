@@ -1,18 +1,23 @@
 package pl.droidcon.app.speakers.view
 
-class SpeakersActivity : android.support.v7.app.AppCompatActivity() {
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 
-    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+class SpeakersActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .add(android.R.id.content, pl.droidcon.app.speakers.view.SpeakersFragment.Companion.instance())
+                    .add(android.R.id.content, SpeakersFragment.instance())
                     .commit()
         }
     }
 
     companion object {
-        fun intent(context: android.content.Context) = android.content.Intent(context, SpeakersActivity::class.java)
+        fun intent(context: Context) = Intent(context, SpeakersActivity::class.java)
     }
 }
