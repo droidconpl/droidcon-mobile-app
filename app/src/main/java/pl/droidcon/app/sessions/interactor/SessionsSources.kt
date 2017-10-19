@@ -20,7 +20,7 @@ class RemoteSessionsSource @Inject constructor(private val sessionsService: Sess
 
     override fun get(success: OnRemoteSuccess<List<Session>>): Single<List<Session>> {
         return sessionsService.sessions()
-                .zipWith(speakersRepository.speakers().firstOrError())
+                .zipWith(speakersRepository.get().firstOrError())
                 .map { (sessionsRemote, speakers) -> sessionsRemote.map { sessionsMapper.map(it, speakers) } }
                 .doOnSuccess {
                     if (it.isNotEmpty()) {
@@ -37,7 +37,7 @@ class LocalSessionsSource @Inject constructor(private val sessionsDao: SessionsD
     : LocalDataSource<List<Session>> {
 
     override fun get(): Maybe<List<Session>> {
-        return speakersRepository.speakers()
+        return speakersRepository.get()
                 .firstElement()
                 .zipWith(sessionsDao.get())
                 .map { (speakers, sessionsLocal) -> sessionsLocal.map { sessionsMapper.map(it, speakers) } }

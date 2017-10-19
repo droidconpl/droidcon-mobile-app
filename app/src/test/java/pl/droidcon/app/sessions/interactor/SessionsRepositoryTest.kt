@@ -1,4 +1,4 @@
-package pl.droidcon.app.speakers.interactor
+package pl.droidcon.app.sessions.interactor
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -11,12 +11,12 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import pl.droidcon.app.domain.Speaker
+import pl.droidcon.app.domain.Session
 import util.RxJavaPluginHelper
 import java.util.concurrent.TimeUnit
 
 @RunWith(JUnit4::class)
-class SpeakersRepositoryTest {
+class SessionsRepositoryTest {
 
     companion object {
         private val testScheduler = TestScheduler()
@@ -34,32 +34,32 @@ class SpeakersRepositoryTest {
         }
     }
 
-    private val remote: RemoteSpeakersSource = mock()
-    private val local: LocalSpeakersSource = mock()
+    private val remote: RemoteSessionsSource = mock()
+    private val local: LocalSessionsSource = mock()
 
-    private val systemUnderTest = SpeakersRepository(remote, local)
+    private val systemUnderTest = SessionsRepository(remote, local)
 
     @Test
-    fun `loads speakers`() {
-        val localSpeakers = listOf(createSpeaker(1), createSpeaker(2))
-        val remoteSpeakers = listOf(createSpeaker(3), createSpeaker(4), createSpeaker(5))
+    fun `loads sessions`() {
+        val localSessions = listOf(createSession(1), createSession(2))
+        val remoteSessions = listOf(createSession(3), createSession(4), createSession(5))
 
-        whenever(local.get()).thenReturn(Maybe.just(localSpeakers))
-        whenever(remote.get(any())).thenReturn(Single.just(remoteSpeakers))
+        whenever(local.get()).thenReturn(Maybe.just(localSessions))
+        whenever(remote.get(any())).thenReturn(Single.just(remoteSessions))
 
         val testObserver = systemUnderTest.get().test()
 
         testScheduler.advanceTimeBy(400, TimeUnit.MILLISECONDS)
 
-        testObserver.assertValues(remoteSpeakers)
+        testObserver.assertValues(remoteSessions)
     }
 
     //to not create big model without using fields
-    private fun createSpeaker(id: Long): Speaker {
-        val speaker: Speaker = mock()
+    private fun createSession(id: Long): Session {
+        val session: Session = mock()
 
-        return speaker.apply {
-            whenever(this.id).thenReturn(id)
+        return session.apply {
+            whenever(sessionId).thenReturn(id)
         }
     }
 }

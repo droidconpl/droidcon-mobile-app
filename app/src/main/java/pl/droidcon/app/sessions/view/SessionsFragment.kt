@@ -34,8 +34,12 @@ class SessionsFragment : Fragment(), SessionsView {
         presenter.attachView(null)
     }
 
-    override fun displaySessions(sessions: List<Session>) {
-        println("display $sessions")
+    override fun display(sessions: List<Session>) {
+
+    }
+
+    override fun display(session: Session) {
+
     }
 
     companion object {

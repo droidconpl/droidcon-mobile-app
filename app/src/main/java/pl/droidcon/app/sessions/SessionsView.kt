@@ -4,5 +4,7 @@ import pl.droidcon.app.domain.Session
 
 interface SessionsView {
 
-    fun displaySessions(sessions: List<Session>)
+    fun display(sessions: List<Session>)
+
+    fun display(session: Session)
 }

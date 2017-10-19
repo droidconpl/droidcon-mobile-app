@@ -22,7 +22,7 @@ class RemoteSpeakersSourceTest {
     private val systemUnderTest = RemoteSpeakersSource(speakersService, speakerMapper)
 
     @Test
-    fun calls_success_when_loaded_from_remote() {
+    fun `calls success when loaded from remote`() {
         val speaker = SpeakerRemote(
                 id = 12,
                 firstName = "name",
@@ -47,7 +47,7 @@ class RemoteSpeakersSourceTest {
     }
 
     @Test
-    fun returns_remote_when_subscribed() {
+    fun `returns remote when subscribed`() {
         val speaker = SpeakerRemote(
                 id = 12,
                 firstName = "name",
@@ -71,7 +71,7 @@ class RemoteSpeakersSourceTest {
     }
 
     @Test
-    fun does_not_call_success_when_loaded_empty() {
+    fun `does not call success when loaded empty`() {
         whenever(speakersService.speakers()).thenReturn(Single.just(emptyList()))
 
         systemUnderTest.get(success).test()
@@ -79,9 +79,8 @@ class RemoteSpeakersSourceTest {
         verify(success, times(0)).invoke(any())
     }
 
-
     @Test
-    fun returns_empty_list_if_error() {
+    fun `returns empty list if error`() {
         whenever(speakersService.speakers()).thenReturn(Single.error(IOException()))
 
         systemUnderTest.get(success).test()

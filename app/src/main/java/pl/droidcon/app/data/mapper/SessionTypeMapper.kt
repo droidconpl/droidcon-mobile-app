@@ -11,7 +11,7 @@ class SessionTypeMapper @Inject constructor() {
     fun map(sessionType: String): SessionType = when (sessionType) {
         TALK -> SessionType.TALK
         WORKSHOP -> SessionType.WORKSHOP
-        else -> throw IllegalStateException("Not expecting $sessionType as session type")
+        else -> throw IllegalArgumentException("Not expecting $sessionType as session type")
     }
 
     fun map(sessionType: SessionType): String = when (sessionType) {
