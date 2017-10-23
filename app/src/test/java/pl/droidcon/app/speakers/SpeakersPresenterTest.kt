@@ -15,7 +15,9 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import pl.droidcon.app.data.Speaker
+import pl.droidcon.app.domain.Speaker
+import pl.droidcon.app.speakers.interactor.SpeakersRepository
+import util.RxJavaPluginHelper
 
 
 @RunWith(JUnit4::class)
@@ -25,20 +27,13 @@ class SpeakersPresenterTest {
         @BeforeClass
         @JvmStatic
         fun setup() {
-            val scheduler = Schedulers.trampoline()
-
-            RxAndroidPlugins.setInitMainThreadSchedulerHandler { _ -> scheduler }
-            RxJavaPlugins.setComputationSchedulerHandler { scheduler }
-            RxJavaPlugins.setIoSchedulerHandler { scheduler }
-            RxJavaPlugins.setNewThreadSchedulerHandler { scheduler }
-            RxJavaPlugins.setSingleSchedulerHandler { scheduler }
+            RxJavaPluginHelper.setup()
         }
 
         @AfterClass
         @JvmStatic
         fun teardown() {
-            RxAndroidPlugins.reset()
-            RxJavaPlugins.reset()
+            RxJavaPluginHelper.teardown()
         }
     }
 

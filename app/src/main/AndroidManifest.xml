@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".speakers.SpeakersActivity" />
+        <activity android:name=".speakers.view.SpeakersActivity" />
     </application>
 
 </manifest>

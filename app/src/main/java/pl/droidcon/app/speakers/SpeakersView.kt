@@ -1,6 +1,6 @@
 package pl.droidcon.app.speakers
 
-import pl.droidcon.app.data.Speaker
+import pl.droidcon.app.domain.Speaker
 
 interface SpeakersView {
 

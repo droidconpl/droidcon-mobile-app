@@ -1,4 +1,4 @@
-package pl.droidcon.app.speakers
+package pl.droidcon.app.speakers.view
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import pl.droidcon.app.R
-import pl.droidcon.app.data.Speaker
-import pl.droidcon.app.ext.bind
+import pl.droidcon.app.domain.Speaker
 
 class SpeakersAdapter(private val speakers: List<Speaker>) : RecyclerView.Adapter<SpeakerViewHolder>() {
 
@@ -22,7 +21,7 @@ class SpeakersAdapter(private val speakers: List<Speaker>) : RecyclerView.Adapte
 
 class SpeakerViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
-    private val name by item.bind<TextView>(R.id.speaker_name)
+    private val name: TextView = item.findViewById(R.id.speaker_name)
 
     fun bindHolder(speaker: Speaker) {
         name.text = speaker.firstName

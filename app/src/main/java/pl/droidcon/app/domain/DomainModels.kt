@@ -1,4 +1,4 @@
-package pl.droidcon.app.data
+package pl.droidcon.app.domain
 
 data class Speaker(
         val id: Long,
