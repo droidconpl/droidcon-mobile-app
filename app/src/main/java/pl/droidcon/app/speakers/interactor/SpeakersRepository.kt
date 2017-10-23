@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SpeakersRepository @Inject constructor(private val remoteSpeakersSource: RemoteSpeakersSource,
-                                             private val localSpeakersSource: LocalSpeakersSource) {
+                                             private val localSpeakersSource: LocalSpeakersSource,
+                                             private val firebaseSpeakerSource: RemoteFirebaseSpeakerSource) {
 
     private val onRemoteDone: OnRemoteSuccess<List<Speaker>> = {
         localSpeakersSource.put(it)

@@ -37,9 +37,10 @@ class SpeakersRepositoryTest {
 
     private val remote: RemoteSpeakersSource = mock()
     private val local: LocalSpeakersSource = mock()
+    private val firebaseRemote: RemoteFirebaseSpeakerSource = mock()
     private val speaker = Speaker(1L, "", "", "", "", "", "", "", "gh", "l", "gp", "image")
 
-    private val systemUnderTest = SpeakersRepository(remote, local)
+    private val systemUnderTest = SpeakersRepository(remote, local, firebaseRemote)
 
     @Test
     fun starts_with_local() {

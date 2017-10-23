@@ -34,42 +34,37 @@ class RemoteSpeakersSource @Inject constructor(private val speakersService: Spea
     }
 }
 
-class RemoteFirebaseSpeakers @Inject constructor(private val speakerMapper: SpeakerMapper,
-                                                 private val firebaseDatabase: FirebaseDatabase)
+class RemoteFirebaseSpeakerSource @Inject constructor(private val speakerMapper: SpeakerMapper,
+                                                      private val firebaseDatabase: FirebaseDatabase)
     : RemoteDataSource<List<Speaker>> {
 
     val speakersSubject: PublishSubject<List<Speaker>> = PublishSubject.create()
 
     override fun get(success: OnRemoteSuccess<List<Speaker>>): Single<List<Speaker>> {
 
+        val speakerReference = firebaseDatabase.getReference("speaker")
 
-        fun firebaseSpeakers(): Observable<List<Speaker>> {
-            val speakersSubject: PublishSubject<List<Speaker>> = PublishSubject.create()
+        speakerReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(databaseError: DatabaseError?) {
+            }
 
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val speakers = mutableListOf<Speaker>()
 
-            val speakerReference = firebaseDatabase.getReference("speaker")
-
-            speakerReference.addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(databaseError: DatabaseError?) {
+                dataSnapshot.children.mapNotNullTo(speakers) {
+                    it.getValue<FirebaseSpeaker>(FirebaseSpeaker::class.java)?.let { it1 -> speakerMapper.map(it1) }
                 }
 
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val speakers = mutableListOf<Speaker>()
+                speakersSubject.onNext(speakers)
+            }
+        })
 
-                    dataSnapshot.children.mapNotNullTo(speakers) {
-                        it.getValue<FirebaseSpeaker>(FirebaseSpeaker::class.java)?.let { it1 -> speakerMapper.map(it1) }
-                    }
+        // TODO: convert the code to use rx.Single
 
-                    speakersSubject.onNext(speakers)
-                }
-            })
-
-            return speakersSubject
-        }
-
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Single.fromObservable { speakersSubject }
     }
 }
+
 
 class LocalSpeakersSource @Inject constructor(private val speakersDao: SpeakersDao,
                                               private val speakerMapper: SpeakerMapper)
