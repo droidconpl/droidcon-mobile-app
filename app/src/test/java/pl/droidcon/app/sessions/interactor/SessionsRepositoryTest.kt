@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
-import io.reactivex.Single
+import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.AfterClass
 import org.junit.BeforeClass
@@ -45,7 +45,7 @@ class SessionsRepositoryTest {
         val remoteSessions = listOf(createSession(3), createSession(4), createSession(5))
 
         whenever(local.get()).thenReturn(Maybe.just(localSessions))
-        whenever(remote.get(any())).thenReturn(Single.just(remoteSessions))
+        whenever(remote.get(any())).thenReturn(Observable.just(remoteSessions))
 
         val testObserver = systemUnderTest.get().test()
 

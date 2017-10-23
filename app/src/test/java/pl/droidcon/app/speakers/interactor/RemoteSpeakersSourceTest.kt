@@ -1,7 +1,7 @@
 package pl.droidcon.app.speakers.interactor
 
 import com.nhaarman.mockito_kotlin.*
-import io.reactivex.Single
+import io.reactivex.Observable
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -39,7 +39,7 @@ class RemoteSpeakersSourceTest {
         )
         val response = listOf(speaker)
         val expected = speakerMapper.map(speaker)
-        whenever(speakersService.speakers()).thenReturn(Single.just(response))
+        whenever(speakersService.speakers()).thenReturn(Observable.just(response))
 
         systemUnderTest.get(success).test()
 
@@ -64,7 +64,7 @@ class RemoteSpeakersSourceTest {
         )
         val response = listOf(speaker)
         val expected = speakerMapper.map(speaker)
-        whenever(speakersService.speakers()).thenReturn(Single.just(response))
+        whenever(speakersService.speakers()).thenReturn(Observable.just(response))
 
         systemUnderTest.get(success).test()
                 .assertValue(listOf(expected))
@@ -72,7 +72,7 @@ class RemoteSpeakersSourceTest {
 
     @Test
     fun `does not call success when loaded empty`() {
-        whenever(speakersService.speakers()).thenReturn(Single.just(emptyList()))
+        whenever(speakersService.speakers()).thenReturn(Observable.just(emptyList()))
 
         systemUnderTest.get(success).test()
 
@@ -81,7 +81,7 @@ class RemoteSpeakersSourceTest {
 
     @Test
     fun `returns empty list if error`() {
-        whenever(speakersService.speakers()).thenReturn(Single.error(IOException()))
+        whenever(speakersService.speakers()).thenReturn(Observable.error(IOException()))
 
         systemUnderTest.get(success).test()
                 .assertValue(emptyList())

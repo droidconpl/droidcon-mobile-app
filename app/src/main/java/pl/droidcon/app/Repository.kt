@@ -1,6 +1,9 @@
 package pl.droidcon.app
 
 import io.reactivex.Observable
+import io.reactivex.ObservableOperator
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import pl.droidcon.app.data.LocalDataSource
 import pl.droidcon.app.data.OnRemoteSuccess
 import pl.droidcon.app.data.RemoteDataSource
@@ -24,11 +27,34 @@ class Repository<T>(private val remoteDataSource: RemoteDataSource<List<T>>,
                 .defaultIfEmpty(emptyList()) // if empty, return empty list and filter in next stream
 
         return remoteDataSource.get(onRemoteSuccess)
-                .toObservable()
+                .lift(IgnoreErrorOperator())
                 .startWith(localStream)
                 .debounce(300, TimeUnit.MILLISECONDS)
-                .filter { it.isNotEmpty() } // to not return empty list from remote in case of network error after local is done
-                .onErrorResumeNext(localStream) // in case of Network Error return local
+                .filter { it.isNotEmpty() }
                 .defaultIfEmpty(emptyList())
+    }
+}
+
+private class IgnoreErrorOperator<T> : ObservableOperator<List<T>, List<T>> {
+
+    override fun apply(observer: Observer<in List<T>>): Observer<in List<T>> = IgnoreErrorObserver(observer)
+}
+
+private class IgnoreErrorObserver<T>(private val child: Observer<T>) : Observer<T> {
+
+    override fun onError(e: Throwable) {
+        // ignore error
+    }
+
+    override fun onSubscribe(d: Disposable) {
+        child.onSubscribe(d)
+    }
+
+    override fun onNext(t: T) {
+        child.onNext(t)
+    }
+
+    override fun onComplete() {
+        child.onComplete()
     }
 }

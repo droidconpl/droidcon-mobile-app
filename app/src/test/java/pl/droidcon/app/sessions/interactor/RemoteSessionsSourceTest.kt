@@ -5,7 +5,6 @@ import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
-import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,7 +15,6 @@ import pl.droidcon.app.data.mapper.SessionsMapper
 import pl.droidcon.app.data.network.SessionRemote
 import pl.droidcon.app.data.network.SessionsService
 import pl.droidcon.app.domain.Session
-import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.speakers.interactor.SpeakersRepository
 import util.createSpeaker
 import java.io.IOException
@@ -51,7 +49,7 @@ class RemoteSessionsSourceTest {
     @Before
     fun setUp() {
         whenever(speakersRepository.get()).thenReturn(Observable.just(speakers))
-        whenever(sessionsService.sessions()).thenReturn(Single.just(response))
+        whenever(sessionsService.sessions()).thenReturn(Observable.just(response))
     }
 
     @Test
@@ -69,7 +67,7 @@ class RemoteSessionsSourceTest {
 
     @Test
     fun `does not call success when empty response`() {
-        whenever(sessionsService.sessions()).thenReturn(Single.just(emptyList()))
+        whenever(sessionsService.sessions()).thenReturn(Observable.just(emptyList()))
 
         systemUnderTest.get(success).test()
 
@@ -94,7 +92,7 @@ class RemoteSessionsSourceTest {
 
     @Test
     fun `returns empty list when sessions failed`() {
-        whenever(sessionsService.sessions()).thenReturn(Single.error(IOException()))
+        whenever(sessionsService.sessions()).thenReturn(Observable.error(IOException()))
 
         systemUnderTest.get(success).test()
                 .assertValue(emptyList())

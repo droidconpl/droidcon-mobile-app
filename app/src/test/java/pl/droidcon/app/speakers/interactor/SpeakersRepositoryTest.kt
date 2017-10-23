@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
-import io.reactivex.Single
+import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.AfterClass
 import org.junit.BeforeClass
@@ -45,7 +45,7 @@ class SpeakersRepositoryTest {
         val remoteSpeakers = listOf(createSpeaker(3), createSpeaker(4), createSpeaker(5))
 
         whenever(local.get()).thenReturn(Maybe.just(localSpeakers))
-        whenever(remote.get(any())).thenReturn(Single.just(remoteSpeakers))
+        whenever(remote.get(any())).thenReturn(Observable.just(remoteSpeakers))
 
         val testObserver = systemUnderTest.get().test()
 

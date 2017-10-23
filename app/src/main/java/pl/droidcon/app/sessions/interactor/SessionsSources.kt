@@ -1,6 +1,7 @@
 package pl.droidcon.app.sessions.interactor
 
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import pl.droidcon.app.data.LocalDataSource
@@ -18,15 +19,17 @@ class RemoteSessionsSource @Inject constructor(private val sessionsService: Sess
                                                private val speakersRepository: SpeakersRepository)
     : RemoteDataSource<List<Session>> {
 
-    override fun get(success: OnRemoteSuccess<List<Session>>): Single<List<Session>> {
+    override fun get(success: OnRemoteSuccess<List<Session>>): Observable<List<Session>> {
         return sessionsService.sessions()
-                .zipWith(speakersRepository.get().firstOrError())
+                .zipWith(speakersRepository.get().defaultIfEmpty(emptyList()))
+                .filter { it.second.isNotEmpty() }
                 .map { (sessionsRemote, speakers) -> sessionsRemote.map { sessionsMapper.map(it, speakers) } }
-                .doOnSuccess {
+                .doOnNext {
                     if (it.isNotEmpty()) {
                         success(it)
                     }
                 }
+                .defaultIfEmpty(emptyList())
                 .onErrorReturn { emptyList() }
     }
 }
