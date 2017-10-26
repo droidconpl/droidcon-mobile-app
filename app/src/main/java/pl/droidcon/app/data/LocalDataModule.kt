@@ -15,4 +15,8 @@ class LocalDataModule(context: android.content.Context) {
     @Provides
     @ApplicationScope
     fun provideSpeakerDao() = DroidconDatabase.get().speakerDao()
+
+    @Provides
+    @ApplicationScope
+    fun provideSessionDao() = DroidconDatabase.get().sessionDao()
 }

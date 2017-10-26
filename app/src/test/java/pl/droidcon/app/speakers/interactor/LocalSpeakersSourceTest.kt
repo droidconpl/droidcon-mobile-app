@@ -23,7 +23,7 @@ class LocalSpeakersSourceTest {
     private val systemUnderTest = LocalSpeakersSource(speakersDao, speakersMapper)
 
     @Test
-    fun returns_empty_list_when_dao_error() {
+    fun `returns empty list when dao error`() {
         whenever(speakersDao.get()).thenReturn(Maybe.error(IOException()))
 
         systemUnderTest.get().test()
@@ -31,7 +31,7 @@ class LocalSpeakersSourceTest {
     }
 
     @Test
-    fun returns_result_from_dao() {
+    fun `returns result from dao`() {
         val speaker = SpeakerLocal(
                 id = 12,
                 firstName = "fir",
@@ -55,7 +55,7 @@ class LocalSpeakersSourceTest {
     }
 
     @Test
-    fun updates_dao() {
+    fun `updates dao`() {
         val speaker = Speaker(
                 id = 12,
                 firstName = "fir",

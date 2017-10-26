@@ -89,3 +89,10 @@ if (googleServicesJsonFile.exists()) {
 }
 
 apply plugin: 'com.google.gms.google-services'
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
+}

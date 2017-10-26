@@ -15,3 +15,12 @@ interface SpeakersDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun put(speakers: List<SpeakerLocal>)
 }
+
+@Dao
+interface SessionsDao {
+    @Query("SELECT * from $SESSION_TABLE_NAME")
+    fun get(): Maybe<List<SessionLocal>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun put(sessions: List<SessionLocal>)
+}

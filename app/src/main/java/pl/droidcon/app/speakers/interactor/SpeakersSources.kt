@@ -22,10 +22,10 @@ class RemoteSpeakersSource @Inject constructor(private val speakersService: Spea
                                                private val speakerMapper: SpeakerMapper)
     : RemoteDataSource<List<Speaker>> {
 
-    override fun get(success: OnRemoteSuccess<List<Speaker>>): Single<List<Speaker>> {
+    override fun get(success: OnRemoteSuccess<List<Speaker>>): Observable<List<Speaker>> {
         return speakersService.speakers()
                 .map { it.map { apiSpeaker -> speakerMapper.map(apiSpeaker) } }
-                .doOnSuccess {
+                .doOnNext {
                     if (!it.isEmpty()) {
                         success(it)
                     }
@@ -40,7 +40,7 @@ class RemoteFirebaseSpeakerSource @Inject constructor(private val speakerMapper:
 
     val speakersSubject: PublishSubject<List<Speaker>> = PublishSubject.create()
 
-    override fun get(success: OnRemoteSuccess<List<Speaker>>): Single<List<Speaker>> {
+    override fun get(success: OnRemoteSuccess<List<Speaker>>): Observable<List<Speaker>> {
 
         val speakerReference = firebaseDatabase.getReference("speaker")
 
@@ -59,9 +59,7 @@ class RemoteFirebaseSpeakerSource @Inject constructor(private val speakerMapper:
             }
         })
 
-        // TODO: convert the code to use rx.Single
-
-        return Single.fromObservable { speakersSubject }
+        return speakersSubject
     }
 }
 

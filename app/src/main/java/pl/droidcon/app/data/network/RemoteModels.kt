@@ -17,6 +17,15 @@ data class SpeakerRemote(
         @SerializedName("imageUrl") val imageUrl: String
 )
 
+data class SessionRemote(
+        @SerializedName("sessionId") val sessionId: Long,
+        @SerializedName("sessionType") val sessionType: String,
+        @SerializedName("sessionTitle") val sessionTitle: String,
+        @SerializedName("sessionDescription") val sessionDescription: String,
+        @SerializedName("speakerId") val speakerIds: List<Long>,
+        @SerializedName("sessionLength") val sessionLength: Double,
+        @SerializedName("workshopCapacity") val workshopCapacity: Int
+)
 data class FirebaseSpeaker(
         val name: String = "",
         val surname: String = "",

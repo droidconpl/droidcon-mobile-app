@@ -1,7 +1,7 @@
 package pl.droidcon.app.speakers.interactor
 
 import com.nhaarman.mockito_kotlin.*
-import io.reactivex.Single
+import io.reactivex.Observable
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -22,7 +22,7 @@ class RemoteSpeakersSourceTest {
     private val systemUnderTest = RemoteSpeakersSource(speakersService, speakerMapper)
 
     @Test
-    fun calls_success_when_loaded_from_remote() {
+    fun `calls success when loaded from remote`() {
         val speaker = SpeakerRemote(
                 id = 12,
                 firstName = "name",
@@ -39,7 +39,7 @@ class RemoteSpeakersSourceTest {
         )
         val response = listOf(speaker)
         val expected = speakerMapper.map(speaker)
-        whenever(speakersService.speakers()).thenReturn(Single.just(response))
+        whenever(speakersService.speakers()).thenReturn(Observable.just(response))
 
         systemUnderTest.get(success).test()
 
@@ -47,7 +47,7 @@ class RemoteSpeakersSourceTest {
     }
 
     @Test
-    fun returns_remote_when_subscribed() {
+    fun `returns remote when subscribed`() {
         val speaker = SpeakerRemote(
                 id = 12,
                 firstName = "name",
@@ -64,25 +64,24 @@ class RemoteSpeakersSourceTest {
         )
         val response = listOf(speaker)
         val expected = speakerMapper.map(speaker)
-        whenever(speakersService.speakers()).thenReturn(Single.just(response))
+        whenever(speakersService.speakers()).thenReturn(Observable.just(response))
 
         systemUnderTest.get(success).test()
                 .assertValue(listOf(expected))
     }
 
     @Test
-    fun does_not_call_success_when_loaded_empty() {
-        whenever(speakersService.speakers()).thenReturn(Single.just(emptyList()))
+    fun `does not call success when loaded empty`() {
+        whenever(speakersService.speakers()).thenReturn(Observable.just(emptyList()))
 
         systemUnderTest.get(success).test()
 
         verify(success, times(0)).invoke(any())
     }
 
-
     @Test
-    fun returns_empty_list_if_error() {
-        whenever(speakersService.speakers()).thenReturn(Single.error(IOException()))
+    fun `returns empty list if error`() {
+        whenever(speakersService.speakers()).thenReturn(Observable.error(IOException()))
 
         systemUnderTest.get(success).test()
                 .assertValue(emptyList())
