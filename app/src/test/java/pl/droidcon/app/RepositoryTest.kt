@@ -2,8 +2,10 @@ package pl.droidcon.app
 
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.SingleSubject
 import org.junit.AfterClass
 import org.junit.BeforeClass
@@ -51,9 +53,9 @@ class RepositoryTest {
 
         val testObserver = systemUnderTest.get().test()
         testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+
         testObserver.assertValue(localList)
-        testObserver.assertNoErrors()
-        testObserver.assertNotComplete()
+        testObserver.assertNotTerminated()
     }
 
     @Test
@@ -68,17 +70,18 @@ class RepositoryTest {
         val testObserver = systemUnderTest.get().test()
         testScheduler.advanceTimeBy(200, TimeUnit.MILLISECONDS)
         testObserver.assertNoValues()
-        remoteSubject.onSuccess(remoteList)
-        testScheduler.advanceTimeBy(100, TimeUnit.MILLISECONDS)
+
+        remoteSubject.onNext(remoteList)
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+
         testObserver.assertValue(remoteList)
-        testObserver.assertNoErrors()
-        testObserver.assertComplete()
+        testObserver.assertNotTerminated()
     }
 
     @Test
     fun `returns empty list once when both sources empty`() {
         whenever(local.get()).thenReturn(Maybe.just(emptyList()))
-        whenever(remote.get(any())).thenReturn(Single.just(emptyList()))
+        whenever(remote.get(any())).thenReturn(Observable.just(emptyList()))
 
         val testObserver = systemUnderTest.get().test()
         testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
@@ -91,13 +94,12 @@ class RepositoryTest {
     fun `returns first not empty result when error`() {
         val localList = createLocal()
         whenever(local.get()).thenReturn(Maybe.just(localList))
-        whenever(remote.get(any())).thenReturn(Single.error(IOException()))
+        whenever(remote.get(any())).thenReturn(Observable.error(IOException()))
 
         val testObserver = systemUnderTest.get().test()
         testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
-        testObserver.assertNoErrors()
         testObserver.assertValue(localList)
-        testObserver.assertComplete()
+        testObserver.assertNotTerminated()
     }
 
     @Test
@@ -112,10 +114,13 @@ class RepositoryTest {
         val testObserver = systemUnderTest.get().test()
         testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
         testScheduler.advanceTimeBy(100, TimeUnit.MILLISECONDS)
-        remoteSubject.onSuccess(remoteList)
+        remoteSubject.onNext(remoteList)
+
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+        testScheduler.triggerActions()
+
         testObserver.assertValues(localList, remoteList)
-        testObserver.assertNoErrors()
-        testObserver.assertComplete()
+        testObserver.assertNotTerminated()
     }
 
     @Test
@@ -123,7 +128,7 @@ class RepositoryTest {
         val remoteList = createRemote()
 
         whenever(local.get()).thenReturn(Maybe.error(IOException()))
-        whenever(remote.get(any())).thenReturn(Single.just(remoteList))
+        whenever(remote.get(any())).thenReturn(Observable.just(remoteList))
 
         val testObserver = systemUnderTest.get().test()
         testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
@@ -140,7 +145,7 @@ class RepositoryTest {
         val remoteList = createRemote()
 
         whenever(local.get()).thenReturn(Maybe.just(localList))
-        whenever(remote.get(captor.capture())).thenReturn(Single.just(remoteList))
+        whenever(remote.get(captor.capture())).thenReturn(Observable.just(remoteList))
 
         systemUnderTest.get().test()
 
@@ -155,7 +160,7 @@ class RepositoryTest {
         val remoteList = createRemote()
 
         whenever(local.get()).thenReturn(Maybe.never())
-        whenever(remote.get(captor.capture())).thenReturn(Single.just(remoteList))
+        whenever(remote.get(captor.capture())).thenReturn(Observable.just(remoteList))
 
         systemUnderTest.get().test()
 
@@ -163,9 +168,35 @@ class RepositoryTest {
         verify(local).put(eq(remoteList))
     }
 
+    @Test
+    fun `sends updates each time remote emits`() {
+        val localList = createLocal()
+        val remoteList = createRemote()
+        val remoteSubject = createRemoteSubject()
+
+        whenever(local.get()).thenReturn(Maybe.just(localList))
+        whenever(remote.get(any())).thenReturn(remoteSubject)
+
+        val testObserver = systemUnderTest.get().test()
+
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+        remoteSubject.onNext(remoteList)
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+
+        testObserver.assertValues(localList, remoteList)
+
+        remoteSubject.onNext(remoteList)
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+        testObserver.assertValues(localList, remoteList, remoteList)
+
+        remoteSubject.onNext(remoteList)
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+        testObserver.assertValues(localList, remoteList, remoteList, remoteList)
+    }
+
     private fun createLocal() = listOf("foo.bar")
 
     private fun createRemote() = listOf("123", "321")
 
-    private fun createRemoteSubject() = SingleSubject.create<List<String>>()
+    private fun createRemoteSubject() = BehaviorSubject.create<List<String>>()
 }

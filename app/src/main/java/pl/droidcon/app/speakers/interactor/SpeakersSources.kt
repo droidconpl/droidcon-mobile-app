@@ -1,6 +1,7 @@
 package pl.droidcon.app.speakers.interactor
 
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 import pl.droidcon.app.data.LocalDataSource
 import pl.droidcon.app.data.OnRemoteSuccess
@@ -15,10 +16,10 @@ class RemoteSpeakersSource @Inject constructor(private val speakersService: Spea
                                                private val speakerMapper: SpeakerMapper)
     : RemoteDataSource<List<Speaker>> {
 
-    override fun get(success: OnRemoteSuccess<List<Speaker>>): Single<List<Speaker>> {
+    override fun get(success: OnRemoteSuccess<List<Speaker>>): Observable<List<Speaker>> {
         return speakersService.speakers()
                 .map { it.map { apiSpeaker -> speakerMapper.map(apiSpeaker) } }
-                .doOnSuccess {
+                .doOnNext {
                     if (!it.isEmpty()) {
                         success(it)
                     }
