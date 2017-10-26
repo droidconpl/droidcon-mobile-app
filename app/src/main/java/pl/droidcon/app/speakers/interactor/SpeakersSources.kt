@@ -41,7 +41,7 @@ class RemoteFirebaseSpeakerSource @Inject constructor(private val speakerMapper:
 
     override fun get(success: OnRemoteSuccess<List<Speaker>>): Observable<List<Speaker>> {
 
-        val speakerReference = firebaseDatabase.getReference("speaker")
+        val speakerReference = firebaseDatabase.getReference("speakers")
 
         speakerReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError?) {
