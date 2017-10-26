@@ -6,7 +6,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import io.reactivex.Maybe
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import pl.droidcon.app.data.LocalDataSource
 import pl.droidcon.app.data.OnRemoteSuccess
