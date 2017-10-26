@@ -2,7 +2,7 @@ package pl.droidcon.app
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import pl.droidcon.app.speakers.SpeakersActivity
+import pl.droidcon.app.speakers.view.SpeakersActivity
 
 class MainActivity : AppCompatActivity() {
 

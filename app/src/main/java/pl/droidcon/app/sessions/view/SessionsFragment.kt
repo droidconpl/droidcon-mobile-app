@@ -1,28 +1,23 @@
-package pl.droidcon.app.speakers
+package pl.droidcon.app.sessions.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
-import pl.droidcon.app.data.Speaker
-import pl.droidcon.app.ext.bind
+import pl.droidcon.app.domain.Session
+import pl.droidcon.app.sessions.SessionsPresenter
+import pl.droidcon.app.sessions.SessionsView
 import javax.inject.Inject
 
-class SpeakersFragment : Fragment(), SpeakersView {
+class SessionsFragment : Fragment(), SessionsView {
 
-    @Inject lateinit var presenter: SpeakersPresenter
-
-    private val recyclerView by bind<RecyclerView>(R.id.speakers)
-    private var adapter: SpeakersAdapter? = null
+    @Inject lateinit var presenter: SessionsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         DroidconApp.component.inject(this)
-
         super.onCreate(savedInstanceState)
     }
 
@@ -31,29 +26,23 @@ class SpeakersFragment : Fragment(), SpeakersView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         presenter.attachView(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         presenter.attachView(null)
     }
 
-    override fun display(speakers: List<Speaker>) {
-        view?.let {
-            recyclerView.layoutManager = GridLayoutManager(it.context, 2)
-            adapter = SpeakersAdapter(speakers)
-            recyclerView.adapter = adapter
-        }
+    override fun display(sessions: List<Session>) {
+
     }
 
-    override fun display(speaker: Speaker) {
+    override fun display(session: Session) {
 
     }
 
     companion object {
-        fun instance() = SpeakersFragment()
+        fun instance() = SessionsFragment()
     }
 }

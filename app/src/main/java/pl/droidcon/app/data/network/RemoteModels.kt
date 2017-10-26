@@ -1,8 +1,8 @@
-package pl.droidcon.app.data
+package pl.droidcon.app.data.network
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiSpeaker(
+data class SpeakerRemote(
         @SerializedName("id") val id: Long,
         @SerializedName("firstName") val firstName: String,
         @SerializedName("lastName") val lastName: String,
@@ -15,4 +15,14 @@ data class ApiSpeaker(
         @SerializedName("linkedIn") val linkedinUrl: String,
         @SerializedName("googlePlus") val googlePlusUrl: String,
         @SerializedName("imageUrl") val imageUrl: String
+)
+
+data class SessionRemote(
+        @SerializedName("sessionId") val sessionId: Long,
+        @SerializedName("sessionType") val sessionType: String,
+        @SerializedName("sessionTitle") val sessionTitle: String,
+        @SerializedName("sessionDescription") val sessionDescription: String,
+        @SerializedName("speakerId") val speakerIds: List<Long>,
+        @SerializedName("sessionLength") val sessionLength: Double,
+        @SerializedName("workshopCapacity") val workshopCapacity: Int
 )

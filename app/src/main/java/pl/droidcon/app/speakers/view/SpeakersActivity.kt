@@ -1,4 +1,4 @@
-package pl.droidcon.app.speakers
+package pl.droidcon.app.speakers.view
 
 import android.content.Context
 import android.content.Intent

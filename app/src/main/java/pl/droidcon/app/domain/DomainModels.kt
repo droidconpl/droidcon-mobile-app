@@ -1,4 +1,4 @@
-package pl.droidcon.app.data
+package pl.droidcon.app.domain
 
 data class Speaker(
         val id: Long,
@@ -14,3 +14,18 @@ data class Speaker(
         val googlePlusUrl: String,
         val imageUrl: String
 )
+
+data class Session(
+        val sessionId: Long,
+        val sessionType: SessionType,
+        val sessionTitle: String,
+        val sessionDescription: String,
+        val speakers: List<Speaker>,
+        val sessionLength: Double,
+        val workshopCapacity: Int
+)
+
+enum class SessionType {
+    TALK,
+    WORKSHOP
+}
