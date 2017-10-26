@@ -28,7 +28,7 @@ class SpeakersPresenter @Inject constructor(private val speakersRepository: Spea
     }
 
     private fun loadSpeakers() {
-        speakersRepository.speakers()
+        speakersRepository.get()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ view?.display(it) }, { e -> e.printStackTrace() })

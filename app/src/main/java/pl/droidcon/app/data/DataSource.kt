@@ -1,12 +1,12 @@
 package pl.droidcon.app.data
 
 import io.reactivex.Maybe
-import io.reactivex.Single
+import io.reactivex.Observable
 
 typealias OnRemoteSuccess<T> = (T) -> Unit
 
 interface RemoteDataSource<T> {
-    fun get(success: OnRemoteSuccess<T>): Single<T>
+    fun get(success: OnRemoteSuccess<T>): Observable<T>
 }
 
 interface LocalDataSource<K> {
