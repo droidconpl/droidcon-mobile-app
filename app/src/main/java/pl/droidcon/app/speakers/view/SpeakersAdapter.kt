@@ -10,7 +10,6 @@ import com.squareup.picasso.Picasso
 import pl.droidcon.app.R
 import pl.droidcon.app.domain.Speaker
 
-private const val BASE_IMAGE_URL = "https://raw.githubusercontent.com/droidconpl/droidcon-2016-web/master/assets/photos/speakers/"
 
 class SpeakersAdapter(private val speakers: List<Speaker>) : RecyclerView.Adapter<SpeakerViewHolder>() {
 
@@ -30,6 +29,6 @@ class SpeakerViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
     fun bindHolder(speaker: Speaker) {
         name.text = speaker.firstName
-        Picasso.with(image.context).load(BASE_IMAGE_URL + speaker.imageUrl).placeholder(R.drawable.ic_person).into(image)
+        Picasso.with(image.context).load(speaker.imageUrl).placeholder(R.drawable.ic_person).into(image)
     }
 }
