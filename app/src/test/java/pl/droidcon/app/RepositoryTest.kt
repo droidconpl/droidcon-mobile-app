@@ -1,12 +1,9 @@
 package pl.droidcon.app
 
 import com.nhaarman.mockito_kotlin.*
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.schedulers.TestScheduler
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.SingleSubject
+import io.reactivex.subjects.PublishSubject
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Test
@@ -80,14 +77,18 @@ class RepositoryTest {
 
     @Test
     fun `returns empty list once when both sources empty`() {
+        val remoteSubject = createRemoteSubject()
+
         whenever(local.get()).thenReturn(Maybe.just(emptyList()))
-        whenever(remote.get(any())).thenReturn(Observable.just(emptyList()))
+        whenever(remote.get(any())).thenReturn(remoteSubject)
 
         val testObserver = systemUnderTest.get().test()
+        remoteSubject.onNext(emptyList())
+
         testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
         testObserver.assertValue(emptyList())
         testObserver.assertNoErrors()
-        testObserver.assertComplete()
+        testObserver.assertNotTerminated()
     }
 
     @Test
@@ -194,9 +195,43 @@ class RepositoryTest {
         testObserver.assertValues(localList, remoteList, remoteList, remoteList)
     }
 
+    @Test
+    fun `does not stop when remote error`() {
+        val localList = createLocal()
+        val remoteList = createRemote()
+
+        val remoteSubject = FakeSubject<List<String>>()
+
+        whenever(local.get()).thenReturn(Maybe.just(localList))
+        whenever(remote.get(any())).thenReturn(remoteSubject.asObservable())
+
+        val testObserver = systemUnderTest.get().test()
+
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+        remoteSubject.onError(IOException())
+        remoteSubject.onNext(remoteList)
+        testScheduler.advanceTimeBy(300, TimeUnit.MILLISECONDS)
+
+        testObserver.assertValues(localList, remoteList)
+    }
+
     private fun createLocal() = listOf("foo.bar")
 
     private fun createRemote() = listOf("123", "321")
 
-    private fun createRemoteSubject() = BehaviorSubject.create<List<String>>()
+    private fun createRemoteSubject() = PublishSubject.create<List<String>>()
+}
+
+private class FakeSubject<T> {
+    private var realSubject = PublishSubject.create<Notification<T>>()
+
+    fun asObservable(): Observable<T> = realSubject.dematerialize<T>()
+
+    fun onError(e: Exception) {
+        realSubject.onNext(Notification.createOnError(e))
+    }
+
+    fun onNext(value: T) {
+        realSubject.onNext(Notification.createOnNext(value))
+    }
 }
