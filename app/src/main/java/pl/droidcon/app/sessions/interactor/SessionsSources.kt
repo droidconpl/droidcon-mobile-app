@@ -51,4 +51,6 @@ class LocalSessionsSource @Inject constructor(private val sessionsDao: SessionsD
         val sessions = k.map { sessionsMapper.map(it) }
         sessionsDao.put(sessions)
     }
+
+    override fun clear() = sessionsDao.clear()
 }

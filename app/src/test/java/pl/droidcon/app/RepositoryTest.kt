@@ -151,7 +151,10 @@ class RepositoryTest {
         systemUnderTest.get().test()
 
         captor.firstValue.invoke(remoteList)
-        verify(local).put(eq(remoteList))
+        inOrder(local).run {
+            verify(local).clear()
+            verify(local).put(eq(remoteList))
+        }
     }
 
     @Test

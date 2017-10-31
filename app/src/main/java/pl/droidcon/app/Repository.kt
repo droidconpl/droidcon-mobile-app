@@ -14,6 +14,7 @@ class Repository<T>(private val remoteDataSource: RemoteDataSource<List<T>>,
                     private val localDataSource: LocalDataSource<List<T>>) : DataRepository<T> {
 
     private val onRemoteSuccess: OnRemoteSuccess<List<T>> = {
+        localDataSource.clear()
         localDataSource.put(it)
     }
 

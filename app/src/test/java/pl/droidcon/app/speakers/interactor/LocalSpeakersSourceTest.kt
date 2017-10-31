@@ -2,9 +2,9 @@ package pl.droidcon.app.speakers.interactor
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
-import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -75,5 +75,14 @@ class LocalSpeakersSourceTest {
         systemUnderTest.put(listOf(speaker))
 
         verify(speakersDao).put(expected)
+        verifyNoMoreInteractions(speakersDao)
+    }
+
+    @Test
+    fun `clears dao`() {
+        systemUnderTest.clear()
+
+        verify(speakersDao).clear()
+        verifyNoMoreInteractions(speakersDao)
     }
 }

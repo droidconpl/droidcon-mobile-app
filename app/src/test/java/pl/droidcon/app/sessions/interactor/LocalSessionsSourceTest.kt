@@ -2,6 +2,7 @@ package pl.droidcon.app.sessions.interactor
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -84,5 +85,14 @@ class LocalSessionsSourceTest {
         systemUnderTest.put(listOf(session))
 
         verify(sessionsDao).put(listOf(sessionLocal))
+        verifyNoMoreInteractions(sessionsDao)
+    }
+
+    @Test
+    fun `clears dao`() {
+        systemUnderTest.clear()
+
+        verify(sessionsDao).clear()
+        verifyNoMoreInteractions(sessionsDao)
     }
 }
