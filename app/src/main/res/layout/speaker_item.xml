@@ -29,19 +29,25 @@
         android:gravity="center"
         android:minHeight="48dp"
         android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
         <TextView
             android:id="@+id/speaker_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/heavy_metal"
+            android:textStyle="bold"
             tools:text="John Smith" />
 
         <TextView
             android:id="@+id/speaker_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/heavy_metal"
+            android:textSize="12sp"
             tools:text="Android developer" />
 
     </LinearLayout>
