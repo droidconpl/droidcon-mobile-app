@@ -59,10 +59,10 @@ class SpeakerMapper @Inject constructor() {
             firstName = firebaseSpeaker.name,
             lastName = firebaseSpeaker.surname,
             imageUrl = firebaseSpeaker.photourl,
+            title = firebaseSpeaker.title,
 
             // will implement later
             id = 1L,
-            title = "",
             description = "",
             websiteUrl = "",
             facebookUrl = "",

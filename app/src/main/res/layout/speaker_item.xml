@@ -21,17 +21,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/speaker_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/pistachio"
         android:gravity="center"
         android:minHeight="48dp"
+        android:orientation="vertical"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        tools:text="Data binding" />
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/speaker_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="John Smith" />
+
+        <TextView
+            android:id="@+id/speaker_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Android developer" />
+
+    </LinearLayout>
+
 
     <FrameLayout
         android:layout_width="match_parent"

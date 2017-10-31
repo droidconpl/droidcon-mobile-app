@@ -1,5 +1,6 @@
 package pl.droidcon.app.speakers.view
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -26,9 +27,12 @@ class SpeakerViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
     private val name: TextView = item.findViewById(R.id.speaker_name)
     private val image: ImageView = item.findViewById(R.id.speaker_picture)
+    private val title: TextView = item.findViewById(R.id.speaker_title)
 
+    @SuppressLint("SetTextI18n")
     fun bindHolder(speaker: Speaker) {
-        name.text = speaker.firstName
+        name.text = "${speaker.firstName} ${speaker.lastName}"
+        title.text= speaker.title
         Picasso.with(image.context).load(speaker.imageUrl).placeholder(R.drawable.ic_person).into(image)
     }
 }
