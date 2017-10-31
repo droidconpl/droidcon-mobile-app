@@ -32,7 +32,7 @@ class SpeakerViewHolder(item: View) : RecyclerView.ViewHolder(item) {
     @SuppressLint("SetTextI18n")
     fun bindHolder(speaker: Speaker) {
         name.text = "${speaker.firstName} ${speaker.lastName}"
-        title.text= speaker.title
-        Picasso.with(image.context).load(speaker.imageUrl).placeholder(R.drawable.ic_person).into(image)
+        title.text = speaker.title
+        Picasso.with(image.context).load(speaker.imageUrl).placeholder(R.drawable.ic_person).resizeDimen(R.dimen.photo_size, R.dimen.photo_size).into(image)
     }
 }
