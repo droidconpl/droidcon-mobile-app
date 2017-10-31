@@ -12,6 +12,7 @@ import pl.droidcon.app.R
 import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.speakers.SpeakersPresenter
 import pl.droidcon.app.speakers.SpeakersView
+import pl.droidcon.app.widget.SpacesItemDecoration
 import javax.inject.Inject
 
 class SpeakersFragment : Fragment(), SpeakersView {
@@ -41,6 +42,7 @@ class SpeakersFragment : Fragment(), SpeakersView {
     override fun display(speakers: List<Speaker>) {
         view?.let {
             speakersView.layoutManager = GridLayoutManager(it.context, 2)
+            speakersView.addItemDecoration(SpacesItemDecoration(resources.getDimensionPixelSize(R.dimen.spacing)))
             adapter = SpeakersAdapter(speakers)
             speakersView.adapter = adapter
         }
