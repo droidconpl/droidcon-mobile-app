@@ -29,6 +29,6 @@ data class SessionRemote(
 data class FirebaseSpeaker(
         val name: String = "",
         val surname: String = "",
-        val photoUrl: String = ""
+        val photourl: String = ""
 
 )

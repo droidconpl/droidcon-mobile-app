@@ -58,7 +58,7 @@ class SpeakerMapper @Inject constructor() {
     fun map(firebaseSpeaker: FirebaseSpeaker): Speaker = Speaker(
             firstName = firebaseSpeaker.name,
             lastName = firebaseSpeaker.surname,
-            imageUrl = firebaseSpeaker.photoUrl,
+            imageUrl = firebaseSpeaker.photourl,
 
             // will implement later
             id = 1L,
