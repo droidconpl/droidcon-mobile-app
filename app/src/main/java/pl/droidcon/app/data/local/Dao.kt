@@ -1,9 +1,6 @@
 package pl.droidcon.app.data.local
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import io.reactivex.Maybe
 
 @Dao
@@ -14,6 +11,9 @@ interface SpeakersDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun put(speakers: List<SpeakerLocal>)
+
+    @Query("DELETE FROM $SPEAKER_TABLE_NAME")
+    fun clear()
 }
 
 @Dao
@@ -23,4 +23,7 @@ interface SessionsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun put(sessions: List<SessionLocal>)
+
+    @Query("DELETE FROM $SESSION_TABLE_NAME")
+    fun clear()
 }

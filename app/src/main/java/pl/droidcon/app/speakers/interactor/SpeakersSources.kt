@@ -71,11 +71,12 @@ class LocalSpeakersSource @Inject constructor(private val speakersDao: SpeakersD
         return speakersDao.get()
                 .map { it.map { dbSpeaker -> speakerMapper.map(dbSpeaker) } }
                 .onErrorReturn { emptyList() }
-
     }
 
     override fun put(k: List<Speaker>) {
         val speakers = k.map { speakerMapper.map(it) }
         speakersDao.put(speakers)
     }
+
+    override fun clear() = speakersDao.clear()
 }
