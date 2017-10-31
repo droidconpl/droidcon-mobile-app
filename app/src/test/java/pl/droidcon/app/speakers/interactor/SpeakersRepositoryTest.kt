@@ -11,6 +11,7 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import pl.droidcon.app.data.RemoteDataSource
 import pl.droidcon.app.domain.Speaker
 import util.RxJavaPluginHelper
 import java.util.concurrent.TimeUnit
@@ -34,7 +35,7 @@ class SpeakersRepositoryTest {
         }
     }
 
-    private val remote: RemoteSpeakersSource = mock()
+    private val remote: RemoteFirebaseSpeakerSource = mock()
     private val local: LocalSpeakersSource = mock()
 
     private val systemUnderTest = SpeakersRepository(remote, local)

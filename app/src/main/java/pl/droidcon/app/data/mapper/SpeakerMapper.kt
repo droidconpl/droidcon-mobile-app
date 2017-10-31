@@ -1,6 +1,7 @@
 package pl.droidcon.app.data.mapper
 
 import pl.droidcon.app.data.local.SpeakerLocal
+import pl.droidcon.app.data.network.FirebaseSpeaker
 import pl.droidcon.app.data.network.SpeakerRemote
 import pl.droidcon.app.domain.Speaker
 import javax.inject.Inject
@@ -52,5 +53,22 @@ class SpeakerMapper @Inject constructor() {
             linkedinUrl = speaker.linkedinUrl,
             googlePlusUrl = speaker.googlePlusUrl,
             imageUrl = speaker.imageUrl
+    )
+
+    fun map(firebaseSpeaker: FirebaseSpeaker): Speaker = Speaker(
+            firstName = firebaseSpeaker.name,
+            lastName = firebaseSpeaker.surname,
+            imageUrl = firebaseSpeaker.photoUrl,
+
+            // will implement later
+            id = 1L,
+            title = "",
+            description = "",
+            websiteUrl = "",
+            facebookUrl = "",
+            twitterUrl = "",
+            githubUrl = "",
+            linkedinUrl = "",
+            googlePlusUrl = ""
     )
 }
