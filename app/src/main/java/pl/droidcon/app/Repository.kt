@@ -1,9 +1,6 @@
 package pl.droidcon.app
 
 import io.reactivex.Observable
-import io.reactivex.ObservableOperator
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
 import pl.droidcon.app.data.LocalDataSource
 import pl.droidcon.app.data.OnRemoteSuccess
 import pl.droidcon.app.data.RemoteDataSource
@@ -23,38 +20,21 @@ class Repository<T>(private val remoteDataSource: RemoteDataSource<List<T>>,
     override fun get(): Observable<List<T>> {
         val localStream = localDataSource.get()
                 .toObservable()
-                .onErrorResumeNext(Observable.empty()) // in case of error reading local, we would like still wait for remote and update local
-                .defaultIfEmpty(emptyList()) // if empty, return empty list and filter in next stream
+                .onErrorResumeNext(Observable.empty())
+                .defaultIfEmpty(emptyList())
 
-        return remoteDataSource.get(onRemoteSuccess)
-                .lift(IgnoreErrorOperator())
+        return observeRemote()
+                .switchIfEmpty(localStream)
                 .startWith(localStream)
                 .debounce(300, TimeUnit.MILLISECONDS)
-                .filter { it.isNotEmpty() }
-                .defaultIfEmpty(emptyList())
-    }
-}
-
-private class IgnoreErrorOperator<T> : ObservableOperator<List<T>, List<T>> {
-
-    override fun apply(observer: Observer<in List<T>>): Observer<in List<T>> = IgnoreErrorObserver(observer)
-}
-
-private class IgnoreErrorObserver<T>(private val child: Observer<T>) : Observer<T> {
-
-    override fun onError(e: Throwable) {
-        // ignore error
+                .materialize()
+                .filter { it.isOnNext }
+                .dematerialize()
     }
 
-    override fun onSubscribe(d: Disposable) {
-        child.onSubscribe(d)
-    }
-
-    override fun onNext(t: T) {
-        child.onNext(t)
-    }
-
-    override fun onComplete() {
-        child.onComplete()
+    private fun observeRemote(): Observable<List<T>> {
+        return remoteDataSource.get(onRemoteSuccess)
+                .retry(10) // max 10 retries
+                .onErrorResumeNext(Observable.never())
     }
 }
