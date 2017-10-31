@@ -8,7 +8,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import pl.droidcon.app.data.local.SpeakerLocal
 import pl.droidcon.app.data.network.FirebaseSpeaker
-import pl.droidcon.app.data.network.SpeakerRemote
 import pl.droidcon.app.domain.Speaker
 
 @RunWith(JUnitParamsRunner::class)
@@ -34,7 +33,7 @@ class SpeakerMapperTest {
     @Test
     @Ignore("will implement rest once we setup all firebase speaker attributes")
     fun mapFirebase() {
-        val firebaseSpeakerRemote = FirebaseSpeaker(name = "first_name", surname = "last_name", photoUrl = "photo_url")
+        val firebaseSpeakerRemote = FirebaseSpeaker(name = "first_name", surname = "last_name", photourl = "photo_url")
 //        val speaker = Speaker(firstName = "first_name", lastName = "last_name", imageUrl = "photo_url")
 //
 //        val speakerFromRemote = systemUnderTest.map(firebaseSpeakerRemote)
