@@ -13,4 +13,6 @@ interface LocalDataSource<K> {
     fun get(): Maybe<K>
 
     fun put(k: K)
+
+    fun clear()
 }
