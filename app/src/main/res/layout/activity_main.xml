@@ -15,7 +15,7 @@
         app:itemTextColor="@drawable/navigation_selector"
         app:menu="@menu/navigation_menu" />
 
-    <android.support.v4.view.ViewPager
+    <pl.droidcon.app.widgets.NonSwipeableViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
