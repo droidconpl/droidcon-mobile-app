@@ -1,5 +1,6 @@
 package pl.droidcon.app.data
 
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -48,4 +49,8 @@ class NetworkModule {
     @Provides
     @ApplicationScope
     fun provideSessionsService(retrofit: Retrofit): SessionsService = retrofit.create(SessionsService::class.java)
+
+    @Provides
+    @ApplicationScope
+    fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance()
 }
