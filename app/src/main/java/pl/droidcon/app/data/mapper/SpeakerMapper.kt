@@ -6,6 +6,8 @@ import pl.droidcon.app.data.network.SpeakerRemote
 import pl.droidcon.app.domain.Speaker
 import javax.inject.Inject
 
+private const val BASE_IMAGE_URL = "https://raw.githubusercontent.com/droidconpl/droidcon-2016-web/master/assets/photos/speakers/"
+
 class SpeakerMapper @Inject constructor() {
 
     fun map(speakerRemote: SpeakerRemote): Speaker = Speaker(
@@ -20,7 +22,7 @@ class SpeakerMapper @Inject constructor() {
             githubUrl = speakerRemote.githubUrl,
             linkedinUrl = speakerRemote.linkedinUrl,
             googlePlusUrl = speakerRemote.googlePlusUrl,
-            imageUrl = speakerRemote.imageUrl
+            imageUrl = "$BASE_IMAGE_URL${speakerRemote.imageUrl}"
     )
 
     fun map(speakerLocal: SpeakerLocal): Speaker = Speaker(
@@ -56,11 +58,11 @@ class SpeakerMapper @Inject constructor() {
     fun map(firebaseSpeaker: FirebaseSpeaker): Speaker = Speaker(
             firstName = firebaseSpeaker.name,
             lastName = firebaseSpeaker.surname,
-            imageUrl = firebaseSpeaker.photoUrl,
+            imageUrl = firebaseSpeaker.photourl,
+            title = firebaseSpeaker.title,
 
             // will implement later
             id = 1L,
-            title = "",
             description = "",
             websiteUrl = "",
             facebookUrl = "",
