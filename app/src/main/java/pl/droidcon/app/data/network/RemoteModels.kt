@@ -26,3 +26,19 @@ data class SessionRemote(
         @SerializedName("sessionLength") val sessionLength: Double,
         @SerializedName("workshopCapacity") val workshopCapacity: Int
 )
+
+data class AgendaRemote(
+        @SerializedName("dayId") val dayId: Int,
+        @SerializedName("slotId") val slotId: Int,
+        @SerializedName("sessionType") val sessionType: String,
+        @SerializedName("slotStart") val slotStart: String,
+        @SerializedName("slotEnd") val slotEnd: String,
+        @SerializedName("slotArray") val slotArray: SlotArrayRemote
+)
+
+data class SlotArrayRemote(
+        @SerializedName("slotTitle") val slotTitle: String,
+        @SerializedName("slotPicture") val slotPicture: String,
+        @SerializedName("slotSpeaker") val slotSpeaker: List<Int>,
+        @SerializedName("slotSession") val slotSession: Int
+)

@@ -1,6 +1,7 @@
 package pl.droidcon.app
 
 import dagger.Component
+import pl.droidcon.app.about.AboutFragment
 import pl.droidcon.app.data.LocalDataModule
 import pl.droidcon.app.data.NetworkModule
 import pl.droidcon.app.sessions.view.SessionsFragment
@@ -21,4 +22,6 @@ interface ApplicationComponent {
     fun inject(speakersFragment: SpeakersFragment)
 
     fun inject(sessionsFragment: SessionsFragment)
+
+    fun inject(aboutFragment: AboutFragment)
 }

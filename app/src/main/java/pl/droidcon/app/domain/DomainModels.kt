@@ -29,3 +29,10 @@ enum class SessionType {
     TALK,
     WORKSHOP
 }
+
+data class Agenda(
+        val dayId: Int,
+        val slotId: Int,
+        val slotStart: String,
+        val slotEnd: String
+)
