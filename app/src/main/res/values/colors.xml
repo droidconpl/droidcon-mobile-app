@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--  https://material.io/guidelines/style/color.html#color-color-palette  -->
+    <!--  http://chir.ag/projects/name-that-color/ -->
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -7,4 +11,7 @@
     <color name="pistachio">#8ACE01</color>
     <color name="white">#FFF</color>
     <color name="gray">#636363</color>
+    <color name="heavy_metal">#1D1D1B</color>
+    <color name="alto">#E0E0E0</color>
+    <color name="alto_80">#CCE0E0E0</color>
 </resources>
