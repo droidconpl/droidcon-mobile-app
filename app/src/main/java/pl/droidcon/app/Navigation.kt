@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.MenuItem
 import pl.droidcon.app.about.AboutFragment
+import pl.droidcon.app.agenda.view.AgendaFragment
 import pl.droidcon.app.sessions.view.SessionsFragment
 import pl.droidcon.app.speakers.view.SpeakersFragment
 
@@ -50,7 +51,7 @@ private fun NavigationItem.toPagerItem(): Int = when (this) {
 
 private enum class NavigationItem {
     AGENDA {
-        override fun instance() = SessionsFragment.instance()
+        override fun instance() = AgendaFragment.instance()
     },
     SPEAKERS {
         override fun instance() = SpeakersFragment.instance()

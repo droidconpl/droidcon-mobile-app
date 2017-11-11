@@ -54,6 +54,9 @@ class RemoteFirebaseSpeakerSource @Inject constructor(private val speakerMapper:
                     it.getValue<FirebaseSpeaker>(FirebaseSpeaker::class.java)?.let { it1 -> speakerMapper.map(it1) }
                 }
 
+                //TODO save success value to local database
+                //TODO must be done on other thread, now is main!!!
+
                 speakersSubject.onNext(speakers)
             }
         })

@@ -2,11 +2,15 @@ package pl.droidcon.app.data.local
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 const val SPEAKER_TABLE_NAME = "speaker"
 const val SESSION_TABLE_NAME = "session"
+const val DAY_TABLE_NAME = "day"
+const val TALK_PANEL_TABLE_NAME = "talk_panel"
+const val TALK_TABLE_NAME = "talk"
 
 @Entity(tableName = SPEAKER_TABLE_NAME)
 data class SpeakerLocal(
@@ -34,3 +38,32 @@ data class SessionLocal(
         @ColumnInfo(name = "sessionLength") val sessionLength: Double,
         @ColumnInfo(name = "workshopCapacity") val workshopCapacity: Int
 )
+
+@Entity(tableName = DAY_TABLE_NAME)
+data class DayLocal(
+        @PrimaryKey @ColumnInfo(name = "id") val id: Long,
+        @ColumnInfo(name = "talkPanels") val talks: List<Long>
+)
+
+@Entity(tableName = TALK_PANEL_TABLE_NAME)
+data class TalkPanelLocal(
+        @ColumnInfo(name = "start") val start: String,
+        @ColumnInfo(name = "end") val end: String,
+        @ColumnInfo(name = "talks") val talks: List<Long>
+) {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id: Long = 0
+}
+
+
+@Entity(tableName = TALK_TABLE_NAME)
+data class TalkLocal(
+        @ColumnInfo(name = "title") val title: String,
+        @ColumnInfo(name = "speakerId") val speakerIds: List<Long>,
+        @ColumnInfo(name = "sessionId") val sessionId: Long?
+) {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id: Long = 0
+}

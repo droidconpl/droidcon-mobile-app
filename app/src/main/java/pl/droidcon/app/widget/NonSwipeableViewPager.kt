@@ -1,4 +1,4 @@
-package pl.droidcon.app.widgets
+package pl.droidcon.app.widget
 
 import android.annotation.SuppressLint
 import android.content.Context

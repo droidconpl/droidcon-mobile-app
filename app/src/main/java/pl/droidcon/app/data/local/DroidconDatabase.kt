@@ -4,13 +4,22 @@ import android.arch.persistence.room.*
 import android.content.Context
 import java.util.regex.Pattern
 
-@Database(entities = arrayOf(SpeakerLocal::class, SessionLocal::class), version = 1)
+@Database(entities =
+arrayOf(
+        SpeakerLocal::class,
+        SessionLocal::class,
+        DayLocal::class,
+        TalkPanelLocal::class,
+        TalkLocal::class),
+        version = 1)
 @TypeConverters(Converters::class)
 abstract class DroidconDatabase : RoomDatabase() {
 
     abstract fun speakerDao(): SpeakersDao
 
     abstract fun sessionDao(): SessionsDao
+
+    abstract fun agendaDao(): AgendaDao
 
     companion object {
         private lateinit var database: DroidconDatabase
@@ -34,6 +43,9 @@ class Converters {
 
     @TypeConverter
     fun fromStringToLongList(longList: String): List<Long> {
+        if (longList.isEmpty()) {
+            return emptyList()
+        }
         return longList.split(regex = Pattern.compile(","))
                 .map { it.toLong() }
     }
