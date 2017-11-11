@@ -29,7 +29,6 @@ class RemoteSpeakersSource @Inject constructor(private val speakersService: Spea
                         success(it)
                     }
                 }
-                .onErrorReturn { (emptyList()) }
     }
 }
 

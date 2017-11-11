@@ -28,7 +28,6 @@ class RemoteSessionsSource @Inject constructor(private val sessionsService: Sess
                         success(it)
                     }
                 }
-                .onErrorReturn { emptyList() }
     }
 }
 

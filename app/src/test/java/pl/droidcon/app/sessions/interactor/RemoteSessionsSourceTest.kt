@@ -75,18 +75,20 @@ class RemoteSessionsSourceTest {
     }
 
     @Test
-    fun `returns empty list when speakers failed`() {
-        whenever(speakersRepository.get()).thenReturn(Observable.error(IOException()))
+    fun `returns error when speakers failed`() {
+        val error = IOException()
+        whenever(speakersRepository.get()).thenReturn(Observable.error(error))
 
         systemUnderTest.get(success).test()
-                .assertValue(emptyList())
+                .assertError(error)
     }
 
     @Test
-    fun `returns empty list when sessions failed`() {
-        whenever(sessionsService.sessions()).thenReturn(Observable.error(IOException()))
+    fun `returns error when sessions failed`() {
+        val error = IOException()
+        whenever(sessionsService.sessions()).thenReturn(Observable.error(error))
 
         systemUnderTest.get(success).test()
-                .assertValue(emptyList())
+                .assertError(error)
     }
 }
