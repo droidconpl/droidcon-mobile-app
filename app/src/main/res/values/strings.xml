@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Droidcon</string>
+
+    <string name="about">About</string>
+    <string name="agenda">Agenda</string>
+    <string name="speakers">Speakers</string>
 </resources>

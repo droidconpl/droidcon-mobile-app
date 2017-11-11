@@ -1,8 +1,8 @@
 package pl.droidcon.app
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import pl.droidcon.app.speakers.view.SpeakersActivity
+import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,8 +10,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+        setupNavigation()
+    }
 
-        //TODO setup main view according to one of the inputs
-        startActivity(SpeakersActivity.intent(this))
+    private fun setupNavigation() {
+        viewpager.adapter = NavigationPagerAdapter(supportFragmentManager)
+
+        bottom_navigation.setOnNavigationItemSelectedListener({
+            it.findPosition()?.run {
+                viewpager.setCurrentItem(this, false)
+            }
+            false
+        })
+
+        viewpager.addOnPageChangeListener(NavigationPageChangeListener(bottom_navigation))
     }
 }
