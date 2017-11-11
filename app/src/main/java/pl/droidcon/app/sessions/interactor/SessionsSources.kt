@@ -21,15 +21,13 @@ class RemoteSessionsSource @Inject constructor(private val sessionsService: Sess
 
     override fun get(success: OnRemoteSuccess<List<Session>>): Observable<List<Session>> {
         return sessionsService.sessions()
-                .zipWith(speakersRepository.get().defaultIfEmpty(emptyList()))
-                .filter { it.second.isNotEmpty() }
+                .zipWith(speakersRepository.get().filter({ it.isNotEmpty() }))
                 .map { (sessionsRemote, speakers) -> sessionsRemote.map { sessionsMapper.map(it, speakers) } }
                 .doOnNext {
                     if (it.isNotEmpty()) {
                         success(it)
                     }
                 }
-                .defaultIfEmpty(emptyList())
                 .onErrorReturn { emptyList() }
     }
 }

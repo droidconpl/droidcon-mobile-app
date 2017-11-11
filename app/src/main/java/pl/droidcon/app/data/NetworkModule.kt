@@ -8,6 +8,7 @@ import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import pl.droidcon.app.ApplicationScope
+import pl.droidcon.app.data.network.AgendaService
 import pl.droidcon.app.data.network.SessionsService
 import pl.droidcon.app.data.network.SpeakersService
 import retrofit2.Retrofit
@@ -53,4 +54,8 @@ class NetworkModule {
     @Provides
     @ApplicationScope
     fun provideFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance()
+
+    @Provides
+    @ApplicationScope
+    fun provideAgendaService(retrofit: Retrofit): AgendaService = retrofit.create(AgendaService::class.java)
 }

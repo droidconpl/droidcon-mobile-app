@@ -17,3 +17,9 @@ interface SessionsService {
     @GET("$BASE_URL/sessions.json")
     fun sessions(): Observable<List<SessionRemote>>
 }
+
+interface AgendaService {
+
+    @GET("$BASE_URL/agenda.json")
+    fun agenda(): Observable<List<AgendaRemote>>
+}

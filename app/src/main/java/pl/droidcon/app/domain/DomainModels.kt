@@ -29,3 +29,15 @@ enum class SessionType {
     TALK,
     WORKSHOP
 }
+
+data class Agenda(val days: List<Day>) {
+   companion object {
+       val NULL_OBJECT = Agenda(emptyList())
+   }
+}
+
+data class Day(val id: Long, val talkPanels: List<TalkPanel>)
+
+data class TalkPanel(val start: String, val end: String, val talks: List<Talk>)
+
+data class Talk(val title: String, val speakers: List<Speaker>, val session: Session?)

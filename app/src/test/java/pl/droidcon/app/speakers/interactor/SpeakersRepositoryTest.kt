@@ -35,19 +35,18 @@ class SpeakersRepositoryTest {
         }
     }
 
-    private val remote: RemoteFirebaseSpeakerSource = mock()
+    private val remote: RemoteSpeakersSource = mock()
     private val local: LocalSpeakersSource = mock()
 
-    private val systemUnderTest = SpeakersRepository(remote, local)
 
     @Test
     fun `loads speakers`() {
         val localSpeakers = listOf(createSpeaker(1), createSpeaker(2))
         val remoteSpeakers = listOf(createSpeaker(3), createSpeaker(4), createSpeaker(5))
-
         whenever(local.get()).thenReturn(Maybe.just(localSpeakers))
         whenever(remote.get(any())).thenReturn(Observable.just(remoteSpeakers))
 
+        val systemUnderTest = SpeakersRepository(remote, local)
         val testObserver = systemUnderTest.get().test()
 
         testScheduler.advanceTimeBy(400, TimeUnit.MILLISECONDS)

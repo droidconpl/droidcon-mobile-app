@@ -26,10 +26,26 @@ data class SessionRemote(
         @SerializedName("sessionLength") val sessionLength: Double,
         @SerializedName("workshopCapacity") val workshopCapacity: Int
 )
+
 data class FirebaseSpeaker(
         val name: String = "",
         val surname: String = "",
         val photourl: String = "",
         val title: String = ""
+)
 
+data class AgendaRemote(
+        @SerializedName("dayId") val dayId: Long,
+        @SerializedName("slotId") val slotId: Long,
+        @SerializedName("sessionType") val sessionType: String,
+        @SerializedName("slotStart") val slotStart: String,
+        @SerializedName("slotEnd") val slotEnd: String,
+        @SerializedName("slotArray") val slotArray: List<SingleSlotRemote>
+)
+
+data class SingleSlotRemote(
+        @SerializedName("slotTitle") val slotTitle: String,
+        @SerializedName("slotPicture") val slotPicture: String,
+        @SerializedName("slotSpeaker") val slotSpeaker: List<Long>,
+        @SerializedName("slotSession") val slotSession: String
 )

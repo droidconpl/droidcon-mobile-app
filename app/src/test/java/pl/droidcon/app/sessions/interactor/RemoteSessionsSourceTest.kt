@@ -75,14 +75,6 @@ class RemoteSessionsSourceTest {
     }
 
     @Test
-    fun `returns empty list when speakers not emitted`() {
-        whenever(speakersRepository.get()).thenReturn(Observable.empty())
-
-        systemUnderTest.get(success).test()
-                .assertValue(emptyList())
-    }
-
-    @Test
     fun `returns empty list when speakers failed`() {
         whenever(speakersRepository.get()).thenReturn(Observable.error(IOException()))
 

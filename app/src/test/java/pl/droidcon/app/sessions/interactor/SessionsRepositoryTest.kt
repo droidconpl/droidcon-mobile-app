@@ -37,16 +37,14 @@ class SessionsRepositoryTest {
     private val remote: RemoteSessionsSource = mock()
     private val local: LocalSessionsSource = mock()
 
-    private val systemUnderTest = SessionsRepository(remote, local)
-
     @Test
     fun `loads sessions`() {
         val localSessions = listOf(createSession(1), createSession(2))
         val remoteSessions = listOf(createSession(3), createSession(4), createSession(5))
-
         whenever(local.get()).thenReturn(Maybe.just(localSessions))
         whenever(remote.get(any())).thenReturn(Observable.just(remoteSessions))
 
+        val systemUnderTest = SessionsRepository(remote, local)
         val testObserver = systemUnderTest.get().test()
 
         testScheduler.advanceTimeBy(400, TimeUnit.MILLISECONDS)

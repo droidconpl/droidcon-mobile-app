@@ -19,4 +19,8 @@ class LocalDataModule(context: android.content.Context) {
     @Provides
     @ApplicationScope
     fun provideSessionDao() = DroidconDatabase.get().sessionDao()
+
+    @Provides
+    @ApplicationScope
+    fun provideAgendaDao() = DroidconDatabase.get().agendaDao()
 }
