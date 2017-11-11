@@ -80,10 +80,11 @@ class RemoteSpeakersSourceTest {
     }
 
     @Test
-    fun `returns empty list if error`() {
-        whenever(speakersService.speakers()).thenReturn(Observable.error(IOException()))
+    fun `returns error if error`() {
+        val error = IOException()
+        whenever(speakersService.speakers()).thenReturn(Observable.error(error))
 
         systemUnderTest.get(success).test()
-                .assertValue(emptyList())
+                .assertError(error)
     }
 }

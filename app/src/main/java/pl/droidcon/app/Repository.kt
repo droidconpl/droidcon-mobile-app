@@ -1,6 +1,7 @@
 package pl.droidcon.app
 
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import pl.droidcon.app.data.LocalDataSource
 import pl.droidcon.app.data.OnRemoteSuccess
@@ -24,16 +25,13 @@ class Repository<T>(private val remoteDataSource: RemoteDataSource<T>,
 
     init {
         val localStream = localDataSource.get()
+                .subscribeOn(Schedulers.io())
                 .toObservable()
-                .doOnError { it.printStackTrace() }
                 .onErrorResumeNext(Observable.empty())
                 .defaultIfEmpty(defaultIfEmpty)
                 .distinctUntilChanged()
 
         val observable: Observable<T> = observeRemote()
-                .distinctUntilChanged()
-                .doOnError { it.printStackTrace() }
-                .switchIfEmpty(localStream)
                 .startWith(localStream)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .materialize()
