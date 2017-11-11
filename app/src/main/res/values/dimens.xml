@@ -2,4 +2,8 @@
 <resources>
     <dimen name="spacing">1dp</dimen>
     <dimen name="photo_size">320dp</dimen>
+    <dimen name="screen_edge_margin">16dp</dimen>
+    <dimen name="list_element_margin">4dp</dimen>
+    <dimen name="icon_button_size">24sp</dimen>
+    <dimen name="speaker_dialog_avatar_size">160dp</dimen>
 </resources>

@@ -6,6 +6,8 @@ import pl.droidcon.app.agenda.view.AgendaFragment
 import pl.droidcon.app.data.LocalDataModule
 import pl.droidcon.app.data.NetworkModule
 import pl.droidcon.app.sessions.view.SessionsFragment
+import pl.droidcon.app.speaker.SpeakerComponent
+import pl.droidcon.app.speaker.SpeakerModule
 import pl.droidcon.app.speakers.view.SpeakersFragment
 import javax.inject.Scope
 
@@ -27,4 +29,6 @@ interface ApplicationComponent {
     fun inject(aboutFragment: AboutFragment)
 
     fun inject(agendaFragment: AgendaFragment)
+
+    fun speakerComponent(speakerModule: SpeakerModule): SpeakerComponent
 }

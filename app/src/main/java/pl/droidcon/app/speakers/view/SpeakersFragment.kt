@@ -6,20 +6,25 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_speakers.*
 import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
 import pl.droidcon.app.domain.Speaker
+import pl.droidcon.app.speaker.SpeakerActivity
 import pl.droidcon.app.speakers.SpeakersPresenter
 import pl.droidcon.app.speakers.SpeakersView
 import pl.droidcon.app.widget.SpacesItemDecoration
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SpeakersFragment : Fragment(), SpeakersView {
 
     @Inject lateinit var presenter: SpeakersPresenter
 
-    private var adapter: SpeakersAdapter? = null
+    private val selectionDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         DroidconApp.component.inject(this)
@@ -35,21 +40,31 @@ class SpeakersFragment : Fragment(), SpeakersView {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        selectionDisposable.clear()
         presenter.attachView(null)
+        super.onDestroyView()
     }
 
     override fun display(speakers: List<Speaker>) {
         view?.let {
+            selectionDisposable.clear()
+
             speakersView.layoutManager = GridLayoutManager(it.context, 2)
             speakersView.addItemDecoration(SpacesItemDecoration(resources.getDimensionPixelSize(R.dimen.spacing)))
-            adapter = SpeakersAdapter(speakers)
+
+            val adapter = SpeakersAdapter(speakers)
+            adapter.speakerSelection()
+                    .debounce(200, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ speaker -> presenter.onSpeakerSelected(speaker) })
+                    .addTo(selectionDisposable)
+
             speakersView.adapter = adapter
         }
     }
 
     override fun display(speaker: Speaker) {
-
+        startActivity(SpeakerActivity.intent(context, speaker))
     }
 
     companion object {
