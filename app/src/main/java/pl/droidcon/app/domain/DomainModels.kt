@@ -148,11 +148,12 @@ data class Day(val id: Long, val talkPanels: List<TalkPanel>) : Parcelable {
     }
 }
 
-data class TalkPanel(val start: String, val end: String, val talks: List<Talk>) : Parcelable {
+data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, val sessionType: String) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
-            source.createTypedArrayList(Talk.CREATOR)
+            source.createTypedArrayList(Talk.CREATOR),
+            source.readString()
     )
 
     override fun describeContents() = 0
@@ -161,6 +162,7 @@ data class TalkPanel(val start: String, val end: String, val talks: List<Talk>) 
         writeString(start)
         writeString(end)
         writeTypedList(talks)
+        writeString(sessionType)
     }
 
     companion object {

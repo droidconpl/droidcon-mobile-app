@@ -59,7 +59,7 @@ class LocalAgendaSource @Inject constructor(private val agendaDao: AgendaDao,
             val talkPanels = it.talkPanels.map {
                 val talksLocal = it.talks.map { agendaMapper.map(it) }
                 val talkIds = agendaDao.putTalks(talkLocals = talksLocal)
-                TalkPanelLocal(start = it.start, end = it.end, talks = talkIds)
+                TalkPanelLocal(start = it.start, end = it.end, talks = talkIds, sessionType = it.sessionType)
             }
 
             val panelIds = agendaDao.putTalkPanels(talkPanelLocal = talkPanels)
@@ -88,7 +88,7 @@ class LocalAgendaSource @Inject constructor(private val agendaDao: AgendaDao,
                         val talksForPanel = talkLocals.filter { panel.talks.contains(it.id) }
                         val talks = talksForPanel.map { agendaMapper.map(it, speakers, sessions) }
 
-                        TalkPanel(panel.start, panel.end, talks)
+                        TalkPanel(panel.start, panel.end, talks, panel.sessionType)
                     })
 
                     val days = dayLocals.map { Day(it.id, talkPanels) }

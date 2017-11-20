@@ -15,7 +15,7 @@ class AgendaMapper @Inject constructor() {
             val agendaForDay = it.value
 
             val talkPanels = agendaForDay.map {
-                val (_, _, _, slotStart, slotEnd, slotArray) = it
+                val (_, _, sessionType, slotStart, slotEnd, slotArray) = it
 
                 val talks = slotArray
                         .map {
@@ -25,7 +25,7 @@ class AgendaMapper @Inject constructor() {
                                     session = sessions.findSession(it.slotSession)
                             )
                         }
-                TalkPanel(start = slotStart, end = slotEnd, talks = talks)
+                TalkPanel(start = slotStart, end = slotEnd, talks = talks, sessionType = sessionType)
             }
 
             Day(dayId, talkPanels)

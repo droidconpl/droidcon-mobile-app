@@ -49,7 +49,8 @@ data class DayLocal(
 data class TalkPanelLocal(
         @ColumnInfo(name = "start") val start: String,
         @ColumnInfo(name = "end") val end: String,
-        @ColumnInfo(name = "talks") val talks: List<Long>
+        @ColumnInfo(name = "talks") val talks: List<Long>,
+        @ColumnInfo(name = "sessionType") val sessionType: String
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
