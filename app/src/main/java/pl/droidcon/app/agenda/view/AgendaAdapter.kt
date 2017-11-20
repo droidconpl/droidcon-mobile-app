@@ -59,10 +59,15 @@ class AgendaTripleHolder(private val item: View,
 
     private val speaker1picture: ImageView = item.findViewById(R.id.speaker_1_picture)
     private val speaker1room: TextView = item.findViewById(R.id.speaker_1_room)
+    private val speaker1description: TextView = item.findViewById(R.id.speaker_1_description)
+
     private val speaker2picture: ImageView = item.findViewById(R.id.speaker_2_picture)
     private val speaker2room: TextView = item.findViewById(R.id.speaker_2_room)
+    private val speaker2description: TextView = item.findViewById(R.id.speaker_2_description)
+
     private val speaker3picture: ImageView = item.findViewById(R.id.speaker_3_picture)
     private val speaker3room: TextView = item.findViewById(R.id.speaker_3_room)
+    private val speaker3description: TextView = item.findViewById(R.id.speaker_3_description)
 
     @SuppressLint("SetTextI18n")
     override fun bindHolder(talk: TalkPanel) {
@@ -79,6 +84,7 @@ class AgendaTripleHolder(private val item: View,
                 .placeholder(R.drawable.ic_person)
                 .error(R.drawable.ic_sad)
                 .into(speaker1picture)
+        speaker1description.text = talk1.session!!.sessionTitle
 
         if (talk2.speakers.isEmpty() && talk3.speakers.isEmpty()) {
             speaker2picture.visibility = View.GONE
@@ -95,24 +101,29 @@ class AgendaTripleHolder(private val item: View,
 
             if (talk2.speakers.isEmpty()) {
                 speaker2picture.setImageResource(R.drawable.ic_sad)
-            } else
+                speaker2description.text = ""
+            } else {
+                speaker2description.text = talk2.session!!.sessionTitle
                 Picasso
                         .with(item.context)
                         .load(talk2.speakers.firstOrNull()?.imageUrl)
                         .placeholder(R.drawable.ic_person)
                         .error(R.drawable.ic_sad)
                         .into(speaker2picture)
-
+            }
 
             if (talk3.speakers.isEmpty()) {
                 speaker3picture.setImageResource(R.drawable.ic_sad)
-            } else
+                speaker3description.text = ""
+            } else {
+                speaker3description.text = talk3.session!!.sessionTitle
                 Picasso
                         .with(item.context)
                         .load(talk3.speakers.firstOrNull()?.imageUrl)
                         .placeholder(R.drawable.ic_person)
                         .error(R.drawable.ic_sad)
                         .into(speaker3picture)
+            }
         }
 
 

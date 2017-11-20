@@ -4,4 +4,8 @@
     <string name="about">About</string>
     <string name="agenda">Agenda</string>
     <string name="speakers">Speakers</string>
+
+    <string name="room_A">Room A</string>
+    <string name="room_B">Room B</string>
+    <string name="room_C">Room C</string>
 </resources>

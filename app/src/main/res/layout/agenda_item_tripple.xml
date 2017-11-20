@@ -23,10 +23,20 @@
         android:id="@+id/speaker_1_room"
         style="@style/AgendaRoomLabel"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-        android:text="Room A"
-        app:layout_constraintBottom_toBottomOf="@id/speaker_1_picture" />
+        android:text="@string/room_A"
+        app:layout_constraintRight_toRightOf="@id/speaker_1_picture"
+        app:layout_constraintTop_toTopOf="@id/speaker_1_picture" />
+
+    <TextView
+        android:id="@+id/speaker_1_description"
+        style="@style/AgendaTalkLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/speaker_1_picture"
+        app:layout_constraintLeft_toLeftOf="@id/speaker_1_picture"
+        app:layout_constraintRight_toRightOf="@id/speaker_1_picture"
+        tools:text="Talk #1 description" />
 
     <ImageView
         android:id="@+id/speaker_2_picture"
@@ -44,8 +54,19 @@
         style="@style/AgendaRoomLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Room B"
-        app:layout_constraintBottom_toBottomOf="@id/speaker_2_picture" />
+        android:text="@string/room_B"
+        app:layout_constraintRight_toRightOf="@id/speaker_2_picture"
+        app:layout_constraintTop_toTopOf="@id/speaker_2_picture" />
+
+    <TextView
+        android:id="@+id/speaker_2_description"
+        style="@style/AgendaTalkLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/speaker_2_picture"
+        app:layout_constraintLeft_toLeftOf="@id/speaker_2_picture"
+        app:layout_constraintRight_toRightOf="@id/speaker_2_picture"
+        tools:text="Talk #2 description" />
 
     <ImageView
         android:id="@+id/speaker_3_picture"
@@ -64,9 +85,19 @@
         style="@style/AgendaRoomLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Room C"
+        android:text="@string/room_C"
+        app:layout_constraintRight_toRightOf="@+id/speaker_3_picture"
+        app:layout_constraintTop_toTopOf="@id/speaker_3_picture" />
+
+    <TextView
+        android:id="@+id/speaker_3_description"
+        style="@style/AgendaTalkLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/speaker_3_picture"
-        app:layout_constraintLeft_toLeftOf="@+id/speaker_3_picture" />
+        app:layout_constraintLeft_toLeftOf="@id/speaker_3_picture"
+        app:layout_constraintRight_toRightOf="@id/speaker_3_picture"
+        tools:text="Talk #3 description" />
 
     <TextView
         android:id="@+id/start_time"
