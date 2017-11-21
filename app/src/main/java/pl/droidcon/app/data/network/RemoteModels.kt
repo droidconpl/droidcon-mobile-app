@@ -28,10 +28,20 @@ data class SessionRemote(
 )
 
 data class FirebaseSpeaker(
+        val id: Long = 0L,
+        val key: String = "",
         val name: String = "",
         val surname: String = "",
+        val title: String = "",
+        val biography: String = "",
+        val twitter: String = "",
+        val facebook: String = "",
+        val github: String = "",
+        val linkedin: String = "",
+        val website: String = "",
         val photourl: String = "",
-        val title: String = ""
+        val published: Boolean = false,
+        val talkid: Long = 0L
 )
 
 data class AgendaRemote(
