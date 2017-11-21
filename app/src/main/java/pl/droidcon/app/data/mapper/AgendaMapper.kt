@@ -2,6 +2,7 @@ package pl.droidcon.app.data.mapper
 
 import pl.droidcon.app.data.local.TalkLocal
 import pl.droidcon.app.data.network.AgendaRemote
+import pl.droidcon.app.data.network.FirebaseAgenda
 import pl.droidcon.app.domain.*
 import javax.inject.Inject
 
@@ -32,6 +33,11 @@ class AgendaMapper @Inject constructor() {
         }
 
         return Agenda(days)
+    }
+
+    fun map(firebaseAgenda: List<FirebaseAgenda>, sessions: List<Session>, speakers: List<Speaker>): Agenda {
+
+        return Agenda(emptyList())
     }
 
     fun map(talk: Talk): TalkLocal {

@@ -1,8 +1,14 @@
 package pl.droidcon.app.agenda.interactor
 
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.zipWith
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import pl.droidcon.app.data.LocalDataSource
 import pl.droidcon.app.data.OnRemoteSuccess
 import pl.droidcon.app.data.RemoteDataSource
@@ -11,6 +17,7 @@ import pl.droidcon.app.data.local.DayLocal
 import pl.droidcon.app.data.local.TalkPanelLocal
 import pl.droidcon.app.data.mapper.AgendaMapper
 import pl.droidcon.app.data.network.AgendaService
+import pl.droidcon.app.data.network.FirebaseAgenda
 import pl.droidcon.app.domain.*
 import pl.droidcon.app.sessions.interactor.SessionsRepository
 import pl.droidcon.app.speakers.interactor.SpeakersRepository
@@ -35,6 +42,51 @@ class RemoteAgendaSource @Inject constructor(private val agendaService: AgendaSe
                             .map { agendaMapper.map(it, sessions, speakers) }
                             .doOnNext(success)
                 }
+    }
+}
+
+class FirebaseAgendaSource @Inject constructor(private val agendaMapper: AgendaMapper,
+                                               private val firebaseDatabase: FirebaseDatabase,
+                                               private val sessionsRepository: SessionsRepository,
+                                               private val speakersRepository: SpeakersRepository)
+    : RemoteDataSource<Agenda> {
+
+    val agendaSubject: PublishSubject<Agenda> = PublishSubject.create()
+
+    override fun get(success: OnRemoteSuccess<Agenda>): Observable<Agenda> {
+        val agendaReference = firebaseDatabase.getReference("agenda")
+
+        agendaReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(databaseError: DatabaseError?) {
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                sessionsRepository
+                        .get()
+                        .distinctUntilChanged()
+                        .zipWith(speakersRepository.get())
+                        .filter({ it.second.isNotEmpty() && it.first.isNotEmpty() })
+                        .map {
+                            val agendaEntries = mutableListOf<FirebaseAgenda>()
+
+                            val sessions = it.first
+                            val speakers = it.second
+
+                            dataSnapshot.children.mapNotNullTo(sessions) {
+                                it.getValue<FirebaseAgenda>(FirebaseAgenda::class.java)?.let { it1 -> agendaMapper.map(it1, speakers) }
+                            }
+
+                            agendaMapper.map(agendaEntries.first(), sessions, speakers)
+                        }
+                        .doOnNext(success)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                        .subscribe(agendaSubject)
+            }
+        })
+
+        return agendaSubject
     }
 }
 

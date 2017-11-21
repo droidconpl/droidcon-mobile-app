@@ -54,6 +54,15 @@ data class FirebaseSpeaker(
         val talkid: Long = 0L
 )
 
+data class FirebaseAgenda(
+        val dayid: Long = 0L,
+        val starthour: String = "",
+        val endhour: String = "",
+        val roomid: Long = 0L,
+        val slotid: Long = 0L,
+        val text: String = ""
+)
+
 data class AgendaRemote(
         @SerializedName("dayId") val dayId: Long,
         @SerializedName("slotId") val slotId: Long,
