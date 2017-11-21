@@ -2,9 +2,7 @@ package pl.droidcon.app.data.local
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 const val SPEAKER_TABLE_NAME = "speaker"
 const val SESSION_TABLE_NAME = "session"
@@ -35,7 +33,7 @@ data class SessionLocal(
         @ColumnInfo(name = "sessionTitle") val sessionTitle: String,
         @ColumnInfo(name = "sessionDescription") val sessionDescription: String,
         @ColumnInfo(name = "speakerId") val speakerIds: List<Long>,
-        @ColumnInfo(name = "sessionLength") val sessionLength: Double,
+        @ColumnInfo(name = "sessionLength") val sessionLength: String,
         @ColumnInfo(name = "workshopCapacity") val workshopCapacity: Int
 )
 

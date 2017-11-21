@@ -22,7 +22,8 @@ class SpeakerMapper @Inject constructor() {
             githubUrl = speakerRemote.githubUrl,
             linkedinUrl = speakerRemote.linkedinUrl,
             googlePlusUrl = speakerRemote.googlePlusUrl,
-            imageUrl = "$BASE_IMAGE_URL${speakerRemote.imageUrl}"
+            imageUrl = "$BASE_IMAGE_URL${speakerRemote.imageUrl}",
+            talkId = 0L
     )
 
     fun map(speakerLocal: SpeakerLocal): Speaker = Speaker(
@@ -37,7 +38,8 @@ class SpeakerMapper @Inject constructor() {
             githubUrl = speakerLocal.githubUrl,
             linkedinUrl = speakerLocal.linkedinUrl,
             googlePlusUrl = speakerLocal.googlePlusUrl,
-            imageUrl = speakerLocal.imageUrl
+            imageUrl = speakerLocal.imageUrl,
+            talkId = 0L
     )
 
     fun map(speaker: Speaker): SpeakerLocal = SpeakerLocal(
@@ -68,6 +70,7 @@ class SpeakerMapper @Inject constructor() {
             twitterUrl = firebaseSpeaker.twitter,
             githubUrl = firebaseSpeaker.github,
             linkedinUrl = firebaseSpeaker.linkedin,
-            googlePlusUrl = ""
+            googlePlusUrl = "",
+            talkId = firebaseSpeaker.talkid
     )
 }

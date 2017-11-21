@@ -1,8 +1,10 @@
 package pl.droidcon.app.data.mapper
 
 import pl.droidcon.app.data.local.SessionLocal
+import pl.droidcon.app.data.network.FirebaseSession
 import pl.droidcon.app.data.network.SessionRemote
 import pl.droidcon.app.domain.Session
+import pl.droidcon.app.domain.SessionType
 import pl.droidcon.app.domain.Speaker
 import javax.inject.Inject
 
@@ -14,9 +16,21 @@ class SessionsMapper @Inject constructor(private val sessionTypeMapper: SessionT
                 sessionType = sessionTypeMapper.map(sessionRemote.sessionType),
                 sessionTitle = sessionRemote.sessionTitle,
                 sessionDescription = sessionRemote.sessionDescription,
-                sessionLength = sessionRemote.sessionLength,
+                sessionLength = "$sessionRemote.sessionLength",
                 workshopCapacity = sessionRemote.workshopCapacity,
                 speakers = sessionRemote.findSpeakers(speakers)
+        )
+    }
+
+    fun map(firebaseSession: FirebaseSession, speakers: List<Speaker>): Session {
+        return Session(
+                sessionId = firebaseSession.id,
+                sessionType = SessionType.TALK,
+                sessionTitle = firebaseSession.title,
+                sessionDescription = firebaseSession.description,
+                sessionLength = firebaseSession.duration,
+                workshopCapacity = 0,
+                speakers = speakers.filter { speaker -> speaker.talkId == firebaseSession.id }
         )
     }
 
