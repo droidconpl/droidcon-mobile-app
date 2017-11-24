@@ -12,6 +12,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import pl.droidcon.app.R
 import pl.droidcon.app.domain.TalkPanel
+import pl.droidcon.app.sessions.SessionActivity
 
 class AgendaAdapter(private val talks: List<TalkPanel>) : RecyclerView.Adapter<AgendaHolder>() {
 
@@ -84,6 +85,9 @@ class AgendaTripleHolder(private val item: View,
                 .error(R.drawable.ic_sad)
                 .into(speaker1picture)
         speaker1description.text = talk1.session!!.sessionTitle
+
+        // TODO: optimize !
+        speaker1picture.setOnClickListener { speaker1picture.context.startActivity(SessionActivity.intent(speaker1picture.context, talk1.session)) }
 
         if (talk.talks.size == 1) {
             speaker2picture.visibility = View.GONE
