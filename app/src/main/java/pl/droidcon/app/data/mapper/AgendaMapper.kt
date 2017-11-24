@@ -26,7 +26,7 @@ class AgendaMapper @Inject constructor() {
                                     session = sessions.findSession(it.slotSession)
                             )
                         }
-                TalkPanel(start = slotStart, end = slotEnd, talks = talks, sessionType = sessionType)
+                TalkPanel(start = slotStart, end = slotEnd, talks = talks, sessionType = sessionType, text = "to_be_removed")
             }
 
             Day(dayId, talkPanels)
@@ -64,7 +64,11 @@ class AgendaMapper @Inject constructor() {
                     talks.add(talk3)
                 }
 
-                TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = talks, sessionType = "talk")
+                if (talks.isEmpty())
+                    TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = emptyList(), sessionType = "meta", text = agenda.text)
+                else
+                    TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = talks, sessionType = "talk", text = "")
+
             }
 
             Day(dayId, talkPanels)

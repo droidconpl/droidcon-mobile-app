@@ -21,7 +21,7 @@ class AgendaAdapter(private val talks: List<TalkPanel>) : RecyclerView.Adapter<A
 
     override fun getItemCount() = talks.size
 
-    override fun getItemViewType(position: Int): Int = if (talks[position].sessionType == "singleSlot") 0 else 1
+    override fun getItemViewType(position: Int): Int = if (talks[position].sessionType == "meta") 0 else 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgendaHolder {
         when (viewType) {
@@ -40,11 +40,11 @@ class AgendaSingleHolder(private val item: View,
 
     @SuppressLint("SetTextI18n")
     override fun bindHolder(talk: TalkPanel) {
-        val talk1 = talk.talks[0]
-        val talk2 = talk.talks[1]
-        val talk3 = talk.talks[2]
-
-        title.text = talk2.title + talk1.title
+//        val talk1 = talk.talks[0]
+//        val talk2 = talk.talks[1]
+//        val talk3 = talk.talks[2]
+//
+        title.text = talk.text
 
         startTime.text = talk.start
         endTime.text = talk.end
@@ -72,8 +72,7 @@ class AgendaTripleHolder(private val item: View,
     @SuppressLint("SetTextI18n")
     override fun bindHolder(talk: TalkPanel) {
         val talk1 = talk.talks[0]
-        val talk2 = talk.talks[1]
-        val talk3 = talk.talks[2]
+
 
         startTime.text = talk.start
         endTime.text = talk.end
@@ -86,13 +85,15 @@ class AgendaTripleHolder(private val item: View,
                 .into(speaker1picture)
         speaker1description.text = talk1.session!!.sessionTitle
 
-        if (talk2.speakers.isEmpty() && talk3.speakers.isEmpty()) {
+        if (talk.talks.size == 1) {
             speaker2picture.visibility = View.GONE
             speaker3picture.visibility = View.GONE
 
             speaker2room.visibility = View.GONE
             speaker3room.visibility = View.GONE
         } else {
+            val talk2 = talk.talks[1]
+            val talk3 = talk.talks[2]
             speaker2picture.visibility = View.VISIBLE
             speaker3picture.visibility = View.VISIBLE
 

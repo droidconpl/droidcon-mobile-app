@@ -156,28 +156,33 @@ data class Day(val id: Long, val talkPanels: List<TalkPanel>) : Parcelable {
     }
 }
 
-data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, val sessionType: String) : Parcelable {
-    constructor(source: Parcel) : this(
-            source.readString(),
-            source.readString(),
-            source.createTypedArrayList(Talk.CREATOR),
-            source.readString()
-    )
+data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, val sessionType: String, val text: String) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.createTypedArrayList(Talk.CREATOR),
+            parcel.readString(),
+            parcel.readString())
 
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(start)
-        writeString(end)
-        writeTypedList(talks)
-        writeString(sessionType)
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(start)
+        parcel.writeString(end)
+        parcel.writeTypedList(talks)
+        parcel.writeString(sessionType)
+        parcel.writeString(text)
     }
 
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<TalkPanel> = object : Parcelable.Creator<TalkPanel> {
-            override fun createFromParcel(source: Parcel): TalkPanel = TalkPanel(source)
-            override fun newArray(size: Int): Array<TalkPanel?> = arrayOfNulls(size)
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<TalkPanel> {
+        override fun createFromParcel(parcel: Parcel): TalkPanel {
+            return TalkPanel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<TalkPanel?> {
+            return arrayOfNulls(size)
         }
     }
 }
