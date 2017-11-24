@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_agenda.*
+import kotlinx.android.synthetic.main.fragment_agenda_item.*
 import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
 import pl.droidcon.app.agenda.AgendaPresenter
@@ -25,7 +25,7 @@ class AgendaFragment : Fragment(), AgendaView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_agenda, container, false)
+            inflater.inflate(R.layout.fragment_agenda_item, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
