@@ -31,7 +31,7 @@ class LocalSessionsSourceTest {
             sessionTitle = "title",
             sessionDescription = "1234566",
             speakerIds = listOf(111),
-            sessionLength = 45.0,
+            sessionLength = "45 min",
             workshopCapacity = 13
     )
 

@@ -2,6 +2,7 @@ package pl.droidcon.app.data.mapper
 
 import pl.droidcon.app.data.local.TalkLocal
 import pl.droidcon.app.data.network.AgendaRemote
+import pl.droidcon.app.data.network.FirebaseAgenda
 import pl.droidcon.app.domain.*
 import javax.inject.Inject
 
@@ -25,11 +26,54 @@ class AgendaMapper @Inject constructor() {
                                     session = sessions.findSession(it.slotSession)
                             )
                         }
-                TalkPanel(start = slotStart, end = slotEnd, talks = talks, sessionType = sessionType)
+                TalkPanel(start = slotStart, end = slotEnd, talks = talks, sessionType = sessionType, text = "to_be_removed")
             }
 
             Day(dayId, talkPanels)
         }
+
+        return Agenda(days)
+    }
+
+    fun map2(firebaseAgenda: List<FirebaseAgenda>, sessions: List<Session>): Agenda {
+
+        val groupedByDays = firebaseAgenda.groupBy { it.dayid }
+
+        val days = groupedByDays.map {
+            val dayId = it.key
+            val agendaForDay = it.value
+
+            val talkPanels = agendaForDay.map { agenda ->
+                val talks = mutableListOf<Talk>()
+
+                if (agenda.session1id > 0) {
+                    val session1 = sessions.findSession(agenda.session1id)
+                    val talk1 = Talk(title = session1!!.sessionTitle, speakers = session1.speakers, session = session1)
+                    talks.add(talk1)
+                }
+
+                if (agenda.session2id > 0) {
+                    val session2 = sessions.findSession(agenda.session2id)
+                    val talk2 = Talk(title = session2!!.sessionTitle, speakers = session2.speakers, session = session2)
+                    talks.add(talk2)
+                }
+
+                if (agenda.session3id > 0) {
+                    val session3 = sessions.findSession(agenda.session3id)
+                    val talk3 = Talk(title = session3!!.sessionTitle, speakers = session3.speakers, session = session3)
+                    talks.add(talk3)
+                }
+
+                if (talks.isEmpty())
+                    TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = emptyList(), sessionType = "meta", text = agenda.text)
+                else
+                    TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = talks, sessionType = "talk", text = "")
+
+            }
+
+            Day(dayId, talkPanels)
+        }
+
 
         return Agenda(days)
     }
@@ -67,6 +111,14 @@ private fun List<Session>.findSession(id: String): Session? {
     val sessions = this
 
     return id.toLongOrNull()?.run {
+        sessions.find { it.sessionId == this }
+    }
+}
+
+private fun List<Session>.findSession(id: Long): Session? {
+    val sessions = this
+
+    return id.run {
         sessions.find { it.sessionId == this }
     }
 }

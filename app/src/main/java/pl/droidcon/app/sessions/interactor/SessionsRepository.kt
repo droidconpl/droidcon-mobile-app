@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 @ApplicationScope
 class SessionsRepository
-@Inject constructor(private val remoteSessionsSource: RemoteSessionsSource,
+@Inject constructor(private val remoteSessionsSource: RemoteFirebaseSessionsSource /* change to RemoteSessionsSource for using old API */,
                     private val localSessionsSource: LocalSessionsSource)
     : DataRepository<List<Session>> by Repository(remoteSessionsSource, localSessionsSource, emptyList())

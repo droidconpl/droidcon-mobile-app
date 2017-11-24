@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import io.reactivex.Maybe
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import pl.droidcon.app.data.LocalDataSource
 import pl.droidcon.app.data.OnRemoteSuccess
@@ -53,10 +54,14 @@ class RemoteFirebaseSpeakerSource @Inject constructor(private val speakerMapper:
                     it.getValue<FirebaseSpeaker>(FirebaseSpeaker::class.java)?.let { it1 -> speakerMapper.map(it1) }
                 }
 
-                //TODO save success value to local database
-                //TODO must be done on other thread, now is main!!!
-
                 speakersSubject.onNext(speakers)
+
+                Observable
+                        .fromCallable {
+                            success(speakers)
+                        }
+                        .subscribeOn(Schedulers.io())
+                        .subscribe()
             }
         })
 

@@ -14,5 +14,6 @@ fun createSpeaker(id: Long) = Speaker(
         githubUrl = "",
         linkedinUrl = "",
         googlePlusUrl = "",
-        imageUrl = ""
+        imageUrl = "",
+        talkId = 0L
 )

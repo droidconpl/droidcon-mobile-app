@@ -34,7 +34,7 @@ class SessionsRepositoryTest {
         }
     }
 
-    private val remote: RemoteSessionsSource = mock()
+    private val remote: RemoteFirebaseSessionsSource = mock()
     private val local: LocalSessionsSource = mock()
 
     @Test
