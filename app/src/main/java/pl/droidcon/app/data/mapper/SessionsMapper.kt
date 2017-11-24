@@ -16,7 +16,7 @@ class SessionsMapper @Inject constructor(private val sessionTypeMapper: SessionT
                 sessionType = sessionTypeMapper.map(sessionRemote.sessionType),
                 sessionTitle = sessionRemote.sessionTitle,
                 sessionDescription = sessionRemote.sessionDescription,
-                sessionLength = "$sessionRemote.sessionLength",
+                sessionLength = sessionRemote.sessionLength.toString(),
                 workshopCapacity = sessionRemote.workshopCapacity,
                 speakers = sessionRemote.findSpeakers(speakers)
         )
