@@ -42,10 +42,10 @@ class AgendaFragment : Fragment(), AgendaView {
     override fun display(agenda: Agenda) {
         view?.let {
 
-            val adapter = AgendaAdapter(agenda.days[0].talkPanels)
-
-            agendaView.layoutManager = LinearLayoutManager(it.context)
-            agendaView.adapter = adapter
+//            val adapter = AgendaAdapter(agenda.days[0].talkPanels)
+//
+//            agendaView.layoutManager = LinearLayoutManager(it.context)
+//            agendaView.adapter = adapter
         }
     }
 

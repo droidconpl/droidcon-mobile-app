@@ -58,9 +58,11 @@ data class FirebaseAgenda(
         val dayid: Long = 0L,
         val starthour: String = "",
         val endhour: String = "",
-        val roomid: Long = 0L,
         val slotid: Long = 0L,
-        val text: String = ""
+        val text: String = "",
+        val session1id: Long = 0L,
+        val session2id: Long = 0L,
+        val session3id: Long = 0L
 )
 
 data class AgendaRemote(

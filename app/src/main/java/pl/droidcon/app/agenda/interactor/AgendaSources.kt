@@ -65,19 +65,15 @@ class FirebaseAgendaSource @Inject constructor(private val agendaMapper: AgendaM
                 sessionsRepository
                         .get()
                         .distinctUntilChanged()
-                        .zipWith(speakersRepository.get())
-                        .filter({ it.second.isNotEmpty() && it.first.isNotEmpty() })
-                        .map {
+                        .filter({ it.isNotEmpty() })
+                        .map { sessions ->
                             val agendaEntries = mutableListOf<FirebaseAgenda>()
 
-                            val sessions = it.first
-                            val speakers = it.second
-
-                            dataSnapshot.children.mapNotNullTo(sessions) {
-                                it.getValue<FirebaseAgenda>(FirebaseAgenda::class.java)?.let { it1 -> agendaMapper.map(it1, speakers) }
+                            dataSnapshot.children.mapNotNullTo(agendaEntries) {
+                                it.getValue<FirebaseAgenda>(FirebaseAgenda::class.java)
                             }
 
-                            agendaMapper.map(agendaEntries.first(), sessions, speakers)
+                            agendaMapper.map2(agendaEntries, sessions)
                         }
                         .doOnNext(success)
                         .subscribeOn(Schedulers.io())
