@@ -27,11 +27,42 @@ data class SessionRemote(
         @SerializedName("workshopCapacity") val workshopCapacity: Int
 )
 
+data class FirebaseSession(
+        val id: Long = 0L,
+        val title: String = "",
+        val description: String = "",
+        val duration: String = "",
+        val tags: String = "",
+        val published: Boolean = false,
+        val speakerkey: String = ""
+)
+
 data class FirebaseSpeaker(
+        val id: Long = 0L,
+        val key: String = "",
         val name: String = "",
         val surname: String = "",
+        val title: String = "",
+        val biography: String = "",
+        val twitter: String = "",
+        val facebook: String = "",
+        val github: String = "",
+        val linkedin: String = "",
+        val website: String = "",
         val photourl: String = "",
-        val title: String = ""
+        val published: Boolean = false,
+        val talkid: Long = 0L
+)
+
+data class FirebaseAgenda(
+        val dayid: Long = 0L,
+        val starthour: String = "",
+        val endhour: String = "",
+        val slotid: Long = 0L,
+        val text: String = "",
+        val session1id: Long = 0L,
+        val session2id: Long = 0L,
+        val session3id: Long = 0L
 )
 
 data class AgendaRemote(

@@ -11,7 +11,7 @@ arrayOf(
         DayLocal::class,
         TalkPanelLocal::class,
         TalkLocal::class),
-        version = 1)
+        version = 2)
 @TypeConverters(Converters::class)
 abstract class DroidconDatabase : RoomDatabase() {
 
@@ -26,6 +26,7 @@ abstract class DroidconDatabase : RoomDatabase() {
 
         fun init(context: Context) {
             database = Room.databaseBuilder(context, DroidconDatabase::class.java, "droidcon")
+                    .fallbackToDestructiveMigration()
                     .build()
         }
 

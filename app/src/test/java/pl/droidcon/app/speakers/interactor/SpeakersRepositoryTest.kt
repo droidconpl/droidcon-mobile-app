@@ -35,7 +35,7 @@ class SpeakersRepositoryTest {
         }
     }
 
-    private val remote: RemoteSpeakersSource = mock()
+    private val remote: RemoteFirebaseSpeakerSource = mock()
     private val local: LocalSpeakersSource = mock()
 
 

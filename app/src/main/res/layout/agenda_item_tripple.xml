@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/speaker_1_picture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="H,2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_time"
+        tools:background="@color/alto"
+        tools:src="@drawable/ic_person" />
+
+    <TextView
+        android:id="@+id/speaker_1_room"
+        style="@style/AgendaRoomLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/room_A"
+        app:layout_constraintRight_toRightOf="@id/speaker_1_picture"
+        app:layout_constraintTop_toTopOf="@id/speaker_1_picture" />
+
+    <TextView
+        android:id="@+id/speaker_1_description"
+        style="@style/AgendaTalkLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/speaker_1_picture"
+        app:layout_constraintLeft_toLeftOf="@id/speaker_1_picture"
+        app:layout_constraintRight_toRightOf="@id/speaker_1_picture"
+        tools:text="Talk #1 description" />
+
+    <ImageView
+        android:id="@+id/speaker_2_picture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintRight_toLeftOf="@id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/speaker_1_picture"
+        tools:background="@color/pistachio"
+        tools:src="@drawable/ic_person" />
+
+    <TextView
+        android:id="@+id/speaker_2_room"
+        style="@style/AgendaRoomLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/room_B"
+        app:layout_constraintRight_toRightOf="@id/speaker_2_picture"
+        app:layout_constraintTop_toTopOf="@id/speaker_2_picture" />
+
+    <TextView
+        android:id="@+id/speaker_2_description"
+        style="@style/AgendaTalkLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/speaker_2_picture"
+        app:layout_constraintLeft_toLeftOf="@id/speaker_2_picture"
+        app:layout_constraintRight_toRightOf="@id/speaker_2_picture"
+        tools:text="Talk #2 description" />
+
+    <ImageView
+        android:id="@+id/speaker_3_picture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/speaker_1_picture"
+        tools:background="@color/mine_shaft"
+        tools:src="@drawable/ic_person" />
+
+    <TextView
+        android:id="@+id/speaker_3_room"
+        style="@style/AgendaRoomLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/room_C"
+        app:layout_constraintRight_toRightOf="@+id/speaker_3_picture"
+        app:layout_constraintTop_toTopOf="@id/speaker_3_picture" />
+
+    <TextView
+        android:id="@+id/speaker_3_description"
+        style="@style/AgendaTalkLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/speaker_3_picture"
+        app:layout_constraintLeft_toLeftOf="@id/speaker_3_picture"
+        app:layout_constraintRight_toRightOf="@id/speaker_3_picture"
+        tools:text="Talk #3 description" />
+
+    <TextView
+        android:id="@+id/start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/heavy_metal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Start time" />
+
+    <TextView
+        android:id="@+id/end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/heavy_metal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/start_time"
+        tools:text="End time" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50" />
+
+
+</android.support.constraint.ConstraintLayout>

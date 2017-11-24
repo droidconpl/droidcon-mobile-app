@@ -2,6 +2,7 @@ package pl.droidcon.app.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+
 // use: https://plugins.jetbrains.com/plugin/8086-parcelable-code-generator-for-kotlin-
 
 data class Speaker(
@@ -16,45 +17,52 @@ data class Speaker(
         val githubUrl: String,
         val linkedinUrl: String,
         val googlePlusUrl: String,
-        val imageUrl: String
+        val imageUrl: String,
+        val talkId: Long
 ) : Parcelable {
-    constructor(source: Parcel) : this(
-            source.readLong(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString()
-    )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeLong(id)
-        writeString(firstName)
-        writeString(lastName)
-        writeString(title)
-        writeString(description)
-        writeString(websiteUrl)
-        writeString(facebookUrl)
-        writeString(twitterUrl)
-        writeString(githubUrl)
-        writeString(linkedinUrl)
-        writeString(googlePlusUrl)
-        writeString(imageUrl)
+    constructor(parcel: Parcel) : this(
+            parcel.readLong(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readLong()) {
     }
 
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<Speaker> = object : Parcelable.Creator<Speaker> {
-            override fun createFromParcel(source: Parcel): Speaker = Speaker(source)
-            override fun newArray(size: Int): Array<Speaker?> = arrayOfNulls(size)
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(id)
+        parcel.writeString(firstName)
+        parcel.writeString(lastName)
+        parcel.writeString(title)
+        parcel.writeString(description)
+        parcel.writeString(websiteUrl)
+        parcel.writeString(facebookUrl)
+        parcel.writeString(twitterUrl)
+        parcel.writeString(githubUrl)
+        parcel.writeString(linkedinUrl)
+        parcel.writeString(googlePlusUrl)
+        parcel.writeString(imageUrl)
+        parcel.writeLong(talkId)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Speaker> {
+        override fun createFromParcel(parcel: Parcel): Speaker {
+            return Speaker(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Speaker?> {
+            return arrayOfNulls(size)
         }
     }
 }
@@ -65,7 +73,7 @@ data class Session(
         val sessionTitle: String,
         val sessionDescription: String,
         val speakers: List<Speaker>,
-        val sessionLength: Double,
+        val sessionLength: String,
         val workshopCapacity: Int
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -74,7 +82,7 @@ data class Session(
             source.readString(),
             source.readString(),
             source.createTypedArrayList(Speaker.CREATOR),
-            source.readDouble(),
+            source.readString(),
             source.readInt()
     )
 
@@ -86,7 +94,7 @@ data class Session(
         writeString(sessionTitle)
         writeString(sessionDescription)
         writeTypedList(speakers)
-        writeDouble(sessionLength)
+        writeString(sessionLength)
         writeInt(workshopCapacity)
     }
 
@@ -148,26 +156,33 @@ data class Day(val id: Long, val talkPanels: List<TalkPanel>) : Parcelable {
     }
 }
 
-data class TalkPanel(val start: String, val end: String, val talks: List<Talk>) : Parcelable {
-    constructor(source: Parcel) : this(
-            source.readString(),
-            source.readString(),
-            source.createTypedArrayList(Talk.CREATOR)
-    )
+data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, val sessionType: String, val text: String) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.createTypedArrayList(Talk.CREATOR),
+            parcel.readString(),
+            parcel.readString())
 
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(start)
-        writeString(end)
-        writeTypedList(talks)
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(start)
+        parcel.writeString(end)
+        parcel.writeTypedList(talks)
+        parcel.writeString(sessionType)
+        parcel.writeString(text)
     }
 
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<TalkPanel> = object : Parcelable.Creator<TalkPanel> {
-            override fun createFromParcel(source: Parcel): TalkPanel = TalkPanel(source)
-            override fun newArray(size: Int): Array<TalkPanel?> = arrayOfNulls(size)
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<TalkPanel> {
+        override fun createFromParcel(parcel: Parcel): TalkPanel {
+            return TalkPanel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<TalkPanel?> {
+            return arrayOfNulls(size)
         }
     }
 }

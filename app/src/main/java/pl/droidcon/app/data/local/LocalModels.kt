@@ -2,9 +2,7 @@ package pl.droidcon.app.data.local
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 const val SPEAKER_TABLE_NAME = "speaker"
 const val SESSION_TABLE_NAME = "session"
@@ -35,7 +33,7 @@ data class SessionLocal(
         @ColumnInfo(name = "sessionTitle") val sessionTitle: String,
         @ColumnInfo(name = "sessionDescription") val sessionDescription: String,
         @ColumnInfo(name = "speakerId") val speakerIds: List<Long>,
-        @ColumnInfo(name = "sessionLength") val sessionLength: Double,
+        @ColumnInfo(name = "sessionLength") val sessionLength: String,
         @ColumnInfo(name = "workshopCapacity") val workshopCapacity: Int
 )
 
@@ -49,7 +47,9 @@ data class DayLocal(
 data class TalkPanelLocal(
         @ColumnInfo(name = "start") val start: String,
         @ColumnInfo(name = "end") val end: String,
-        @ColumnInfo(name = "talks") val talks: List<Long>
+        @ColumnInfo(name = "talks") val talks: List<Long>,
+        @ColumnInfo(name = "sessionType") val sessionType: String,
+        @ColumnInfo(name = "text") val text: String
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

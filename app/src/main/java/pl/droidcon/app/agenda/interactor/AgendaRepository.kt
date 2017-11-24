@@ -7,6 +7,6 @@ import pl.droidcon.app.domain.Agenda
 import javax.inject.Inject
 
 @ApplicationScope
-class AgendaRepository @Inject constructor(private val remoteAgendaSource: RemoteAgendaSource,
+class AgendaRepository @Inject constructor(private val remoteAgendaSource: FirebaseAgendaSource /* RemoteAgendaSource */,
                                            private val localAgendaSource: LocalAgendaSource)
     : DataRepository<Agenda> by Repository(remoteAgendaSource, localAgendaSource, Agenda.NULL_OBJECT)
