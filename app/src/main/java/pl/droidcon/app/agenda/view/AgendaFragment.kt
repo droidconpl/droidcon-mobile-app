@@ -59,6 +59,9 @@ class AgendaPagerAdapter constructor(val agenda: Agenda, fm: FragmentManager) : 
 
     override fun getCount(): Int = 2
 
+    override fun getPageTitle(position: Int): CharSequence {
+        return if (position == 0) "Friday " else "Saturday"
+    }
 }
 
 class AgendaItemFragment : Fragment() {
@@ -75,7 +78,7 @@ class AgendaItemFragment : Fragment() {
         val dayId = arguments.getInt(AgendaItemFragment.DAY_ID_PARAM)
         val agenda = arguments.getParcelable<Agenda>(AgendaItemFragment.AGENDA_PARAM)
 
-        if(agenda.days.isEmpty()) return
+        if (agenda.days.isEmpty()) return
 
         val talks = agenda.days[dayId].talkPanels
         val adapter = AgendaAdapter(talks)
