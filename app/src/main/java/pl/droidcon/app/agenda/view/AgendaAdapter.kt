@@ -1,8 +1,6 @@
 package pl.droidcon.app.agenda.view
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import pl.droidcon.app.R
+import pl.droidcon.app.agenda.AgendaItemPresenter
 import pl.droidcon.app.domain.TalkPanel
-import pl.droidcon.app.sessions.SessionActivity
 
 
-class AgendaAdapter(private val talks: List<TalkPanel>) : RecyclerView.Adapter<AgendaHolder>() {
-
-    private val subject: PublishSubject<TalkPanel> = PublishSubject.create()
+class AgendaAdapter(private val talks: List<TalkPanel>, val agendaItemPresenter: AgendaItemPresenter) : RecyclerView.Adapter<AgendaHolder>() {
 
     override fun onBindViewHolder(holder: AgendaHolder, position: Int) = holder.bindHolder(talks[position])
 
@@ -29,14 +23,13 @@ class AgendaAdapter(private val talks: List<TalkPanel>) : RecyclerView.Adapter<A
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgendaHolder {
         when (viewType) {
-            0 -> return AgendaSingleHolder(LayoutInflater.from(parent.context).inflate(R.layout.agenda_item, parent, false), subject)
-            else -> return AgendaTripleHolder(LayoutInflater.from(parent.context).inflate(R.layout.agenda_item_tripple, parent, false), subject)
+            0 -> return AgendaSingleHolder(LayoutInflater.from(parent.context).inflate(R.layout.agenda_item, parent, false))
+            else -> return AgendaTripleHolder(LayoutInflater.from(parent.context).inflate(R.layout.agenda_item_tripple, parent, false), agendaItemPresenter)
         }
     }
 }
 
-class AgendaSingleHolder(private val item: View,
-                         private val subject: Subject<TalkPanel>) : AgendaHolder(item, subject) {
+class AgendaSingleHolder(item: View) : AgendaHolder(item) {
 
     private val startTime: TextView = item.findViewById(R.id.start_time)
     private val endTime: TextView = item.findViewById(R.id.end_time)
@@ -44,10 +37,6 @@ class AgendaSingleHolder(private val item: View,
 
     @SuppressLint("SetTextI18n")
     override fun bindHolder(talk: TalkPanel) {
-//        val talk1 = talk.talks[0]
-//        val talk2 = talk.talks[1]
-//        val talk3 = talk.talks[2]
-//
         title.text = talk.text
 
         startTime.text = talk.start
@@ -55,8 +44,7 @@ class AgendaSingleHolder(private val item: View,
     }
 }
 
-class AgendaTripleHolder(private val item: View,
-                         private val subject: Subject<TalkPanel>) : AgendaHolder(item, subject) {
+class AgendaTripleHolder(private val item: View, val agendaItemPresenter: AgendaItemPresenter) : AgendaHolder(item) {
 
     private val startTime: TextView = item.findViewById(R.id.start_time)
     private val endTime: TextView = item.findViewById(R.id.end_time)
@@ -72,6 +60,7 @@ class AgendaTripleHolder(private val item: View,
     private val speaker3picture: ImageView = item.findViewById(R.id.speaker_3_picture)
     private val speaker3room: TextView = item.findViewById(R.id.speaker_3_room)
     private val speaker3description: TextView = item.findViewById(R.id.speaker_3_description)
+
 
     @SuppressLint("SetTextI18n")
     override fun bindHolder(talk: TalkPanel) {
@@ -91,12 +80,7 @@ class AgendaTripleHolder(private val item: View,
 
         // TODO: optimize !
         speaker1picture.setOnClickListener {
-            val context = speaker1picture.context
-
-            val intent = SessionActivity.intent(context, talk1.session)
-
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, speaker1picture as View, "profile")
-            speaker1picture.context.startActivity(intent, options.toBundle())
+            agendaItemPresenter.openSession(speaker1picture, talk1.session)
         }
 
         if (talk.talks.size == 1) {
@@ -107,12 +91,8 @@ class AgendaTripleHolder(private val item: View,
             speaker3room.visibility = View.GONE
         } else {
             val talk2 = talk.talks[1]
-            val talk3 = talk.talks[2]
             speaker2picture.visibility = View.VISIBLE
-            speaker3picture.visibility = View.VISIBLE
-
             speaker2room.visibility = View.VISIBLE
-            speaker3room.visibility = View.VISIBLE
 
             if (talk2.speakers.isEmpty()) {
                 speaker2picture.setImageResource(R.drawable.ic_sad)
@@ -126,27 +106,39 @@ class AgendaTripleHolder(private val item: View,
                         .error(R.drawable.ic_sad)
                         .into(speaker2picture)
             }
+            speaker2picture.setOnClickListener {
+                agendaItemPresenter.openSession(speaker2picture, talk2.session)
+            }
 
-            if (talk3.speakers.isEmpty()) {
-                speaker3picture.setImageResource(R.drawable.ic_sad)
-                speaker3description.text = ""
+            if (talk.talks.size == 3) {
+                val talk3 = talk.talks[2]
+                if (talk3.speakers.isEmpty()) {
+                    speaker3picture.setImageResource(R.drawable.ic_sad)
+                    speaker3description.text = ""
+                } else {
+                    speaker3description.text = talk3.session!!.sessionTitle
+                    Picasso
+                            .with(item.context)
+                            .load(talk3.speakers.firstOrNull()?.imageUrl)
+                            .placeholder(R.drawable.ic_person)
+                            .error(R.drawable.ic_sad)
+                            .into(speaker3picture)
+                }
+                speaker3picture.setOnClickListener {
+                    agendaItemPresenter.openSession(speaker3picture, talk3.session)
+                }
+
+                speaker3picture.visibility = View.VISIBLE
+                speaker3room.visibility = View.VISIBLE
             } else {
-                speaker3description.text = talk3.session!!.sessionTitle
-                Picasso
-                        .with(item.context)
-                        .load(talk3.speakers.firstOrNull()?.imageUrl)
-                        .placeholder(R.drawable.ic_person)
-                        .error(R.drawable.ic_sad)
-                        .into(speaker3picture)
+                speaker3picture.setImageResource(R.drawable.ic_sad)
             }
         }
-
 
     }
 }
 
-abstract class AgendaHolder(private val item: View,
-                            private val subject: Subject<TalkPanel>) : RecyclerView.ViewHolder(item) {
+abstract class AgendaHolder(item: View) : RecyclerView.ViewHolder(item) {
 
     abstract fun bindHolder(talk: TalkPanel)
 }

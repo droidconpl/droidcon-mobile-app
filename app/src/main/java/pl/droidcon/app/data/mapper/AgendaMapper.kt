@@ -99,20 +99,20 @@ private fun List<Speaker>.toIds(): List<Long> = map { it.id }
 
 private fun List<Speaker>.findSpeakers(ids: List<Long>): List<Speaker> = filter { ids.contains(it.id) }
 
-private fun List<Session>.findSessionMaybe(id: Long?): Session? {
+private fun List<Session>.findSessionMaybe(id: Long?): Session {
     val sessions = this
 
     return id?.run {
         sessions.find { it.sessionId == this }
-    }
+    }!!
 }
 
-private fun List<Session>.findSession(id: String): Session? {
+private fun List<Session>.findSession(id: String): Session {
     val sessions = this
 
     return id.toLongOrNull()?.run {
         sessions.find { it.sessionId == this }
-    }
+    }!!
 }
 
 private fun List<Session>.findSession(id: Long): Session? {
