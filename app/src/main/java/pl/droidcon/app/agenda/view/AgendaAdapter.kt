@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import pl.droidcon.app.R
 import pl.droidcon.app.agenda.AgendaItemPresenter
+import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.domain.TalkPanel
 
 
@@ -70,13 +71,9 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
         startTime.text = talk.start
         endTime.text = talk.end
 
-        Picasso
-                .with(item.context)
-                .load(talk1.speakers.firstOrNull()?.imageUrl)
-                .placeholder(R.drawable.ic_person)
-                .error(R.drawable.ic_sad)
-                .into(speaker1picture)
-        speaker1description.text = talk1.session!!.sessionTitle
+        loadSpeakerPicutre(talk1.speakers, speaker1picture)
+
+        speaker1description.text = talk1.session.sessionTitle
 
         // TODO: optimize !
         speaker1picture.setOnClickListener {
@@ -99,12 +96,7 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
                 speaker2description.text = ""
             } else {
                 speaker2description.text = talk2.session!!.sessionTitle
-                Picasso
-                        .with(item.context)
-                        .load(talk2.speakers.firstOrNull()?.imageUrl)
-                        .placeholder(R.drawable.ic_person)
-                        .error(R.drawable.ic_sad)
-                        .into(speaker2picture)
+                loadSpeakerPicutre(talk2.speakers, speaker2picture)
             }
             speaker2picture.setOnClickListener {
                 agendaItemPresenter.openSession(speaker2picture, talk2.session)
@@ -117,12 +109,8 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
                     speaker3description.text = ""
                 } else {
                     speaker3description.text = talk3.session!!.sessionTitle
-                    Picasso
-                            .with(item.context)
-                            .load(talk3.speakers.firstOrNull()?.imageUrl)
-                            .placeholder(R.drawable.ic_person)
-                            .error(R.drawable.ic_sad)
-                            .into(speaker3picture)
+
+                    loadSpeakerPicutre(talk3.speakers, speaker3picture)
                 }
                 speaker3picture.setOnClickListener {
                     agendaItemPresenter.openSession(speaker3picture, talk3.session)
@@ -135,6 +123,15 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
             }
         }
 
+    }
+
+    fun loadSpeakerPicutre(speakers: List<Speaker>, speakerIv: ImageView) {
+        Picasso
+                .with(item.context)
+                .load(speakers.firstOrNull()?.imageUrl)
+                .placeholder(R.drawable.ic_person)
+                .error(R.drawable.ic_sad)
+                .into(speakerIv)
     }
 }
 
