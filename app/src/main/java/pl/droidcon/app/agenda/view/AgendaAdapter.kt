@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso
 import pl.droidcon.app.R
 import pl.droidcon.app.agenda.AgendaItemPresenter
 import pl.droidcon.app.domain.Speaker
+import pl.droidcon.app.domain.Talk
 import pl.droidcon.app.domain.TalkPanel
 
 
@@ -50,82 +51,74 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
     private val startTime: TextView = item.findViewById(R.id.start_time)
     private val endTime: TextView = item.findViewById(R.id.end_time)
 
-    private val speaker1picture: ImageView = item.findViewById(R.id.speaker_1_picture)
-    private val speaker1room: TextView = item.findViewById(R.id.speaker_1_room)
-    private val speaker1description: TextView = item.findViewById(R.id.speaker_1_description)
+    private val session1: AgendaItemPack = AgendaItemPack(
+            speakerImageView = item.findViewById(R.id.speaker_1_picture),
+            roomTextView = item.findViewById(R.id.speaker_1_room),
+            descriptionTextView = item.findViewById(R.id.speaker_1_description)
+    )
 
-    private val speaker2picture: ImageView = item.findViewById(R.id.speaker_2_picture)
-    private val speaker2room: TextView = item.findViewById(R.id.speaker_2_room)
-    private val speaker2description: TextView = item.findViewById(R.id.speaker_2_description)
+    private val session2: AgendaItemPack = AgendaItemPack(
+            speakerImageView = item.findViewById(R.id.speaker_2_picture),
+            roomTextView = item.findViewById(R.id.speaker_2_room),
+            descriptionTextView = item.findViewById(R.id.speaker_2_description)
+    )
 
-    private val speaker3picture: ImageView = item.findViewById(R.id.speaker_3_picture)
-    private val speaker3room: TextView = item.findViewById(R.id.speaker_3_room)
-    private val speaker3description: TextView = item.findViewById(R.id.speaker_3_description)
-
+    private val session3: AgendaItemPack = AgendaItemPack(
+            speakerImageView = item.findViewById(R.id.speaker_3_picture),
+            roomTextView = item.findViewById(R.id.speaker_3_room),
+            descriptionTextView = item.findViewById(R.id.speaker_3_description)
+    )
 
     @SuppressLint("SetTextI18n")
     override fun bindHolder(talk: TalkPanel) {
-        val talk1 = talk.talks[0]
-
-
         startTime.text = talk.start
         endTime.text = talk.end
 
-        loadSpeakerPicutre(talk1.speakers, speaker1picture)
+        val numberOfTalks = talk.talks.size
 
-        speaker1description.text = talk1.session.sessionTitle
+        setupTalk(talk.talks[0], session1)
 
-        // TODO: optimize !
-        speaker1picture.setOnClickListener {
-            agendaItemPresenter.openSession(speaker1picture, talk1.session)
-        }
+        if (numberOfTalks == 1) {
+            session2.speakerImageView.visibility = View.GONE
+            session2.roomTextView.visibility = View.GONE
 
-        if (talk.talks.size == 1) {
-            speaker2picture.visibility = View.GONE
-            speaker3picture.visibility = View.GONE
-
-            speaker2room.visibility = View.GONE
-            speaker3room.visibility = View.GONE
+            session3.speakerImageView.visibility = View.GONE
+            session3.roomTextView.visibility = View.GONE
         } else {
-            val talk2 = talk.talks[1]
-            speaker2picture.visibility = View.VISIBLE
-            speaker2room.visibility = View.VISIBLE
+            setupTalk(talk.talks[1], session2)
 
-            if (talk2.speakers.isEmpty()) {
-                speaker2picture.setImageResource(R.drawable.ic_sad)
-                speaker2description.text = ""
+            session2.speakerImageView.visibility = View.VISIBLE
+            session2.roomTextView.visibility = View.VISIBLE
+
+            if (numberOfTalks == 3) {
+                setupTalk(talk.talks[2], session3)
+
+                session3.speakerImageView.visibility = View.VISIBLE
+                session3.roomTextView.visibility = View.VISIBLE
             } else {
-                speaker2description.text = talk2.session!!.sessionTitle
-                loadSpeakerPicutre(talk2.speakers, speaker2picture)
-            }
-            speaker2picture.setOnClickListener {
-                agendaItemPresenter.openSession(speaker2picture, talk2.session)
-            }
-
-            if (talk.talks.size == 3) {
-                val talk3 = talk.talks[2]
-                if (talk3.speakers.isEmpty()) {
-                    speaker3picture.setImageResource(R.drawable.ic_sad)
-                    speaker3description.text = ""
-                } else {
-                    speaker3description.text = talk3.session!!.sessionTitle
-
-                    loadSpeakerPicutre(talk3.speakers, speaker3picture)
-                }
-                speaker3picture.setOnClickListener {
-                    agendaItemPresenter.openSession(speaker3picture, talk3.session)
-                }
-
-                speaker3picture.visibility = View.VISIBLE
-                speaker3room.visibility = View.VISIBLE
-            } else {
-                speaker3picture.setImageResource(R.drawable.ic_sad)
+                session3.speakerImageView.visibility = View.GONE
+                session3.roomTextView.visibility = View.GONE
             }
         }
 
     }
 
-    fun loadSpeakerPicutre(speakers: List<Speaker>, speakerIv: ImageView) {
+    private fun setupTalk(talk: Talk, itemPack: AgendaItemPack) {
+        itemPack.speakerImageView.setOnClickListener {
+            agendaItemPresenter.openSession(itemPack.speakerImageView, talk.session)
+        }
+
+        // fallback for corrupted data
+        if (talk.speakers.isEmpty()) {
+            itemPack.speakerImageView.setImageResource(R.drawable.ic_sad)
+            itemPack.descriptionTextView.text = ""
+        } else {
+            setSpeakerPicture(talk.speakers, itemPack.speakerImageView)
+            itemPack.descriptionTextView.text = talk.session.sessionTitle
+        }
+    }
+
+    private fun setSpeakerPicture(speakers: List<Speaker>, speakerIv: ImageView) {
         Picasso
                 .with(item.context)
                 .load(speakers.firstOrNull()?.imageUrl)
@@ -133,6 +126,12 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
                 .error(R.drawable.ic_sad)
                 .into(speakerIv)
     }
+
+    data class AgendaItemPack(
+            val speakerImageView: ImageView,
+            val roomTextView: TextView,
+            val descriptionTextView: TextView
+    )
 }
 
 abstract class AgendaHolder(item: View) : RecyclerView.ViewHolder(item) {
