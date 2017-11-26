@@ -3,6 +3,7 @@ package pl.droidcon.app
 import dagger.Component
 import pl.droidcon.app.about.AboutFragment
 import pl.droidcon.app.agenda.view.AgendaFragment
+import pl.droidcon.app.agenda.view.AgendaItemFragment
 import pl.droidcon.app.data.LocalDataModule
 import pl.droidcon.app.data.NetworkModule
 import pl.droidcon.app.sessions.view.SessionsFragment
@@ -29,6 +30,7 @@ interface ApplicationComponent {
     fun inject(aboutFragment: AboutFragment)
 
     fun inject(agendaFragment: AgendaFragment)
+    fun inject(agendaItemFragment: AgendaItemFragment)
 
     fun speakerComponent(speakerModule: SpeakerModule): SpeakerComponent
 }

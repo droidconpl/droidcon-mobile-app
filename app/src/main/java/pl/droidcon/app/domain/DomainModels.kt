@@ -187,7 +187,7 @@ data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, 
     }
 }
 
-data class Talk(val title: String, val speakers: List<Speaker>, val session: Session?) : Parcelable {
+data class Talk(val title: String, val speakers: List<Speaker>, val session: Session) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.createTypedArrayList(Speaker.CREATOR),

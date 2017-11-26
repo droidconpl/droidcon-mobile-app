@@ -8,6 +8,7 @@ import android.text.Html
 import android.view.View
 import android.widget.ImageButton
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_speaker.*
 import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
@@ -36,6 +37,7 @@ class SpeakerActivity : AppCompatActivity(), SpeakerView {
         with(speakerDetails) {
             Picasso.with(this@SpeakerActivity)
                     .load(photoUrl)
+                    .transform(CropCircleTransformation())
                     .placeholder(R.drawable.ic_person)
                     .resizeDimen(R.dimen.photo_size, R.dimen.photo_size)
                     .into(speaker_photo)

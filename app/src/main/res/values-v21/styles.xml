@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SpeakerPicture">
+        <item name="android:transitionName">profile</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/pistachio</item>
+        <item name="colorPrimaryDark">@color/pistachio_dark</item>
+        <item name="colorAccent">@color/mine_shaft</item>
+
+        <item name="android:windowContentTransitions">true</item>
+
+    </style>
+</resources>
