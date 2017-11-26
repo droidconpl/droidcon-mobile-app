@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_session.*
 import pl.droidcon.app.R
 import pl.droidcon.app.domain.Session
@@ -23,7 +24,8 @@ class SessionActivity : AppCompatActivity() {
 
         val speaker = session.speakers[0]
         session_speaker_1_name.text = "${speaker.firstName} ${speaker.lastName}"
-        Picasso.with(this).load(session.speakers.first().imageUrl).into(session_speaker_1_picture)
+        session_speaker_1_title.text = speaker.title
+        Picasso.with(this).load(session.speakers.first().imageUrl).transform(CropCircleTransformation()).into(session_speaker_1_picture)
     }
 
     companion object {
