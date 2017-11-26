@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/speaker_1_picture"
+        style="@style/SpeakerPicture"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

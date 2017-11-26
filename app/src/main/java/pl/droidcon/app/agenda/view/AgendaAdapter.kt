@@ -1,6 +1,8 @@
 package pl.droidcon.app.agenda.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import io.reactivex.subjects.Subject
 import pl.droidcon.app.R
 import pl.droidcon.app.domain.TalkPanel
 import pl.droidcon.app.sessions.SessionActivity
+
 
 class AgendaAdapter(private val talks: List<TalkPanel>) : RecyclerView.Adapter<AgendaHolder>() {
 
@@ -87,7 +90,14 @@ class AgendaTripleHolder(private val item: View,
         speaker1description.text = talk1.session!!.sessionTitle
 
         // TODO: optimize !
-        speaker1picture.setOnClickListener { speaker1picture.context.startActivity(SessionActivity.intent(speaker1picture.context, talk1.session)) }
+        speaker1picture.setOnClickListener {
+            val context = speaker1picture.context
+
+            val intent = SessionActivity.intent(context, talk1.session)
+
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity, speaker1picture as View, "profile")
+            speaker1picture.context.startActivity(intent, options.toBundle())
+        }
 
         if (talk.talks.size == 1) {
             speaker2picture.visibility = View.GONE

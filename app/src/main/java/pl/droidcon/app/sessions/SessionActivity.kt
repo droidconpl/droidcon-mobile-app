@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_session.*
 import pl.droidcon.app.R
 import pl.droidcon.app.domain.Session
@@ -18,6 +19,9 @@ class SessionActivity : AppCompatActivity() {
 
         session_title.text = session.sessionTitle
 
+        session_description.text = session.sessionDescription
+
+        Picasso.with(this).load(session.speakers.first().imageUrl).into(session_picture)
     }
 
     companion object {
