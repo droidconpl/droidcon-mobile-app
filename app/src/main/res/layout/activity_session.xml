@@ -7,8 +7,8 @@
     tools:context="pl.droidcon.app.sessions.SessionActivity">
 
     <ImageView
-        style="@style/SpeakerPicture"
         android:id="@+id/session_picture"
+        style="@style/SpeakerPicture"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -46,6 +46,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/session_title"
         tools:text="Sample session description" />
+
+    <LinearLayout
+        android:id="@+id/session_speaker_1_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/session_description">
+
+        <ImageView
+            android:id="@+id/session_speaker_1_picture"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            tools:src="@drawable/ic_person" />
+
+        <TextView
+            android:id="@+id/session_speaker_1_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/heavy_metal"
+            android:textSize="12sp"
+            tools:text="John Doe" />
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

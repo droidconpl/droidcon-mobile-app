@@ -18,10 +18,12 @@ class SessionActivity : AppCompatActivity() {
         val session = session(intent)
 
         session_title.text = session.sessionTitle
-
         session_description.text = session.sessionDescription
-
         Picasso.with(this).load(session.speakers.first().imageUrl).into(session_picture)
+
+        val speaker = session.speakers[0]
+        session_speaker_1_name.text = "${speaker.firstName} ${speaker.lastName}"
+        Picasso.with(this).load(session.speakers.first().imageUrl).into(session_speaker_1_picture)
     }
 
     companion object {
