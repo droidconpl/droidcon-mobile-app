@@ -3,6 +3,7 @@ package pl.droidcon.app.sessions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_session.*
 import pl.droidcon.app.R
 import pl.droidcon.app.domain.Session
 import pl.droidcon.app.domain.Speaker
+import pl.droidcon.app.speaker.SpeakerActivity
 
 class SessionActivity : AppCompatActivity() {
 
@@ -26,18 +28,32 @@ class SessionActivity : AppCompatActivity() {
         session_description.text = session.sessionDescription
         Picasso.with(this).load(firstSpeaker.imageUrl).into(session_picture)
 
-        setupSpeaker(firstSpeaker, session_speaker_1_name, session_speaker_1_title, session_speaker_1_picture)
+        setupSpeaker(
+                firstSpeaker,
+                session_speaker_1_name,
+                session_speaker_1_title,
+                session_speaker_1_picture,
+                session_speaker_1_container
+        )
 
         if (session.speakers.size == 2) {
-            setupSpeaker(session.speakers[1], session_speaker_2_name, session_speaker_2_title, session_speaker_2_picture)
+            setupSpeaker(
+                    session.speakers[1],
+                    session_speaker_2_name,
+                    session_speaker_2_title,
+                    session_speaker_2_picture,
+                    session_speaker_2_container
+            )
         }
 
     }
 
-    private fun setupSpeaker(speaker: Speaker, nameTextView: TextView, titleTextView: TextView, speakerImageView: ImageView) {
+    private fun setupSpeaker(speaker: Speaker, nameTextView: TextView, titleTextView: TextView, speakerImageView: ImageView, container: ConstraintLayout) {
         nameTextView.text = "${speaker.firstName} ${speaker.lastName}"
         titleTextView.text = speaker.title
         Picasso.with(this).load(speaker.imageUrl).transform(CropCircleTransformation()).into(speakerImageView)
+
+        container.setOnClickListener { startActivity(SpeakerActivity.intent(this, speaker)) }
     }
 
     companion object {
