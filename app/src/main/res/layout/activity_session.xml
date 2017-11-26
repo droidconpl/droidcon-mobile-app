@@ -47,81 +47,95 @@
         app:layout_constraintTop_toBottomOf="@+id/session_title"
         tools:text="Sample session description" />
 
-    <ImageView
-        android:id="@+id/session_speaker_1_picture"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/session_speaker_1_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/session_description"
-        tools:src="@drawable/ic_person" />
+        app:layout_constraintTop_toBottomOf="@id/session_description">
 
-    <TextView
-        android:id="@+id/session_speaker_1_name"
-        android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/session_speaker_1_picture"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/ic_person" />
+
+        <TextView
+            android:id="@+id/session_speaker_1_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/heavy_metal"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/session_speaker_1_title"
+            app:layout_constraintStart_toEndOf="@+id/session_speaker_1_picture"
+            app:layout_constraintTop_toTopOf="@+id/session_speaker_1_picture"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="John Doe" />
+
+        <TextView
+            android:id="@+id/session_speaker_1_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/heavy_metal"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/session_speaker_1_picture"
+            app:layout_constraintStart_toEndOf="@+id/session_speaker_1_picture"
+            app:layout_constraintTop_toBottomOf="@+id/session_speaker_1_name"
+            tools:text="The awesome developer" />
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/session_speaker_2_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/heavy_metal"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/session_speaker_1_title"
-        app:layout_constraintStart_toEndOf="@+id/session_speaker_1_picture"
-        app:layout_constraintTop_toTopOf="@+id/session_speaker_1_picture"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="John Doe" />
-
-    <TextView
-        android:id="@+id/session_speaker_1_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
-        android:textColor="@color/heavy_metal"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/session_speaker_1_picture"
-        app:layout_constraintStart_toEndOf="@+id/session_speaker_1_picture"
-        app:layout_constraintTop_toBottomOf="@+id/session_speaker_1_name"
-        tools:text="The awesome developer" />
-
-
-    <ImageView
-        android:id="@+id/session_speaker_2_picture"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/session_speaker_1_picture"
-        tools:src="@drawable/ic_person" />
+        app:layout_constraintTop_toBottomOf="@+id/session_speaker_1_container">
 
-    <TextView
-        android:id="@+id/session_speaker_2_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/heavy_metal"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/session_speaker_2_title"
-        app:layout_constraintStart_toEndOf="@+id/session_speaker_2_picture"
-        app:layout_constraintTop_toTopOf="@+id/session_speaker_2_picture"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="John Doe jr" />
+        <ImageView
+            android:id="@+id/session_speaker_2_picture"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/ic_person" />
 
-    <TextView
-        android:id="@+id/session_speaker_2_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
-        android:textColor="@color/heavy_metal"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/session_speaker_2_picture"
-        app:layout_constraintStart_toEndOf="@+id/session_speaker_2_picture"
-        app:layout_constraintTop_toBottomOf="@+id/session_speaker_2_name"
-        tools:text="The second awesome developer" />
+        <TextView
+            android:id="@+id/session_speaker_2_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/heavy_metal"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/session_speaker_2_title"
+            app:layout_constraintStart_toEndOf="@+id/session_speaker_2_picture"
+            app:layout_constraintTop_toTopOf="@+id/session_speaker_2_picture"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="John Doe jr" />
+
+        <TextView
+            android:id="@+id/session_speaker_2_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/heavy_metal"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/session_speaker_2_picture"
+            app:layout_constraintStart_toEndOf="@+id/session_speaker_2_picture"
+            app:layout_constraintTop_toBottomOf="@+id/session_speaker_2_name"
+            tools:text="The second awesome developer" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
