@@ -60,6 +60,7 @@ data class FirebaseAgenda(
         val endhour: String = "",
         val slotid: Long = 0L,
         val text: String = "",
+        val imageurl: String = "",
         val session1id: Long = 0L,
         val session2id: Long = 0L,
         val session3id: Long = 0L
