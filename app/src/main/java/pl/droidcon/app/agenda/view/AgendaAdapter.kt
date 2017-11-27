@@ -36,6 +36,7 @@ class AgendaSingleHolder(item: View) : AgendaHolder(item) {
     private val startTime: TextView = item.findViewById(R.id.start_time)
     private val endTime: TextView = item.findViewById(R.id.end_time)
     private val title: TextView = item.findViewById(R.id.title)
+    private val image: ImageView = item.findViewById(R.id.item_icon)
 
     @SuppressLint("SetTextI18n")
     override fun bindHolder(talk: TalkPanel) {
@@ -43,6 +44,12 @@ class AgendaSingleHolder(item: View) : AgendaHolder(item) {
 
         startTime.text = talk.start
         endTime.text = talk.end
+
+        Picasso
+                .with(image.context)
+                .load(talk.imageUrl)
+//                .placeholder(R.drawable.)
+                .into(image)
     }
 }
 
