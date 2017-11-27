@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/speakersView"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="vertical" />
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/speakers_progress"
+        style="@style/Progress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="visible" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/speakersView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:visibility="gone" />
+
+</FrameLayout>

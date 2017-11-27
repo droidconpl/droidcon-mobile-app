@@ -156,11 +156,12 @@ data class Day(val id: Long, val talkPanels: List<TalkPanel>) : Parcelable {
     }
 }
 
-data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, val sessionType: String, val text: String) : Parcelable {
+data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, val sessionType: String, val text: String, val imageUrl: String) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
             parcel.createTypedArrayList(Talk.CREATOR),
+            parcel.readString(),
             parcel.readString(),
             parcel.readString())
 
@@ -170,6 +171,7 @@ data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, 
         parcel.writeTypedList(talks)
         parcel.writeString(sessionType)
         parcel.writeString(text)
+        parcel.writeString(imageUrl)
     }
 
     override fun describeContents(): Int {

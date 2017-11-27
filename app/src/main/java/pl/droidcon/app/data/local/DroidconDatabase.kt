@@ -11,7 +11,7 @@ arrayOf(
         DayLocal::class,
         TalkPanelLocal::class,
         TalkLocal::class),
-        version = 2)
+        version = 3)
 @TypeConverters(Converters::class)
 abstract class DroidconDatabase : RoomDatabase() {
 

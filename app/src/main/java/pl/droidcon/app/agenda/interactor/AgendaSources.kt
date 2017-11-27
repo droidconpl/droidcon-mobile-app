@@ -65,15 +65,16 @@ class FirebaseAgendaSource @Inject constructor(private val agendaMapper: AgendaM
                 sessionsRepository
                         .get()
                         .distinctUntilChanged()
-                        .filter({ it.isNotEmpty() })
-                        .map { sessions ->
+                        .zipWith(speakersRepository.get())
+                        .filter({ it.second.isNotEmpty() && it.first.isNotEmpty() })
+                        .map {
                             val agendaEntries = mutableListOf<FirebaseAgenda>()
 
                             dataSnapshot.children.mapNotNullTo(agendaEntries) {
                                 it.getValue<FirebaseAgenda>(FirebaseAgenda::class.java)
                             }
 
-                            agendaMapper.map2(agendaEntries, sessions)
+                            agendaMapper.map2(agendaEntries, it.first)
                         }
                         .doOnNext(success)
                         .subscribeOn(Schedulers.io())
@@ -107,7 +108,7 @@ class LocalAgendaSource @Inject constructor(private val agendaDao: AgendaDao,
             val talkPanels = it.talkPanels.map {
                 val talksLocal = it.talks.map { agendaMapper.map(it) }
                 val talkIds = agendaDao.putTalks(talkLocals = talksLocal)
-                TalkPanelLocal(start = it.start, end = it.end, talks = talkIds, sessionType = it.sessionType, text = it.text)
+                TalkPanelLocal(start = it.start, end = it.end, talks = talkIds, sessionType = it.sessionType, text = it.text, imageUrl = it.imageUrl)
             }
 
             val panelIds = agendaDao.putTalkPanels(talkPanelLocal = talkPanels)
@@ -136,7 +137,7 @@ class LocalAgendaSource @Inject constructor(private val agendaDao: AgendaDao,
                         val talksForPanel = talkLocals.filter { panel.talks.contains(it.id) }
                         val talks = talksForPanel.map { agendaMapper.map(it, speakers, sessions) }
 
-                        TalkPanel(panel.start, panel.end, talks, panel.sessionType, panel.text)
+                        TalkPanel(panel.start, panel.end, talks, panel.sessionType, panel.text, panel.imageUrl)
                     })
 
                     val days = dayLocals.map { Day(it.id, talkPanels) }

@@ -11,4 +11,7 @@
     <color name="heavy_metal">#1D1D1B</color>
     <color name="alto">#E0E0E0</color>
     <color name="alto_80">#CCE0E0E0</color>
+
+    <color name="grey">#EEEDEC</color>
+
 </resources>
