@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/speaker_1_picture"
@@ -21,23 +21,26 @@
         tools:src="@drawable/ic_person" />
 
     <TextView
-        android:id="@+id/speaker_1_room"
-        style="@style/AgendaRoomLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/room_A"
-        app:layout_constraintRight_toRightOf="@id/speaker_1_picture"
-        app:layout_constraintTop_toTopOf="@id/speaker_1_picture" />
-
-    <TextView
         android:id="@+id/speaker_1_description"
         style="@style/AgendaTalkLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/speaker_1_picture"
+        app:layout_constraintBottom_toTopOf="@id/speaker_1_room"
         app:layout_constraintLeft_toLeftOf="@id/speaker_1_picture"
         app:layout_constraintRight_toRightOf="@id/speaker_1_picture"
-        tools:text="Talk #1 description" />
+        tools:text="Talk #1 description \nLorem Ipsum Ipsum" />
+
+    <TextView
+        android:id="@+id/speaker_1_room"
+        style="@style/AgendaRoomLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/room_A"
+        app:layout_constraintBottom_toBottomOf="@id/speaker_1_picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/speaker_2_picture"
@@ -54,11 +57,13 @@
     <TextView
         android:id="@+id/speaker_2_room"
         style="@style/AgendaRoomLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/room_B"
-        app:layout_constraintRight_toRightOf="@id/speaker_2_picture"
-        app:layout_constraintTop_toTopOf="@id/speaker_2_picture" />
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/speaker_2_picture"
+        app:layout_constraintEnd_toEndOf="@id/speaker_2_picture"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/speaker_2_description"
@@ -66,6 +71,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/speaker_2_picture"
+        app:layout_constraintBottom_toTopOf="@id/speaker_2_room"
         app:layout_constraintLeft_toLeftOf="@id/speaker_2_picture"
         app:layout_constraintRight_toRightOf="@id/speaker_2_picture"
         tools:text="Talk #2 description" />
@@ -86,11 +92,12 @@
     <TextView
         android:id="@+id/speaker_3_room"
         style="@style/AgendaRoomLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/room_C"
-        app:layout_constraintRight_toRightOf="@+id/speaker_3_picture"
-        app:layout_constraintTop_toTopOf="@id/speaker_3_picture" />
+        app:layout_constraintBottom_toBottomOf="@+id/speaker_3_picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/speaker_3_picture" />
 
     <TextView
         android:id="@+id/speaker_3_description"
@@ -98,30 +105,55 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/speaker_3_picture"
+        app:layout_constraintBottom_toTopOf="@id/speaker_3_room"
         app:layout_constraintLeft_toLeftOf="@id/speaker_3_picture"
         app:layout_constraintRight_toRightOf="@id/speaker_3_picture"
         tools:text="Talk #3 description" />
 
+    <ImageView
+        android:id="@+id/item_clock"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_clock"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/start_time"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:textColor="@color/heavy_metal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/item_clock"
+        app:layout_constraintLeft_toRightOf="@+id/item_clock"
+        app:layout_constraintTop_toTopOf="@+id/item_clock"
         tools:text="Start time" />
 
     <TextView
         android:id="@+id/end_time"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
         android:textColor="@color/heavy_metal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/start_time"
+        app:layout_constraintBottom_toBottomOf="@+id/item_clock"
+        app:layout_constraintStart_toEndOf="@+id/time_separator"
+        app:layout_constraintTop_toTopOf="@+id/item_clock"
         tools:text="End time" />
+
+    <View
+        android:id="@+id/time_separator"
+        android:layout_width="8dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="4dp"
+        android:background="@color/heavy_metal"
+        app:layout_constraintBottom_toBottomOf="@+id/item_clock"
+        app:layout_constraintStart_toEndOf="@id/start_time"
+        app:layout_constraintTop_toTopOf="@+id/item_clock"
+        app:layout_goneMarginEnd="8dp" />
 
 
     <android.support.constraint.Guideline

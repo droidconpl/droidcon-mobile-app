@@ -5,6 +5,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -100,6 +101,9 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
         val adapter = AgendaAdapter(talks, agendaItemPresenter)
         agendaRecyclerView.layoutManager = LinearLayoutManager(agendaRecyclerView.context)
         agendaRecyclerView.adapter = adapter
+        val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.item_divider))
+        agendaRecyclerView.addItemDecoration(dividerItemDecoration)
     }
 
     override fun onDestroyView() {

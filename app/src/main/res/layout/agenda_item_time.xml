@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/item_clock"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_clock"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
+        android:textColor="@color/heavy_metal"
+        app:layout_constraintBottom_toBottomOf="@+id/item_clock"
+        app:layout_constraintLeft_toRightOf="@+id/item_clock"
+        app:layout_constraintTop_toTopOf="@+id/item_clock"
+        tools:text="Start time" />
+
+    <TextView
+        android:id="@+id/end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
+        android:textColor="@color/heavy_metal"
+        app:layout_constraintBottom_toBottomOf="@+id/item_clock"
+        app:layout_constraintStart_toEndOf="@+id/time_separator"
+        app:layout_constraintTop_toTopOf="@+id/item_clock"
+        tools:text="End time" />
+
+    <View
+        android:id="@+id/time_separator"
+        android:layout_width="8dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="4dp"
+        android:background="@color/heavy_metal"
+        app:layout_constraintBottom_toBottomOf="@+id/item_clock"
+        app:layout_constraintStart_toEndOf="@id/start_time"
+        app:layout_constraintTop_toTopOf="@+id/item_clock"
+        app:layout_goneMarginEnd="8dp" />
+
+</android.support.constraint.ConstraintLayout>
