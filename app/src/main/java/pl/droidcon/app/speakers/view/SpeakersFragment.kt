@@ -47,6 +47,9 @@ class SpeakersFragment : Fragment(), SpeakersView {
 
     override fun display(speakers: List<Speaker>) {
         view?.let {
+            speakersView.visibility = View.VISIBLE
+            speakers_progress.visibility = View.GONE
+
             selectionDisposable.clear()
 
             speakersView.layoutManager = GridLayoutManager(it.context, 2)
