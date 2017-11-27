@@ -38,7 +38,7 @@ class SpeakersPresenterTest {
 
     private val speakerRepository: SpeakersRepository = mock()
     private val view: SpeakersView = mock()
-    private val speakers: List<Speaker> = emptyList()
+    private val speakers: List<Speaker> = arrayListOf(mock())
 
     private val systemUnderTest = SpeakersPresenter(speakerRepository)
 
