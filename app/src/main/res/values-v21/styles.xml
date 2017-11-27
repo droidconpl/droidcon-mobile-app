@@ -14,4 +14,9 @@
         <item name="android:windowContentTransitions">true</item>
 
     </style>
+
+    <style name="Progress">
+        <item name="android:indeterminateTint">@color/pistachio</item>
+        <item name="android:indeterminateTintMode">src_in</item>
+    </style>
 </resources>

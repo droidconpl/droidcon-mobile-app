@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/agenda_view_pager"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.view.PagerTitleStrip
-        android:id="@+id/pager_title_strip"
-        style="@style/viewPagerTitleStrip"
+    <ProgressBar
+        android:id="@+id/agenda_progress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        style="@style/Progress"
+        android:visibility="visible" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/agenda_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="@color/alto_80"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp" />
-</android.support.v4.view.ViewPager>
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_title_strip"
+            style="@style/viewPagerTitleStrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/alto_80"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:visibility="gone" />
+    </android.support.v4.view.ViewPager>
+
+</FrameLayout>

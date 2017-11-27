@@ -51,6 +51,8 @@ class AgendaFragment : Fragment(), AgendaView {
 
     override fun display(agenda: Agenda) {
         view?.let {
+            agenda_progress.visibility = View.GONE
+            agenda_view_pager.visibility = View.VISIBLE
             agenda_view_pager.adapter = AgendaPagerAdapter(agenda, fragmentManager)
         }
     }
