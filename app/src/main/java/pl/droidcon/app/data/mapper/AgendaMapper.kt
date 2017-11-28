@@ -35,7 +35,7 @@ class AgendaMapper @Inject constructor() {
         return Agenda(days)
     }
 
-    fun map2(firebaseAgenda: List<FirebaseAgenda>, sessions: List<Session>): Agenda {
+    fun map2(firebaseAgenda: List<FirebaseAgenda>, sessions: List<Session>, speakers: List<Speaker>): Agenda {
 
         val groupedByDays = firebaseAgenda.groupBy { it.dayid }
 
@@ -48,19 +48,25 @@ class AgendaMapper @Inject constructor() {
 
                 if (agenda.session1id > 0) {
                     val session1 = sessions.findSession(agenda.session1id)
-                    val talk1 = Talk(title = session1!!.sessionTitle, speakers = session1.speakers, session = session1)
+                    val session1speakers = speakers.findSpeakersByTalkId(agenda.session1id)
+
+                    val talk1 = Talk(title = session1!!.sessionTitle, speakers = session1speakers, session = session1)
                     talks.add(talk1)
                 }
 
                 if (agenda.session2id > 0) {
                     val session2 = sessions.findSession(agenda.session2id)
-                    val talk2 = Talk(title = session2!!.sessionTitle, speakers = session2.speakers, session = session2)
+                    val session2speakers = speakers.findSpeakersByTalkId(agenda.session2id)
+
+                    val talk2 = Talk(title = session2!!.sessionTitle, speakers = session2speakers, session = session2)
                     talks.add(talk2)
                 }
 
                 if (agenda.session3id > 0) {
                     val session3 = sessions.findSession(agenda.session3id)
-                    val talk3 = Talk(title = session3!!.sessionTitle, speakers = session3.speakers, session = session3)
+                    val session3speakers = speakers.findSpeakersByTalkId(agenda.session3id)
+
+                    val talk3 = Talk(title = session3!!.sessionTitle, speakers = session3speakers, session = session3)
                     talks.add(talk3)
                 }
 
@@ -98,6 +104,8 @@ class AgendaMapper @Inject constructor() {
 private fun List<Speaker>.toIds(): List<Long> = map { it.id }
 
 private fun List<Speaker>.findSpeakers(ids: List<Long>): List<Speaker> = filter { ids.contains(it.id) }
+
+private fun List<Speaker>.findSpeakersByTalkId(id: Long): List<Speaker> = filter { id == it.talkId }
 
 private fun List<Session>.findSessionMaybe(id: Long?): Session {
     val sessions = this

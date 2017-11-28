@@ -7,12 +7,12 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.fragment_agenda.*
+import kotlinx.android.synthetic.main.fragment_agenda_item.*
 import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
 import pl.droidcon.app.agenda.AgendaItemPresenter
@@ -21,6 +21,7 @@ import pl.droidcon.app.agenda.AgendaPresenter
 import pl.droidcon.app.agenda.AgendaView
 import pl.droidcon.app.domain.Agenda
 import pl.droidcon.app.domain.Session
+import pl.droidcon.app.domain.TalkPanel
 import pl.droidcon.app.sessions.SessionActivity
 import javax.inject.Inject
 
@@ -90,26 +91,23 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        agendaItemPresenter.attachView(this)
-
-        val agendaRecyclerView = view.findViewById<RecyclerView>(R.id.agendaView)
-
         val dayId = arguments.getInt(AgendaItemFragment.DAY_ID_PARAM)
-        val agenda = arguments.getParcelable<Agenda>(AgendaItemFragment.AGENDA_PARAM)
+        agendaItemPresenter.attachView(this, dayId)
+    }
 
-        if (agenda.days.isEmpty()) return
-
-        val talks = agenda.days[dayId].talkPanels
-        val adapter = AgendaAdapter(talks, agendaItemPresenter)
-        agendaRecyclerView.layoutManager = LinearLayoutManager(agendaRecyclerView.context)
-        agendaRecyclerView.adapter = adapter
-        val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.item_divider))
-        agendaRecyclerView.addItemDecoration(dividerItemDecoration)
+    override fun display(talkPanels: List<TalkPanel>) {
+        view?.let {
+            val adapter = AgendaAdapter(talkPanels, agendaItemPresenter)
+            agendaView.layoutManager = LinearLayoutManager(agendaView.context)
+            agendaView.adapter = adapter
+            val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+            dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.item_divider))
+            agendaView.addItemDecoration(dividerItemDecoration)
+        }
     }
 
     override fun onDestroyView() {
-        agendaItemPresenter.attachView(null)
+        agendaItemPresenter.attachView(null, 0)
 
         super.onDestroyView()
     }

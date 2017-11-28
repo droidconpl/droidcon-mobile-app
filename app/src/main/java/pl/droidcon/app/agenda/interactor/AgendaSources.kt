@@ -74,7 +74,7 @@ class FirebaseAgendaSource @Inject constructor(private val agendaMapper: AgendaM
                                 it.getValue<FirebaseAgenda>(FirebaseAgenda::class.java)
                             }
 
-                            agendaMapper.map2(agendaEntries, it.first)
+                            agendaMapper.map2(agendaEntries, it.first, it.second)
                         }
                         .doOnNext(success)
                         .subscribeOn(Schedulers.io())
