@@ -20,8 +20,8 @@ class SpeakerMapperTest {
     fun maps(id: Long, firstName: String, lastName: String, title: String, description: String, websiteUrl: String,
              fb: String, twitter: String, gh: String, linkedIn: String, gplus: String, image: String) {
 
-        val speaker = Speaker(id = id, firstName = firstName, lastName = lastName, title = title, description = description, websiteUrl = websiteUrl, facebookUrl = fb, twitterUrl = twitter, githubUrl = gh, linkedinUrl = linkedIn, googlePlusUrl = gplus, imageUrl = image, talkId = 0L)
-        val speakerLocal = SpeakerLocal(id = id, firstName = firstName, lastName = lastName, title = title, description = description, websiteUrl = websiteUrl, facebookUrl = fb, twitterUrl = twitter, githubUrl = gh, linkedinUrl = linkedIn, googlePlusUrl = gplus, imageUrl = image)
+        val speaker = Speaker(id = id, firstName = firstName, lastName = lastName, title = title, description = description, websiteUrl = websiteUrl, facebookUrl = fb, twitterUrl = twitter, githubUrl = gh, linkedinUrl = linkedIn, googlePlusUrl = gplus, imageUrl = image, talkId = 1L)
+        val speakerLocal = SpeakerLocal(id = id, firstName = firstName, lastName = lastName, title = title, description = description, websiteUrl = websiteUrl, facebookUrl = fb, twitterUrl = twitter, githubUrl = gh, linkedinUrl = linkedIn, googlePlusUrl = gplus, imageUrl = image, talkId = 1L)
 
         val speakerFromLocal = systemUnderTest.map(speakerLocal)
         val speakerLocalFromDomain = systemUnderTest.map(speaker)
