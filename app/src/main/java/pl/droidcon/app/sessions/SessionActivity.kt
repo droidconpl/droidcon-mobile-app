@@ -46,7 +46,19 @@ class SessionActivity : AppCompatActivity() {
             )
         }
 
+
+
+        session_favorite.setOnClickListener {
+            selected = !selected
+            session_favorite.setImageResource(if (selected) {
+                R.drawable.ic_favorite
+            } else {
+                R.drawable.ic_favorite_border
+            })
+        }
     }
+
+    var selected: Boolean = true
 
     private fun setupSpeaker(speaker: Speaker, nameTextView: TextView, titleTextView: TextView, speakerImageView: ImageView, container: ConstraintLayout) {
         nameTextView.text = "${speaker.firstName} ${speaker.lastName}"
