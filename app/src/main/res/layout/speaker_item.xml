@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/heavy_metal"
+            android:textColor="@color/dark"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:text="John Smith"/>
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/heavy_metal"
+            android:textColor="@color/dark"
             android:textSize="12sp"
             tools:text="Android developer"/>
 

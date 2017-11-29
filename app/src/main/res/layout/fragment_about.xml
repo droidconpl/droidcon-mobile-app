@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_margin="4dp"
-                android:background="@color/heavy_metal"/>
+                android:background="@color/dark"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_margin="4dp"
-                android:background="@color/heavy_metal"/>
+                android:background="@color/dark"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -132,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_margin="4dp"
-                android:background="@color/heavy_metal"/>
+                android:background="@color/dark"/>
 
             <TextView
                 android:layout_width="wrap_content"
