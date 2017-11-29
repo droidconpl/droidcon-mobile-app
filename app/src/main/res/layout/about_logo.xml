@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/logo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="@dimen/about_logo_bottom_margin"
+    android:layout_marginTop="@dimen/about_logo_top_margin"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_about">
+
+    <ImageView
+        android:layout_width="@dimen/about_logo_size"
+        android:layout_height="@dimen/about_logo_size"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        android:src="@drawable/logo"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/event_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@android:color/white"/>
+</LinearLayout>
