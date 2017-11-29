@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-                                             android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <include
         android:id="@+id/agenda_item_time"
-        layout="@layout/agenda_item_time"/>
+        layout="@layout/agenda_item_time" />
 
     <ImageView
         android:id="@+id/speaker_1_picture"
@@ -22,8 +22,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/agenda_item_time"
-        tools:background="@color/alto"
-        tools:src="@drawable/ic_person"/>
+        tools:background="@color/light_2"
+        tools:src="@drawable/ic_person" />
 
     <TextView
         android:id="@+id/speaker_1_description"
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@id/speaker_1_room"
         app:layout_constraintLeft_toLeftOf="@id/speaker_1_picture"
         app:layout_constraintRight_toRightOf="@id/speaker_1_picture"
-        tools:text="Talk #1 description \nLorem Ipsum Ipsum"/>
+        tools:text="Talk #1 description \nLorem Ipsum Ipsum" />
 
     <TextView
         android:id="@+id/speaker_1_room"
@@ -45,7 +45,7 @@
         android:text="@string/room_A"
         app:layout_constraintBottom_toBottomOf="@id/speaker_1_picture"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/speaker_2_picture"
@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/speaker_1_picture"
         tools:background="@color/pistachio"
-        tools:src="@drawable/ic_person"/>
+        tools:src="@drawable/ic_person" />
 
     <TextView
         android:id="@+id/speaker_2_room"
@@ -69,7 +69,7 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/speaker_2_picture"
         app:layout_constraintEnd_toEndOf="@id/speaker_2_picture"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/speaker_2_description"
@@ -80,7 +80,7 @@
         app:layout_constraintBottom_toTopOf="@id/speaker_2_room"
         app:layout_constraintLeft_toLeftOf="@id/speaker_2_picture"
         app:layout_constraintRight_toRightOf="@id/speaker_2_picture"
-        tools:text="Talk #2 description"/>
+        tools:text="Talk #2 description" />
 
     <ImageView
         android:id="@+id/speaker_3_picture"
@@ -94,7 +94,7 @@
         app:layout_constraintLeft_toRightOf="@id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/speaker_1_picture"
         tools:background="@color/mine_shaft"
-        tools:src="@drawable/ic_person"/>
+        tools:src="@drawable/ic_person" />
 
     <TextView
         android:id="@+id/speaker_3_room"
@@ -104,7 +104,7 @@
         android:text="@string/room_C"
         app:layout_constraintBottom_toBottomOf="@+id/speaker_3_picture"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/speaker_3_picture"/>
+        app:layout_constraintStart_toStartOf="@+id/speaker_3_picture" />
 
     <TextView
         android:id="@+id/speaker_3_description"
@@ -115,7 +115,7 @@
         app:layout_constraintBottom_toTopOf="@id/speaker_3_room"
         app:layout_constraintLeft_toLeftOf="@id/speaker_3_picture"
         app:layout_constraintRight_toRightOf="@id/speaker_3_picture"
-        tools:text="Talk #3 description"/>
+        tools:text="Talk #3 description" />
 
 
     <android.support.constraint.Guideline
@@ -123,6 +123,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.50"/>
+        app:layout_constraintGuide_percent="0.50" />
 
 </android.support.constraint.ConstraintLayout>
