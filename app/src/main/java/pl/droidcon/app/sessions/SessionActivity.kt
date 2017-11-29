@@ -8,13 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_session.*
 import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
-import pl.droidcon.app.data.local.FavoriteLocal
 import pl.droidcon.app.domain.Session
 import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.speaker.SpeakerActivity
@@ -64,27 +61,15 @@ class SessionActivity : AppCompatActivity(), SessionView {
             )
         }
 
-        val repo = DroidconApp.component.getRepo()
+        session_favorite.setOnClickListener {
+            session_favorite.isSelected = !session_favorite.isSelected
 
-        val subscribe = repo
-                .getFavorite(session.sessionId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { session_favorite.isSelected = false }
-                .doOnSubscribe {
-                    session_favorite.setOnClickListener {
-                        session_favorite.isSelected = !session_favorite.isSelected
+            presenter.setFavoriteSelected(session_favorite.isSelected)
+        }
+    }
 
-                        val favoriteLocal = FavoriteLocal(sessionId = session.sessionId)
-                        if (session_favorite.isSelected)
-                            repo.put(favoriteLocal)
-                        else
-                            repo.delete(favoriteLocal)
-                    }
-                }
-                .subscribe {
-                    session_favorite.isSelected = true
-                }
+    override fun setFavoriteSelected(isSelected: Boolean) {
+        session_favorite.isSelected = isSelected
     }
 
     private fun setupSpeaker(speaker: Speaker, nameTextView: TextView, titleTextView: TextView, speakerImageView: ImageView, container: ConstraintLayout) {

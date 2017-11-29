@@ -5,4 +5,6 @@ import pl.droidcon.app.domain.Session
 interface SessionView {
 
     fun display(session: Session)
+
+    fun setFavoriteSelected(isSelected: Boolean)
 }

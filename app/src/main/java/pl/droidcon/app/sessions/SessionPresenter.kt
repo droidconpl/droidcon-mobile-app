@@ -5,10 +5,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import pl.droidcon.app.data.local.FavoriteLocal
 import pl.droidcon.app.domain.Session
+import pl.droidcon.app.favorite.interactor.FavoriteRepository
 import pl.droidcon.app.sessions.interactor.SessionsRepository
 
-class SessionPresenter constructor(val sessionId: Long, val sessionsRepository: SessionsRepository) {
+class SessionPresenter constructor(val sessionId: Long, val sessionsRepository: SessionsRepository, val favoriteRepository: FavoriteRepository) {
 
     private var view: SessionView? = null
 
@@ -29,6 +31,25 @@ class SessionPresenter constructor(val sessionId: Long, val sessionsRepository: 
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ view?.display(it) }, { it.printStackTrace() })
                     .addTo(disposables)
+
+            favoriteRepository
+                    .getFavorite(sessionId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { view?.setFavoriteSelected(false) }
+                    .subscribe {
+                        view?.setFavoriteSelected(true)
+                    }
         }
     }
+
+    fun setFavoriteSelected(selected: Boolean) {
+        val favoriteLocal = FavoriteLocal(sessionId = sessionId)
+        if (selected)
+            favoriteRepository.put(favoriteLocal)
+        else
+            favoriteRepository.delete(favoriteLocal)
+    }
+
+
 }
