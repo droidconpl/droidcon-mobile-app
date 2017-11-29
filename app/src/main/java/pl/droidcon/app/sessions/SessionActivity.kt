@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -51,34 +50,28 @@ class SessionActivity : AppCompatActivity() {
             )
         }
 
-        val dao = DroidconApp.component.getDao()
 
+        val repo = DroidconApp.component.getRepo()
 
-
-        dao.findOneFavorite(session.sessionId)
+        val subscribe = repo
+                .getFavorite(session.sessionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { session_favorite.isSelected = false }
-                .subscribe(
-                        { favoriteLocal ->
-                            session_favorite.isSelected = true
+                .doOnSubscribe {
+                    session_favorite.setOnClickListener {
+                        session_favorite.isSelected = !session_favorite.isSelected
 
-                            session_favorite.setOnClickListener {
-                                session_favorite.isSelected = !session_favorite.isSelected
-
-                                Observable
-                                        .fromCallable {
-                                            val favoriteLocal = FavoriteLocal(sessionId = session.sessionId)
-                                            if (session_favorite.isSelected)
-                                                dao.putFavorite(favoriteLocal)
-                                            else
-                                                dao.deleteFavorite(favoriteLocal)
-                                        }
-                                        .subscribeOn(Schedulers.io())
-                                        .subscribe()
-                            }
-                        },
-                        { e -> e.printStackTrace() })
+                        val favoriteLocal = FavoriteLocal(sessionId = session.sessionId)
+                        if (session_favorite.isSelected)
+                            repo.put(favoriteLocal)
+                        else
+                            repo.delete(favoriteLocal)
+                    }
+                }
+                .subscribe {
+                    session_favorite.isSelected = true
+                }
 
 
     }

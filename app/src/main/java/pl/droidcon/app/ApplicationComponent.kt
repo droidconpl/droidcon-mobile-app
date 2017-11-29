@@ -7,6 +7,7 @@ import pl.droidcon.app.agenda.view.AgendaItemFragment
 import pl.droidcon.app.data.LocalDataModule
 import pl.droidcon.app.data.NetworkModule
 import pl.droidcon.app.data.local.FavoriteDao
+import pl.droidcon.app.favorite.interactor.FavoriteRepository
 import pl.droidcon.app.sessions.view.SessionsFragment
 import pl.droidcon.app.speaker.SpeakerComponent
 import pl.droidcon.app.speaker.SpeakerModule
@@ -36,4 +37,6 @@ interface ApplicationComponent {
     fun speakerComponent(speakerModule: SpeakerModule): SpeakerComponent
 
     fun getDao(): FavoriteDao
+
+    fun getRepo(): FavoriteRepository
 }
