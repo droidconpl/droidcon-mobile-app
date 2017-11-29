@@ -45,11 +45,12 @@ class AgendaSingleHolder(item: View) : AgendaHolder(item) {
         startTime.text = talk.start
         endTime.text = talk.end
 
-        Picasso
-                .with(image.context)
-                .load(talk.imageUrl)
-//                .placeholder(R.drawable.)
-                .into(image)
+        if (talk.imageUrl.isNotEmpty()) {
+            Picasso
+                    .with(image.context)
+                    .load(talk.imageUrl)
+                    .into(image)
+        }
     }
 }
 

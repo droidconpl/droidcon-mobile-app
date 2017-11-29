@@ -54,7 +54,7 @@ class AgendaFragment : Fragment(), AgendaView {
         view?.let {
             agenda_progress.visibility = View.GONE
             agenda_view_pager.visibility = View.VISIBLE
-            agenda_view_pager.adapter = AgendaPagerAdapter(agenda, fragmentManager)
+            agenda_view_pager.adapter = AgendaPagerAdapter(agenda, childFragmentManager)
         }
     }
 
