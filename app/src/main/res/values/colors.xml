@@ -7,6 +7,7 @@
     <color name="white">#FFF</color>
     <color name="light">#EEEDEC</color>
     <color name="light_2">#E6E6E6</color>
+    <color name="light_2_80">#CCE6E6E6</color>
     <color name="pistachio">#8ACE01</color>
     <color name="pistachio_dark">#63A000</color>
     <color name="grey">#4D4D4D</color>
@@ -15,8 +16,5 @@
 
     <color name="mine_shaft">#3d3d3d</color>
     <color name="heavy_metal">#1D1D1B</color>
-    <color name="alto">#E0E0E0</color>
-    <color name="alto_80">#CCE0E0E0</color>
-
 
 </resources>
