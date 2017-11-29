@@ -69,7 +69,7 @@ abstract class AgendaDao {
 @Dao
 abstract class FavoriteDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun putFavorite(favoriteLocal: FavoriteLocal): Long
 
     @Query("SELECT * FROM $FAVORITE_TABLE_NAME WHERE sessionId = :sessionId LIMIT 1")

@@ -38,7 +38,7 @@ class SessionPresenter constructor(val sessionId: Long, val sessionsRepository: 
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { view?.setFavoriteSelected(false) }
                     .subscribe {
-                        view?.setFavoriteSelected(true)
+                        view?.setFavoriteSelected(it.isFavorite)
                     }
         }
     }

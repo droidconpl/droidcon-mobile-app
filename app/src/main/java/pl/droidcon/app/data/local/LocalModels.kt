@@ -75,5 +75,6 @@ data class TalkLocal(
 // Firebase syncs data
 @Entity(tableName = FAVORITE_TABLE_NAME)
 data class FavoriteLocal(
-        @PrimaryKey @ColumnInfo(name = "sessionId") val sessionId: Long
+        @PrimaryKey @ColumnInfo(name = "sessionId") val sessionId: Long,
+        @ColumnInfo(name = "is_favorite") var isFavorite: Boolean = false
 )
