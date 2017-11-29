@@ -9,6 +9,7 @@ const val SESSION_TABLE_NAME = "session"
 const val DAY_TABLE_NAME = "day"
 const val TALK_PANEL_TABLE_NAME = "talk_panel"
 const val TALK_TABLE_NAME = "talk"
+const val FAVORITE_TABLE_NAME = "favorite"
 
 @Entity(tableName = SPEAKER_TABLE_NAME)
 data class SpeakerLocal(
@@ -69,3 +70,10 @@ data class TalkLocal(
     @ColumnInfo(name = "id")
     var id: Long = 0
 }
+
+// We are replace SessionLocal object on each insert. That way we will lose all data each time
+// Firebase syncs data
+@Entity(tableName = FAVORITE_TABLE_NAME)
+data class FavoriteLocal(
+        @PrimaryKey @ColumnInfo(name = "sessionId") val sessionId: Long
+)

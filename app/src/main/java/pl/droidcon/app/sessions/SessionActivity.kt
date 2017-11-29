@@ -8,9 +8,14 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_session.*
+import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
+import pl.droidcon.app.data.local.FavoriteLocal
 import pl.droidcon.app.domain.Session
 import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.speaker.SpeakerActivity
@@ -46,9 +51,36 @@ class SessionActivity : AppCompatActivity() {
             )
         }
 
-        session_favorite.setOnClickListener {
-            session_favorite.isSelected = !session_favorite.isSelected
-        }
+        val dao = DroidconApp.component.getDao()
+
+
+
+        dao.findOneFavorite(session.sessionId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { session_favorite.isSelected = false }
+                .subscribe(
+                        { favoriteLocal ->
+                            session_favorite.isSelected = true
+
+                            session_favorite.setOnClickListener {
+                                session_favorite.isSelected = !session_favorite.isSelected
+
+                                Observable
+                                        .fromCallable {
+                                            val favoriteLocal = FavoriteLocal(sessionId = session.sessionId)
+                                            if (session_favorite.isSelected)
+                                                dao.putFavorite(favoriteLocal)
+                                            else
+                                                dao.deleteFavorite(favoriteLocal)
+                                        }
+                                        .subscribeOn(Schedulers.io())
+                                        .subscribe()
+                            }
+                        },
+                        { e -> e.printStackTrace() })
+
+
     }
 
     private fun setupSpeaker(speaker: Speaker, nameTextView: TextView, titleTextView: TextView, speakerImageView: ImageView, container: ConstraintLayout) {

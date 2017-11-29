@@ -2,6 +2,7 @@ package pl.droidcon.app.data.local
 
 import android.arch.persistence.room.*
 import io.reactivex.Maybe
+import io.reactivex.Single
 
 @Dao
 interface SpeakersDao {
@@ -64,4 +65,20 @@ abstract class AgendaDao {
         clearTalkPanelLocal()
         clearDayLocal()
     }
+}
+
+@Dao
+abstract class FavoriteDao {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract fun putFavorite(favoriteLocal: FavoriteLocal): Long
+
+    @Query("SELECT * FROM $FAVORITE_TABLE_NAME WHERE sessionId = :sessionId LIMIT 1")
+    abstract fun findOneFavorite(sessionId: Long): Maybe<FavoriteLocal>
+
+    @Delete
+    abstract fun deleteFavorite(favoriteLocal: FavoriteLocal)
+
+    @Query("DELETE FROM $FAVORITE_TABLE_NAME")
+    abstract fun clear()
 }
