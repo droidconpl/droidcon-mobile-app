@@ -65,7 +65,7 @@ class AgendaFragment : Fragment(), AgendaView {
 
 class AgendaPagerAdapter constructor(val agenda: Agenda, fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
-    override fun getItem(position: Int): Fragment = AgendaItemFragment.newInstance(agenda, position)
+    override fun getItem(position: Int): Fragment = AgendaItemFragment.newInstance(position)
 
     override fun getCount(): Int = 2
 
@@ -125,13 +125,11 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
     companion object {
 
         private val DAY_ID_PARAM = "day_id"
-        private val AGENDA_PARAM = "agenda"
 
-        fun newInstance(agenda: Agenda, dayId: Int): AgendaItemFragment {
+        fun newInstance(dayId: Int): AgendaItemFragment {
             val fragment = AgendaItemFragment()
             val args = Bundle()
             args.putInt(AgendaItemFragment.DAY_ID_PARAM, dayId)
-            args.putParcelable(AGENDA_PARAM, agenda)
             fragment.arguments = args
             return fragment
         }
