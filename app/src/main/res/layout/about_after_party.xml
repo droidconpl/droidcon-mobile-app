@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/about_card_vertical_margin"
+    android:layout_marginEnd="@dimen/about_card_horizontal_margin"
+    android:layout_marginLeft="@dimen/about_card_horizontal_margin"
+    android:layout_marginRight="@dimen/about_card_horizontal_margin"
+    android:layout_marginStart="@dimen/about_card_horizontal_margin"
+    app:cardCornerRadius="@dimen/about_card_corner_radius"
+    tools:showIn="@layout/fragment_about">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/after_party_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/about_card_content_margin"
+            android:layout_marginStart="@dimen/about_card_content_margin"
+            android:layout_marginTop="@dimen/about_card_content_margin"
+            android:text="@string/about_after_party"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/pistachio_dark"/>
+
+        <TextView
+            android:id="@+id/after_party_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/about_card_content_margin"
+            android:text="@string/about_address_after_party"/>
+
+        <ImageView
+            android:id="@+id/after_party_map"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/about_card_map_height"
+            android:contentDescription="@null"
+            android:foreground="?android:selectableItemBackground"
+            android:scaleType="centerCrop"
+            android:src="@drawable/after_party_map"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
