@@ -67,7 +67,7 @@ class SpeakersFragment : Fragment(), SpeakersView {
     }
 
     override fun display(speaker: Speaker) {
-        context?.let { startActivity(SpeakerActivity.intent(it, speaker)) }
+        context?.let { startActivity(SpeakerActivity.intent(it, speaker.id)) }
     }
 
     companion object {

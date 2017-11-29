@@ -53,7 +53,7 @@ class SessionActivity : AppCompatActivity() {
         titleTextView.text = speaker.title
         Picasso.with(this).load(speaker.imageUrl).transform(CropCircleTransformation()).into(speakerImageView)
 
-        container.setOnClickListener { startActivity(SpeakerActivity.intent(this, speaker)) }
+        container.setOnClickListener { startActivity(SpeakerActivity.intent(this, speaker.id)) }
     }
 
     companion object {

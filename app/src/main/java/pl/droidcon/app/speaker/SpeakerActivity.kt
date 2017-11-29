@@ -12,7 +12,6 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_speaker.*
 import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
-import pl.droidcon.app.domain.Speaker
 import javax.inject.Inject
 
 class SpeakerActivity : AppCompatActivity(), SpeakerView {
@@ -69,11 +68,11 @@ class SpeakerActivity : AppCompatActivity(), SpeakerView {
     companion object {
         private const val SPEAKER_ARG = "speaker"
 
-        private fun speaker(intent: Intent): Speaker = intent.extras.getParcelable(SPEAKER_ARG)
+        private fun speaker(intent: Intent): Long = intent.extras.getLong(SPEAKER_ARG)
 
-        fun intent(context: Context, speaker: Speaker): Intent {
+        fun intent(context: Context, speakerId: Long): Intent {
             return Intent(context, SpeakerActivity::class.java).apply {
-                putExtra(SPEAKER_ARG, speaker)
+                putExtra(SPEAKER_ARG, speakerId)
             }
         }
     }
