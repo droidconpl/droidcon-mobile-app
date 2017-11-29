@@ -23,7 +23,8 @@ data class SpeakerLocal(
         @ColumnInfo(name = "githubUrl") val githubUrl: String,
         @ColumnInfo(name = "linkedinUrl") val linkedinUrl: String,
         @ColumnInfo(name = "googlePlusUrl") val googlePlusUrl: String,
-        @ColumnInfo(name = "imageUrl") val imageUrl: String
+        @ColumnInfo(name = "imageUrl") val imageUrl: String,
+        @ColumnInfo(name = "talkId") val talkId: Long
 )
 
 @Entity(tableName = SESSION_TABLE_NAME)

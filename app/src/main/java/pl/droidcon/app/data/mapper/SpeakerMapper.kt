@@ -39,7 +39,7 @@ class SpeakerMapper @Inject constructor() {
             linkedinUrl = speakerLocal.linkedinUrl,
             googlePlusUrl = speakerLocal.googlePlusUrl,
             imageUrl = speakerLocal.imageUrl,
-            talkId = 0L
+            talkId = speakerLocal.talkId
     )
 
     fun map(speaker: Speaker): SpeakerLocal = SpeakerLocal(
@@ -54,7 +54,8 @@ class SpeakerMapper @Inject constructor() {
             githubUrl = speaker.githubUrl,
             linkedinUrl = speaker.linkedinUrl,
             googlePlusUrl = speaker.googlePlusUrl,
-            imageUrl = speaker.imageUrl
+            imageUrl = speaker.imageUrl,
+            talkId = speaker.talkId
     )
 
     fun map(firebaseSpeaker: FirebaseSpeaker): Speaker = Speaker(

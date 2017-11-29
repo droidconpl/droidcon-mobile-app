@@ -44,7 +44,8 @@ class LocalSpeakersSourceTest {
                 githubUrl = "ghs",
                 linkedinUrl = "linsa1",
                 googlePlusUrl = "gpsa",
-                imageUrl = "image"
+                imageUrl = "image",
+                talkId = 1L
         )
         val response = listOf(speaker)
         val expected = listOf(speakersMapper.map(speaker))
