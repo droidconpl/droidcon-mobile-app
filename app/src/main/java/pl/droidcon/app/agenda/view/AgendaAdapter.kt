@@ -8,6 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.schedulers.Schedulers
 import pl.droidcon.app.R
 import pl.droidcon.app.agenda.AgendaItemPresenter
 import pl.droidcon.app.domain.Speaker
@@ -62,23 +66,29 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
     private val session1: AgendaItemPack = AgendaItemPack(
             speakerImageView = item.findViewById(R.id.speaker_1_picture),
             roomTextView = item.findViewById(R.id.speaker_1_room),
-            descriptionTextView = item.findViewById(R.id.speaker_1_description)
+            descriptionTextView = item.findViewById(R.id.speaker_1_description),
+            favIcon = item.findViewById(R.id.speaker_1_fav)
     )
 
     private val session2: AgendaItemPack = AgendaItemPack(
             speakerImageView = item.findViewById(R.id.speaker_2_picture),
             roomTextView = item.findViewById(R.id.speaker_2_room),
-            descriptionTextView = item.findViewById(R.id.speaker_2_description)
+            descriptionTextView = item.findViewById(R.id.speaker_2_description),
+            favIcon = item.findViewById(R.id.speaker_2_fav)
     )
 
     private val session3: AgendaItemPack = AgendaItemPack(
             speakerImageView = item.findViewById(R.id.speaker_3_picture),
             roomTextView = item.findViewById(R.id.speaker_3_room),
-            descriptionTextView = item.findViewById(R.id.speaker_3_description)
+            descriptionTextView = item.findViewById(R.id.speaker_3_description),
+            favIcon = item.findViewById(R.id.speaker_3_fav)
     )
+
+    private val disposables = CompositeDisposable()
 
     @SuppressLint("SetTextI18n")
     override fun bindHolder(talk: TalkPanel) {
+        disposables.clear()
         startTime.text = talk.start
         endTime.text = talk.end
 
@@ -89,9 +99,11 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
         if (numberOfTalks == 1) {
             session2.speakerImageView.visibility = View.GONE
             session2.roomTextView.visibility = View.GONE
+            session2.favIcon.visibility = View.GONE
 
             session3.speakerImageView.visibility = View.GONE
             session3.roomTextView.visibility = View.GONE
+            session3.favIcon.visibility = View.GONE
         } else {
             setupTalk(talk.talks[1], session2)
 
@@ -106,6 +118,7 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
             } else {
                 session3.speakerImageView.visibility = View.GONE
                 session3.roomTextView.visibility = View.GONE
+                session3.favIcon.visibility = View.GONE
             }
         }
 
@@ -124,6 +137,20 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
             setSpeakerPicture(talk.speakers, itemPack.speakerImageView)
             itemPack.descriptionTextView.text = talk.session.sessionTitle
         }
+
+        itemPack.favIcon.visibility = View.GONE
+
+        agendaItemPresenter
+                .observeFavorite(talk.session.sessionId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    itemPack.favIcon.visibility = if (it) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+                }.addTo(disposables)
     }
 
     private fun setSpeakerPicture(speakers: List<Speaker>, speakerIv: ImageView) {
@@ -138,7 +165,8 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
     data class AgendaItemPack(
             val speakerImageView: ImageView,
             val roomTextView: TextView,
-            val descriptionTextView: TextView
+            val descriptionTextView: TextView,
+            val favIcon: ImageView
     )
 }
 
