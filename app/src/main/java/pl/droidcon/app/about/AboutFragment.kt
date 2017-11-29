@@ -48,7 +48,7 @@ class AboutFragment : Fragment(), ObservableScrollViewCallbacks {
 
     private fun styleBackground() = context?.let {
         val transparentColor = getColor(it, android.R.color.transparent)
-        val accentColor = getColor(it, R.color.pistachio_dark)
+        val accentColor = getColor(it, R.color.pistachio)
 
         val gradientDrawable = GradientDrawable(
                 GradientDrawable.Orientation.BOTTOM_TOP,
