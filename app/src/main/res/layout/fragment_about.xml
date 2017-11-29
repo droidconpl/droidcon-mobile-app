@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 
-                                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_gravity="center"
             android:background="@color/mine_shaft"
             android:contentDescription="@null"
-            android:src="@drawable/droidcon_krakow_logo"/>
+            android:src="@drawable/droidcon_krakow_logo" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,13 +28,13 @@
 
             <TextView
                 style="@style/EventDate"
-                android:text="@string/event_date"/>
+                android:text="@string/event_date" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="@string/about_description"/>
+                android:text="@string/about_description" />
         </LinearLayout>
 
         <LinearLayout
@@ -50,13 +50,13 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="start"
                 android:text="@string/address"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_margin="4dp"
-                android:background="@color/dark"/>
+                android:background="@color/dark" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="start"
                 android:text="@string/address_description"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
                 android:id="@+id/address_map"
@@ -77,8 +77,8 @@
                 android:gravity="start"
                 android:text="@string/address_map"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/mine_shaft"
-                app:backgroundTint="@color/pistachio"/>
+                android:textColor="@color/dark"
+                app:backgroundTint="@color/pistachio" />
         </LinearLayout>
 
         <LinearLayout
@@ -93,13 +93,13 @@
                 android:layout_gravity="start"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/event_more_info_title"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_margin="4dp"
-                android:background="@color/dark"/>
+                android:background="@color/dark" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                 android:lineSpacingExtra="8dp"
                 android:text="@string/event_website_link"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColorLink="@color/pistachio"/>
+                android:textColorLink="@color/pistachio" />
         </LinearLayout>
 
         <LinearLayout
@@ -126,13 +126,13 @@
                 android:layout_gravity="start"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/open_source"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_margin="4dp"
-                android:background="@color/dark"/>
+                android:background="@color/dark" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -143,7 +143,7 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="start"
                 android:text="@string/open_source_items"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </LinearLayout>
     </LinearLayout>
