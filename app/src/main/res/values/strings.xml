@@ -8,4 +8,38 @@
     <string name="room_A">Room A</string>
     <string name="room_B">Room B</string>
     <string name="room_C">Room C</string>
+    <string name="event_date">1st-2nd December 2017</string>
+    <string name="event_more_info_title">Useful links</string>
+    <string name="event_website_link">http://droidcon.pl/#/faq \nhttp://droidcon.pl/#/code-of-conduct</string>
+    <string name="address">Address</string>
+    <string name="address_description">WPiA Jagiellonian University, Krupnicza 33a, 31–123 Kraków</string>
+    <string name="address_map">Open map</string>
+    <string name="about_description">droidcon is a global developer conference series and a network focusing on the best of Android. The idea behind droidcon is to support the Android platform and create a strong network for developers and companies.This is already 4th edition of droidcon in Kraków and we can\'t wait to meet you!</string>
+    <string name="open_source">3rd party libraries</string>
+    <string name="open_source_items">
+        \u2022 Kotlin
+        \n\u2022 Appcompat v7
+        \n\u2022 Support v4
+        \n\u2022 Support Design
+        \n\u2022 RecyclerView
+        \n\u2022 ConstraintLayout
+        \n\u2022 Dagger 2
+        \n\u2022 RxJava 2
+        \n\u2022 RxAndroid
+        \n\u2022 RxKotlin
+        \n\u2022 Retrofit
+        \n\u2022 Gson
+        \n\u2022 OkHttp
+        \n\u2022 Stetho
+        \n\u2022 Picasso
+        \n\u2022 Firebase
+        \n\u2022 Room
+        \n\u2022 Picasso Transformations
+        \n\u2022 Leakcanary
+        \n\u2022 Truth
+        \n\u2022 Junit4
+        \n\u2022 JUnitParams
+        \n\u2022 Mockito 2
+        \n\u2022 Mockito Kotlin
+    </string>
 </resources>
