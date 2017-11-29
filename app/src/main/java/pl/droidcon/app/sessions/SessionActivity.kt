@@ -10,18 +10,33 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_session.*
+import pl.droidcon.app.DroidconApp
 import pl.droidcon.app.R
 import pl.droidcon.app.domain.Session
 import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.speaker.SpeakerActivity
+import javax.inject.Inject
 
-class SessionActivity : AppCompatActivity() {
+class SessionActivity : AppCompatActivity(), SessionView {
+
+    @Inject
+    lateinit var presenter: SessionPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DroidconApp.component.createSessionComponent(session(intent)).inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session)
 
-        val session = session(intent)
+        presenter.attachView(this)
+    }
+
+    override fun onDestroy() {
+        presenter.attachView(null)
+        super.onDestroy()
+    }
+
+
+    override fun display(session: Session) {
         val firstSpeaker = session.speakers[0]
 
         session_title.text = session.sessionTitle
@@ -45,7 +60,6 @@ class SessionActivity : AppCompatActivity() {
                     session_speaker_2_container
             )
         }
-
     }
 
     private fun setupSpeaker(speaker: Speaker, nameTextView: TextView, titleTextView: TextView, speakerImageView: ImageView, container: ConstraintLayout) {
@@ -59,11 +73,11 @@ class SessionActivity : AppCompatActivity() {
     companion object {
         private const val SESSION_ARG = "sessions"
 
-        private fun session(intent: Intent): Session = intent.extras.getParcelable(SESSION_ARG)
+        private fun session(intent: Intent): Long = intent.extras.getLong(SESSION_ARG)
 
-        fun intent(context: Context, session: Session): Intent {
+        fun intent(context: Context, sessionId: Long): Intent {
             return Intent(context, SessionActivity::class.java).apply {
-                putExtra(SESSION_ARG, session)
+                putExtra(SESSION_ARG, sessionId)
             }
         }
     }
