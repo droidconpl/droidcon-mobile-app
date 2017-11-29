@@ -1,0 +1,16 @@
+// Check for google-services.json file and copy to project dir
+def googleServicesJsonFile = new File(System.getenv("BUDDYBUILD_SECURE_FILES") as String, "google-services.json")
+
+if (googleServicesJsonFile.exists()) {
+    def targetFile = file("google-services.json")
+    targetFile.write(googleServicesJsonFile.text)
+}
+
+apply plugin: 'com.google.gms.google-services'
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
+}

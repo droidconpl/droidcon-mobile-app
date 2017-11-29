@@ -38,7 +38,7 @@ class AgendaFragment : Fragment(), AgendaView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_agenda, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         agendaPresenter.attachView(this)
@@ -91,8 +91,10 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dayId = arguments.getInt(AgendaItemFragment.DAY_ID_PARAM)
-        agendaItemPresenter.attachView(this, dayId)
+        val dayId = arguments?.getInt(AgendaItemFragment.DAY_ID_PARAM)
+        dayId?.let {
+            agendaItemPresenter.attachView(this, dayId)
+        }
     }
 
     override fun display(talkPanels: List<TalkPanel>) {
@@ -113,10 +115,11 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
     }
 
     override fun openSession(speakerPicture: ImageView, session: Session) {
-        val intent = SessionActivity.intent(context, session)
-
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, speakerPicture as View, "profile")
-        startActivity(intent, options.toBundle())
+        activity?.let {
+            val intent = SessionActivity.intent(it.baseContext, session)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(it, speakerPicture as View, "profile")
+            startActivity(intent, options.toBundle())
+        }
     }
 
     companion object {
