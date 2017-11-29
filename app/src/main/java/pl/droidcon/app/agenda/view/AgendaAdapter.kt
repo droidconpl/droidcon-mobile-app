@@ -144,12 +144,8 @@ class AgendaTripleHolder(private val item: View, val agendaItemPresenter: Agenda
                 .observeFavorite(talk.session.sessionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    itemPack.favIcon.visibility = if (it) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
+                .subscribe { isFavorite ->
+                    itemPack.favIcon.visibility = if (isFavorite) View.VISIBLE else View.GONE
                 }.addTo(disposables)
     }
 
