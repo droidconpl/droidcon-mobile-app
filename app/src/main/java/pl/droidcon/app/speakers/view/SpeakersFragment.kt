@@ -34,7 +34,7 @@ class SpeakersFragment : Fragment(), SpeakersView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_speakers, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.attachView(this)
     }
@@ -67,7 +67,7 @@ class SpeakersFragment : Fragment(), SpeakersView {
     }
 
     override fun display(speaker: Speaker) {
-        startActivity(SpeakerActivity.intent(context, speaker))
+        context?.let { startActivity(SpeakerActivity.intent(it, speaker)) }
     }
 
     companion object {
