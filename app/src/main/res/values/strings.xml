@@ -12,9 +12,9 @@
     <string name="event_more_info_title">Useful links</string>
     <string name="event_website_link">http://droidcon.pl/#/faq \nhttp://droidcon.pl/#/code-of-conduct</string>
     <string name="address">Address</string>
-    <string name="address_description">WPiA Jagiellonian University, Krupnicza 33a, 31–123 Kraków</string>
+    <string name="address_description">WPiA Jagiellonian University, \nKrupnicza 33a, 31–123 Kraków</string>
     <string name="address_map">Open map</string>
-    <string name="about_description">droidcon is a global developer conference series and a network focusing on the best of Android. The idea behind droidcon is to support the Android platform and create a strong network for developers and companies.This is already 4th edition of droidcon in Kraków and we can\'t wait to meet you!</string>
+    <string name="about_description">Droidcon is a global developer conference series and a network focusing on the best of Android. The idea behind droidcon is to support the Android platform and create a strong network for developers and companies. \n \nThis is already 4th edition of droidcon in Kraków and we can\'t wait to meet you!</string>
     <string name="open_source">3rd party libraries</string>
     <string name="open_source_items">
         \u2022 Kotlin
@@ -42,4 +42,12 @@
         \n\u2022 Mockito 2
         \n\u2022 Mockito Kotlin
     </string>
+    <string name="about_who_we_are">Who we are?</string>
+    <string name="about_venue">Venue</string>
+    <string name="about_after_party">After party!</string>
+    <string name="about_address_after_party">Forum Przestrzenie, \nMarii Konopnickiej 28, 30–001 Kraków \nStarting 20:00</string>
+    <string name="about_sponsors">Sponsors</string>
+    <string name="about_bronze_sponsor">Bronze sponsor</string>
+    <string name="about_virtual_sponsor">Virtual sponsor</string>
+    <string name="about_travel_sponsor">Travel sponsor</string>
 </resources>

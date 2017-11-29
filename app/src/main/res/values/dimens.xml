@@ -6,4 +6,15 @@
     <dimen name="list_element_margin">4dp</dimen>
     <dimen name="icon_button_size">24sp</dimen>
     <dimen name="speaker_dialog_avatar_size">160dp</dimen>
+    <dimen name="about_flexible_photo_height">250dp</dimen>
+    <dimen name="about_logo_size">140dp</dimen>
+    <dimen name="about_card_horizontal_margin">14dp</dimen>
+    <dimen name="about_card_vertical_margin">8dp</dimen>
+    <dimen name="about_card_corner_radius">3dp</dimen>
+    <dimen name="about_card_content_margin">16dp</dimen>
+    <dimen name="about_card_map_height">130dp</dimen>
+    <dimen name="about_logo_bottom_margin">61dp</dimen>
+    <dimen name="about_logo_top_margin">91dp</dimen>
+    <dimen name="about_card_sponsor_height">100dp</dimen>
+    <dimen name="about_margin_top">-50dp</dimen>
 </resources>
