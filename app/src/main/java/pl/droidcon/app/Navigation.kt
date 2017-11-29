@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager
 import android.view.MenuItem
 import pl.droidcon.app.about.AboutFragment
 import pl.droidcon.app.agenda.view.AgendaFragment
-import pl.droidcon.app.sessions.view.SessionsFragment
 import pl.droidcon.app.speakers.view.SpeakersFragment
 
 class NavigationPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
