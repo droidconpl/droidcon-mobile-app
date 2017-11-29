@@ -20,8 +20,8 @@ class SpeakerDetailsMapper @Inject constructor() {
         return mutableListOf<Social>()
                 .apply {
                     addIfNotEmpty(websiteUrl) { Social.Website(it) }
-                    addIfNotEmpty(facebookUrl) { Social.Facebook(it) }
-                    addIfNotEmpty(twitterUrl) { Social.Twitter(it) }
+                    addIfNotEmpty(facebookUrl) { Social.Facebook("https://facebook.com/$it") }
+                    addIfNotEmpty(twitterUrl) { Social.Twitter("https://twitter.com/$it") }
                     addIfNotEmpty(githubUrl) { Social.Github(it) }
                     addIfNotEmpty(linkedinUrl) { Social.Linkedin(it) }
                     addIfNotEmpty(googlePlusUrl) { Social.GooglePlus(it) }
