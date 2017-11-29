@@ -18,14 +18,28 @@ import pl.droidcon.app.data.local.FavoriteLocal
 import pl.droidcon.app.domain.Session
 import pl.droidcon.app.domain.Speaker
 import pl.droidcon.app.speaker.SpeakerActivity
+import javax.inject.Inject
 
-class SessionActivity : AppCompatActivity() {
+class SessionActivity : AppCompatActivity(), SessionView {
+
+    @Inject
+    lateinit var presenter: SessionPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DroidconApp.component.createSessionComponent(session(intent)).inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session)
 
-        val session = session(intent)
+        presenter.attachView(this)
+    }
+
+    override fun onDestroy() {
+        presenter.attachView(null)
+        super.onDestroy()
+    }
+
+
+    override fun display(session: Session) {
         val firstSpeaker = session.speakers[0]
 
         session_title.text = session.sessionTitle
@@ -50,7 +64,6 @@ class SessionActivity : AppCompatActivity() {
             )
         }
 
-
         val repo = DroidconApp.component.getRepo()
 
         val subscribe = repo
@@ -72,8 +85,6 @@ class SessionActivity : AppCompatActivity() {
                 .subscribe {
                     session_favorite.isSelected = true
                 }
-
-
     }
 
     private fun setupSpeaker(speaker: Speaker, nameTextView: TextView, titleTextView: TextView, speakerImageView: ImageView, container: ConstraintLayout) {
@@ -81,17 +92,17 @@ class SessionActivity : AppCompatActivity() {
         titleTextView.text = speaker.title
         Picasso.with(this).load(speaker.imageUrl).transform(CropCircleTransformation()).into(speakerImageView)
 
-        container.setOnClickListener { startActivity(SpeakerActivity.intent(this, speaker)) }
+        container.setOnClickListener { startActivity(SpeakerActivity.intent(this, speaker.id)) }
     }
 
     companion object {
         private const val SESSION_ARG = "sessions"
 
-        private fun session(intent: Intent): Session = intent.extras.getParcelable(SESSION_ARG)
+        private fun session(intent: Intent): Long = intent.extras.getLong(SESSION_ARG)
 
-        fun intent(context: Context, session: Session): Intent {
+        fun intent(context: Context, sessionId: Long): Intent {
             return Intent(context, SessionActivity::class.java).apply {
-                putExtra(SESSION_ARG, session)
+                putExtra(SESSION_ARG, sessionId)
             }
         }
     }

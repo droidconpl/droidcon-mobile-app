@@ -2,9 +2,7 @@ package pl.droidcon.app.sessions
 
 import pl.droidcon.app.domain.Session
 
-interface SessionsView {
-
-    fun display(sessions: List<Session>)
+interface SessionView {
 
     fun display(session: Session)
 }

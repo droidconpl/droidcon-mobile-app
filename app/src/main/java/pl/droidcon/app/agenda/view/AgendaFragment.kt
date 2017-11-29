@@ -116,7 +116,7 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
 
     override fun openSession(speakerPicture: ImageView, session: Session) {
         activity?.let {
-            val intent = SessionActivity.intent(it.baseContext, session)
+            val intent = SessionActivity.intent(it.baseContext, session.sessionId)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(it, speakerPicture as View, "profile")
             startActivity(intent, options.toBundle())
         }

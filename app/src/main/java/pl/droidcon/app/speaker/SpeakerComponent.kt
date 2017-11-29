@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import pl.droidcon.app.ApplicationComponent
-import pl.droidcon.app.domain.Speaker
+import pl.droidcon.app.speakers.interactor.SpeakersRepository
 
 @Subcomponent(modules = arrayOf(SpeakerModule::class))
 interface SpeakerComponent {
@@ -13,13 +13,13 @@ interface SpeakerComponent {
 }
 
 @Module
-class SpeakerModule(private val speaker: Speaker) {
+class SpeakerModule(private val speakerId: Long) {
 
     @Provides
-    fun provideSpeakerPresenter(speakerDetailsMapper: SpeakerDetailsMapper): SpeakerPresenter {
-        return SpeakerPresenter(speaker, speakerDetailsMapper)
+    fun provideSpeakerPresenter(speakerDetailsMapper: SpeakerDetailsMapper, speakersRepository: SpeakersRepository): SpeakerPresenter {
+        return SpeakerPresenter(speakerId, speakersRepository, speakerDetailsMapper)
     }
 }
 
-fun ApplicationComponent.createSpeakerComponent(speaker: Speaker): SpeakerComponent =
-        speakerComponent(SpeakerModule(speaker))
+fun ApplicationComponent.createSpeakerComponent(speakerId: Long): SpeakerComponent =
+        speakerComponent(SpeakerModule(speakerId))
