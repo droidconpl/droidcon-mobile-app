@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,8 +102,6 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
     }
 
     override fun display(talkPanels: List<TalkPanel>) {
-        val size = talkPanels.size
-        Log.d("DDD", this.toString() + " " + size)
         view?.let {
             adapter.add(talkPanels)
             agendaView.layoutManager = LinearLayoutManager(agendaView.context)
