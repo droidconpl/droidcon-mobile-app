@@ -51,7 +51,8 @@ data class TalkPanelLocal(
         @ColumnInfo(name = "talks") val talks: List<Long>,
         @ColumnInfo(name = "sessionType") val sessionType: String,
         @ColumnInfo(name = "text") val text: String,
-        @ColumnInfo(name = "imageUrl") val imageUrl: String
+        @ColumnInfo(name = "imageUrl") val imageUrl: String,
+        @ColumnInfo(name = "slotId") val slotId: Long
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

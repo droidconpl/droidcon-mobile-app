@@ -1,6 +1,7 @@
 package pl.droidcon.app.agenda.view
 
 import android.annotation.SuppressLint
+import android.support.v7.util.SortedList
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -17,11 +18,17 @@ import pl.droidcon.app.domain.TalkPanel
 
 class AgendaAdapter(private val talks: List<TalkPanel>, val agendaItemPresenter: AgendaItemPresenter) : RecyclerView.Adapter<AgendaHolder>() {
 
-    override fun onBindViewHolder(holder: AgendaHolder, position: Int) = holder.bindHolder(talks[position])
+    val sortedList = SortedList<TalkPanel>(TalkPanel::class.java, AgendaListAdapterCallback(this))
 
-    override fun getItemCount() = talks.size
+    init {
+        sortedList.addAll(talks)
+    }
 
-    override fun getItemViewType(position: Int): Int = if (talks[position].sessionType == "meta") 0 else 1
+    override fun onBindViewHolder(holder: AgendaHolder, position: Int) = holder.bindHolder(sortedList[position])
+
+    override fun getItemCount() = sortedList.size()
+
+    override fun getItemViewType(position: Int): Int = if (sortedList[position].sessionType == "meta") 0 else 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgendaHolder {
         when (viewType) {
@@ -29,7 +36,13 @@ class AgendaAdapter(private val talks: List<TalkPanel>, val agendaItemPresenter:
             else -> return AgendaTripleHolder(LayoutInflater.from(parent.context).inflate(R.layout.agenda_item_tripple, parent, false), agendaItemPresenter)
         }
     }
+
+    fun add(talkPanels: List<TalkPanel>) {
+        sortedList.addAll(talkPanels)
+    }
+
 }
+
 
 class AgendaSingleHolder(item: View) : AgendaHolder(item) {
 
