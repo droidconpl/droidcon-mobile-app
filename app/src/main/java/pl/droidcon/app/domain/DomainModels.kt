@@ -37,6 +37,6 @@ data class Agenda(val days: List<Day>)
 
 data class Day(val id: Long, val talkPanels: List<TalkPanel>)
 
-data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, val sessionType: String, val text: String, val imageUrl: String)
+data class TalkPanel(val start: String, val end: String, val talks: List<Talk>, val sessionType: String, val text: String, val imageUrl: String, val slotId: Long)
 
 data class Talk(val title: String, val speakers: List<Speaker>, val session: Session)

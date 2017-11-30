@@ -1,6 +1,7 @@
 package pl.droidcon.app.agenda
 
 import android.widget.ImageView
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -26,7 +27,9 @@ class AgendaItemPresenter @Inject constructor(private val agendaRepository: Agen
                     .subscribeOn(Schedulers.io())
                     .distinctUntilChanged()
                     .filter { agenda: Agenda -> agenda.days.isNotEmpty() }
-                    .map { agenda -> agenda.days[dayId].talkPanels }
+                    .flatMap { agenda -> Observable.fromIterable(agenda.days) }
+                    .filter { day -> day.id == dayId.toLong() + 1 }
+                    .map { day -> day.talkPanels }
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ view?.display(it) }, { it.printStackTrace() })
                     .addTo(disposables)

@@ -16,7 +16,7 @@ class AgendaMapper @Inject constructor() {
             val agendaForDay = it.value
 
             val talkPanels = agendaForDay.map {
-                val (_, _, sessionType, slotStart, slotEnd, slotArray) = it
+                val (_, slotId, sessionType, slotStart, slotEnd, slotArray) = it
 
                 val talks = slotArray
                         .map {
@@ -26,7 +26,7 @@ class AgendaMapper @Inject constructor() {
                                     session = sessions.findSession(it.slotSession)
                             )
                         }
-                TalkPanel(start = slotStart, end = slotEnd, talks = talks, sessionType = sessionType, text = "to_be_removed", imageUrl = "")
+                TalkPanel(start = slotStart, end = slotEnd, talks = talks, sessionType = sessionType, text = "to_be_removed", imageUrl = "", slotId = slotId)
             }
 
             Day(dayId, talkPanels)
@@ -71,9 +71,9 @@ class AgendaMapper @Inject constructor() {
                 }
 
                 if (talks.isEmpty())
-                    TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = emptyList(), sessionType = "meta", text = agenda.text, imageUrl = agenda.imageurl)
+                    TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = emptyList(), sessionType = "meta", text = agenda.text, imageUrl = agenda.imageurl, slotId = agenda.slotid)
                 else
-                    TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = talks, sessionType = "talk", text = "", imageUrl = "")
+                    TalkPanel(start = agenda.starthour, end = agenda.endhour, talks = talks, sessionType = "talk", text = "", imageUrl = "", slotId = agenda.slotid)
 
             }
 

@@ -40,7 +40,7 @@ class AgendaFragment : Fragment(), AgendaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        agenda_view_pager.adapter = AgendaPagerAdapter(childFragmentManager)
         agendaPresenter.attachView(this)
     }
 
@@ -54,7 +54,7 @@ class AgendaFragment : Fragment(), AgendaView {
         view?.let {
             agenda_progress.visibility = View.GONE
             agenda_view_pager.visibility = View.VISIBLE
-            agenda_view_pager.adapter = AgendaPagerAdapter(agenda, childFragmentManager)
+//            agenda_view_pager.adapter = AgendaPagerAdapter(childFragmentManager)
         }
     }
 
@@ -63,7 +63,7 @@ class AgendaFragment : Fragment(), AgendaView {
     }
 }
 
-class AgendaPagerAdapter constructor(val agenda: Agenda, fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+class AgendaPagerAdapter constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment = AgendaItemFragment.newInstance(position)
 
@@ -80,8 +80,11 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
     @Inject
     lateinit var agendaItemPresenter: AgendaItemPresenter
 
+    lateinit var adapter: AgendaAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         DroidconApp.component.inject(this)
+        adapter = AgendaAdapter(agendaItemPresenter)
         super.onCreate(savedInstanceState)
     }
 
@@ -91,6 +94,7 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val dayId = arguments?.getInt(AgendaItemFragment.DAY_ID_PARAM)
         dayId?.let {
             agendaItemPresenter.attachView(this, dayId)
@@ -99,7 +103,7 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
 
     override fun display(talkPanels: List<TalkPanel>) {
         view?.let {
-            val adapter = AgendaAdapter(talkPanels, agendaItemPresenter)
+            adapter.add(talkPanels)
             agendaView.layoutManager = LinearLayoutManager(agendaView.context)
             agendaView.adapter = adapter
             val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)

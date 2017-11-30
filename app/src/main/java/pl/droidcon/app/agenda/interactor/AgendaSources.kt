@@ -108,7 +108,7 @@ class LocalAgendaSource @Inject constructor(private val agendaDao: AgendaDao,
             val talkPanels = it.talkPanels.map {
                 val talksLocal = it.talks.map { agendaMapper.map(it) }
                 val talkIds = agendaDao.putTalks(talkLocals = talksLocal)
-                TalkPanelLocal(start = it.start, end = it.end, talks = talkIds, sessionType = it.sessionType, text = it.text, imageUrl = it.imageUrl)
+                TalkPanelLocal(start = it.start, end = it.end, talks = talkIds, sessionType = it.sessionType, text = it.text, imageUrl = it.imageUrl, slotId = it.slotId)
             }
 
             val panelIds = agendaDao.putTalkPanels(talkPanelLocal = talkPanels)
@@ -131,16 +131,22 @@ class LocalAgendaSource @Inject constructor(private val agendaDao: AgendaDao,
                     val talkPanelsLocal = it.first.second
                     val talkLocals = it.second
 
-                    val talkPanels = talkPanelsLocal.map({
-                        @Suppress("UnnecessaryVariable")
-                        val panel = it
-                        val talksForPanel = talkLocals.filter { panel.talks.contains(it.id) }
-                        val talks = talksForPanel.map { agendaMapper.map(it, speakers, sessions) }
 
-                        TalkPanel(panel.start, panel.end, talks, panel.sessionType, panel.text, panel.imageUrl)
-                    })
+                    val days = dayLocals.map { dayLocal ->
 
-                    val days = dayLocals.map { Day(it.id, talkPanels) }
+                        val talkPanel = talkPanelsLocal
+                                .filter { talkPanelLocal ->
+                                    talkPanelLocal.id in dayLocal.talks
+                                }
+                                .map({ panel ->
+                                    val talksForPanel = talkLocals.filter { panel.talks.contains(it.id) }
+                                    val talks = talksForPanel.map { agendaMapper.map(it, speakers, sessions) }
+
+                                    TalkPanel(panel.start, panel.end, talks, panel.sessionType, panel.text, panel.imageUrl, panel.slotId)
+                                })
+
+                        Day(dayLocal.id, talkPanel)
+                    }
                     Agenda(days)
                 }
     }
