@@ -1,6 +1,5 @@
 package pl.droidcon.app.agenda
 
-import android.util.Log
 import android.widget.ImageView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,19 +27,9 @@ class AgendaItemPresenter @Inject constructor(private val agendaRepository: Agen
                     .subscribeOn(Schedulers.io())
                     .distinctUntilChanged()
                     .filter { agenda: Agenda -> agenda.days.isNotEmpty() }
-                    .flatMap { agenda ->
-                        Log.d("DDD", "MRR " + agenda.days.size)
-                        Observable.fromIterable(agenda.days)
-                    }
-                    .filter { day ->
-                        Log.d("DDD", "DAYYS  " + day.talkPanels.size +  "  id: " + day.id)
-                        day.id == dayId.toLong() + 1
-                    }
-//                    .map { agenda -> agenda.days[dayId].talkPanels }
-                    .map { day ->
-                        Log.d("DDD", "HMM " + day.id + " " + day.talkPanels.size)
-                        day.talkPanels
-                    }
+                    .flatMap { agenda -> Observable.fromIterable(agenda.days) }
+                    .filter { day -> day.id == dayId.toLong() + 1 }
+                    .map { day -> day.talkPanels }
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ view?.display(it) }, { it.printStackTrace() })
                     .addTo(disposables)
