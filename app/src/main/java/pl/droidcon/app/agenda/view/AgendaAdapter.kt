@@ -16,13 +16,9 @@ import pl.droidcon.app.domain.Talk
 import pl.droidcon.app.domain.TalkPanel
 
 
-class AgendaAdapter(private val talks: List<TalkPanel>, val agendaItemPresenter: AgendaItemPresenter) : RecyclerView.Adapter<AgendaHolder>() {
+class AgendaAdapter(val agendaItemPresenter: AgendaItemPresenter) : RecyclerView.Adapter<AgendaHolder>() {
 
     val sortedList = SortedList<TalkPanel>(TalkPanel::class.java, AgendaListAdapterCallback(this))
-
-    init {
-        sortedList.addAll(talks)
-    }
 
     override fun onBindViewHolder(holder: AgendaHolder, position: Int) = holder.bindHolder(sortedList[position])
 

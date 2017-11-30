@@ -85,7 +85,7 @@ class AgendaItemFragment : Fragment(), AgendaItemView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         DroidconApp.component.inject(this)
-        adapter = AgendaAdapter(emptyList(), agendaItemPresenter)
+        adapter = AgendaAdapter(agendaItemPresenter)
         super.onCreate(savedInstanceState)
     }
 
