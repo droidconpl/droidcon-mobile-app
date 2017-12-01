@@ -60,6 +60,16 @@ class SessionActivity : AppCompatActivity(), SessionView {
                     session_speaker_2_container
             )
         }
+
+        session_favorite.setOnClickListener {
+            session_favorite.isSelected = !session_favorite.isSelected
+
+            presenter.setFavoriteSelected(session_favorite.isSelected)
+        }
+    }
+
+    override fun setFavoriteSelected(isSelected: Boolean) {
+        session_favorite.isSelected = isSelected
     }
 
     private fun setupSpeaker(speaker: Speaker, nameTextView: TextView, titleTextView: TextView, speakerImageView: ImageView, container: ConstraintLayout) {

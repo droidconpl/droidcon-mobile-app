@@ -10,8 +10,9 @@ arrayOf(
         SessionLocal::class,
         DayLocal::class,
         TalkPanelLocal::class,
-        TalkLocal::class),
-        version = 4)
+        TalkLocal::class,
+        FavoriteLocal::class),
+        version = 5)
 @TypeConverters(Converters::class)
 abstract class DroidconDatabase : RoomDatabase() {
 
@@ -20,6 +21,8 @@ abstract class DroidconDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionsDao
 
     abstract fun agendaDao(): AgendaDao
+
+    abstract fun favoriteDao(): FavoriteDao
 
     companion object {
         private lateinit var database: DroidconDatabase

@@ -65,3 +65,22 @@ abstract class AgendaDao {
         clearDayLocal()
     }
 }
+
+@Dao
+abstract class FavoriteDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun putFavorite(favoriteLocal: FavoriteLocal): Long
+
+    @Query("SELECT * FROM $FAVORITE_TABLE_NAME WHERE sessionId = :sessionId LIMIT 1")
+    abstract fun findOneFavorite(sessionId: Long): Maybe<FavoriteLocal>
+
+    @Query("SELECT * FROM $FAVORITE_TABLE_NAME")
+    abstract fun getFavorites(): Maybe<List<FavoriteLocal>>
+
+    @Delete
+    abstract fun deleteFavorite(favoriteLocal: FavoriteLocal)
+
+    @Query("DELETE FROM $FAVORITE_TABLE_NAME")
+    abstract fun clear()
+}

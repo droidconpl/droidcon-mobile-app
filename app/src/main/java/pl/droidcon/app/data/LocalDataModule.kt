@@ -23,4 +23,8 @@ class LocalDataModule(context: android.content.Context) {
     @Provides
     @ApplicationScope
     fun provideAgendaDao() = DroidconDatabase.get().agendaDao()
+
+    @Provides
+    @ApplicationScope
+    fun provideFavoriteDao() = DroidconDatabase.get().favoriteDao()
 }

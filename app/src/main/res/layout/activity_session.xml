@@ -24,6 +24,20 @@
             tools:background="@color/light_2"
             tools:src="@drawable/ic_person" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/session_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/selector_fav"
+            app:backgroundTint="@color/pink"
+            app:layout_constraintBottom_toBottomOf="@id/session_picture"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/session_picture"
+            app:rippleColor="#FFF" />
+
         <TextView
             android:id="@+id/session_title"
             android:layout_width="0dp"
