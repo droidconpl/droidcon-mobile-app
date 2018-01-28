@@ -1,0 +1,52 @@
+apply from: "$rootDir/gradle/versions.gradle"
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion androidbuildtools
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 27
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinlang"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:$dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    api "javax.annotation:jsr250-api:$jsr250"
+
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin"
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp"
+    implementation "com.google.code.gson:gson:$gson"
+
+    // Persistence
+    implementation "com.google.firebase:firebase-core:$firebase"
+    implementation "com.google.firebase:firebase-database:$firebase"
+    implementation "android.arch.persistence.room:runtime:$room"
+    implementation "android.arch.persistence.room:rxjava2:$room"
+    annotationProcessor "android.arch.persistence.room:compiler:$room"
+}
