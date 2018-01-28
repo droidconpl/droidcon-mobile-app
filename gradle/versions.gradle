@@ -1,5 +1,5 @@
 ext {
-    kotlinlang = '1.2.0'
+    kotlinlang = '1.2.21'
     gradleplugin = '3.0.1'
     androidbuildtools = '27.0.1'
     support = '27.0.2'
