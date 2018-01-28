@@ -2,6 +2,7 @@ apply from: "$rootDir/gradle/versions.gradle"
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
@@ -22,12 +23,14 @@ android {
 }
 
 dependencies {
+    implementation project(path: ":domain", configuration: 'default')
+
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinlang"
 
     // Dagger
     implementation "com.google.dagger:dagger:$dagger"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
     api "javax.annotation:jsr250-api:$jsr250"
 
 
@@ -48,5 +51,5 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$firebase"
     implementation "android.arch.persistence.room:runtime:$room"
     implementation "android.arch.persistence.room:rxjava2:$room"
-    annotationProcessor "android.arch.persistence.room:compiler:$room"
+    kapt "android.arch.persistence.room:compiler:$room"
 }

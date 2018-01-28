@@ -13,10 +13,6 @@ import pl.droidcon.app.speaker.SpeakerModule
 import pl.droidcon.app.speakers.view.SpeakersFragment
 import javax.inject.Scope
 
-@Scope
-@Retention(AnnotationRetention.RUNTIME)
-annotation class ApplicationScope
-
 @Component(modules = arrayOf(
         NetworkModule::class,
         LocalDataModule::class
