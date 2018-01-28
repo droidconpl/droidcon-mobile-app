@@ -38,6 +38,7 @@ androidExtensions {
 
 dependencies {
     implementation project(path: ":data", configuration: 'default')
+    implementation project(path: ":domain", configuration: 'default')
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinlang"
