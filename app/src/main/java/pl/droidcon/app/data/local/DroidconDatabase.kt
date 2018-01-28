@@ -1,5 +1,6 @@
 package pl.droidcon.app.data.local
 
+import android.arch.persistence.db.SupportSQLiteOpenHelper
 import android.arch.persistence.room.*
 import android.content.Context
 import java.util.regex.Pattern
@@ -26,6 +27,13 @@ abstract class DroidconDatabase : RoomDatabase() {
 
         fun init(context: Context) {
             database = Room.databaseBuilder(context, DroidconDatabase::class.java, "droidcon")
+                    .fallbackToDestructiveMigration()
+                    .build()
+        }
+
+        fun initInMemory(context: Context, factory: SupportSQLiteOpenHelper.Factory) {
+            database = Room.inMemoryDatabaseBuilder(context, DroidconDatabase::class.java)
+                    .openHelperFactory(factory)
                     .fallbackToDestructiveMigration()
                     .build()
         }

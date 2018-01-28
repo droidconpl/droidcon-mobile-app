@@ -94,6 +94,8 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
         exclude group: 'org.mockito'
     }
+
+    testImplementation 'org.xerial:sqlite-jdbc:3.8.11.2'
 }
 
 apply from: "$rootDir/gradle/googleservices.gradle"
